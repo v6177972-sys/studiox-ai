@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>StudioX AI | Social Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <style>
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; }
+        .logo-font { font-family: 'Syncopate', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .btn-grad { background: linear-gradient(135deg, #9333ea 0%, #4f46e5 100%); transition: 0.3s; }
+        .btn-grad:active { transform: scale(0.98); }
+        .ad-banner { height: 50px; background: #0a0a0a; border: 1px dashed #222; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #444; letter-spacing: 2px; }
+    </style>
+</head>
+<body class="pb-20">
+
+    <div class="ad-banner">ADSENSE_TOP_SLOT</div>
+
+    <header class="p-6 sticky top-0 bg-black/90 backdrop-blur-md z-50 flex justify-between items-center border-b border-white/5">
+        <div>
+            <h1 class="logo-font text-sm italic tracking-tighter">STUDIOX</h1>
+            <p class="text-[7px] text-purple-500 font-bold tracking-[0.4em] uppercase">Cloud Powered</p>
+        </div>
+        <div onclick="openStore()" class="glass px-4 py-2 rounded-2xl flex items-center gap-2 border-purple-500/30 cursor-pointer">
+            <i class="fas fa-bolt text-yellow-400 text-xs"></i>
+            <span id="nrg-val" class="font-black text-xs">--</span>
+        </div>
+    </header>
+
+    <main class="p-6 max-w-xl mx-auto space-y-8">
+        <div class="glass rounded-[2.5rem] p-6 border-white/5">
+            <textarea id="prompt-in" class="w-full bg-transparent border-none focus:outline-none min-h-[140px] text-lg placeholder:text-zinc-800 resize-none" placeholder="Descrivi il post..."></textarea>
+            <div class="flex justify-between items-center mt-4 pt-4 border-t border-white/5">
+                <button onclick="toggleVisual()" id="v-toggle" class="text-[9px] font-black uppercase text-zinc-500">
+                    <i class="fas fa-image mr-1"></i> + Immagine
+                </button>
+                <span class="text-[9px] font-bold text-purple-500 uppercase">Costo: <span id="c-val">2</span> N-RG</span>
+            </div>
+        </div>
+
+        <button onclick="generate()" class="btn-grad w-full py-6 rounded-[2rem] font-black uppercase text-[10px] tracking-[0.3em] shadow-xl">Genera</button>
+
+        <div id="result-box" class="hidden space-y-6">
+            <div id="res-img"></div>
+            <div class="glass rounded-[2rem] p-6 italic text-zinc-300 leading-relaxed" id="res-txt"></div>
+        </div>
+    </main>
+
+    <div id="store" class="fixed inset-0 bg-black/98 z-[100] hidden flex flex-col items-center justify-center p-10">
+        <h2 class="logo-font text-xl mb-10">REFILL</h2>
+        <div onclick="simulateAd()" class="glass p-10 rounded-[3rem] border-purple-500/30 text-center w-full max-w-xs">
+            <i class="fas fa-play text-3xl mb-4 text-purple-500"></i>
+            <p class="font-black text-[10px] uppercase">Guarda Video</p>
+            <p class="text-[8px] opacity-40">+10 N-RG</p>
+        </div>
+        <button onclick="closeStore()" class="mt-10 text-[8px] uppercase opacity-30">Chiudi</button>
+    </div>
+
+    <div class="fixed bottom-0 left-0 w-full ad-banner bg-black/90 backdrop-blur-md">ADSENSE_BOTTOM_SLOT</div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Vercel config injection
+        const config = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const app = initializeApp(config);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'studiox-v1';
+
+        let state = { nrg: 20 };
+
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                const ref = doc(db, 'artifacts', appId, 'users', user.uid, 'profile');
+                onSnapshot(ref, d => {
+                    if (d.exists()) {
+                        state = d.data();
+                        document.getElementById('nrg-val').innerText = state.nrg;
+                    } else {
+                        setDoc(ref, state);
+                    }
+                });
+            } else {
+                signInAnonymously(auth);
+            }
+        });
+
+        window.simulateAd = async () => {
+            alert("Video in corso...");
+            setTimeout(async () => {
+                const ref = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'profile');
+                await updateDoc(ref, { nrg: state.nrg + 10 });
+                document.getElementById('store').classList.add('hidden');
+            }, 2000);
+        };
+
+        window.openStore = () => document.getElementById('store').classList.remove('hidden');
+        window.closeStore = () => document.getElementById('store').classList.add('hidden');
+        window.generate = () => alert("Configura le API Key nel codice per attivare l'IA!");
+    </script>
+</body>
+</html>
+
