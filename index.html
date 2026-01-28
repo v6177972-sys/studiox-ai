@@ -3,94 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>StudioX AI | Ready</title>
+    <title>StudioX AI | Business & Social</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
-        body { background-color: #000; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .ui-card { background: rgba(18, 18, 22, 0.95); border: 1px solid rgba(255,255,255,0.1); border-radius: 2rem; }
-        .btn-glow { background: linear-gradient(135deg, #6366f1, #a855f7); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
-    </style>
-</head>
-<body>
-    <div id="root"></div>
-
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-
-        // ==========================================
-        // INSERISCI LA TUA NUOVA CHIAVE GOOGLE QUI SOTTO
-        // ==========================================
-        const GOOGLE_API_KEY = "AIzaSyCiaPmeuschK5EYRj96kKmcIw3CkXz_VOY"; 
-
-        function App() {
-            const [nrg, setNrg] = useState(() => Number(localStorage.getItem('sx_nrg')) || 50);
-            const [input, setInput] = useState("");
-            const [result, setResult] = useState("");
-            const [loading, setLoading] = useState(false);
-
-            useEffect(() => { localStorage.setItem('sx_nrg', nrg); }, [nrg]);
-
-            const generate = async () => {
-                if (!GOOGLE_API_KEY || GOOGLE_API_KEY.includes("CHIAVE")) return alert("Inserisci la chiave API nel codice!");
-                if (nrg < 10) return alert("Energia esaurita! Usa il tasto Bonus.");
-                
-                setLoading(true);
-                try {
-                    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GOOGLE_API_KEY}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ contents: [{ parts: [{ text: `Scrivi un post social virale per: ${input}` }] }] })
-                    });
-                    const data = await resp.json();
-                    setResult(data.candidates[0].content.parts[0].text);
-                    setNrg(nrg - 10);
-                } catch (e) {
-                    alert("Errore API: Controlla la chiave.");
-                } finally { setLoading(false); }
-            };
-
-            return (
-                <div className="max-w-md mx-auto min-h-screen p-6 flex flex-col gap-6">
-                    <div className="flex justify-between items-center py-4">
-                        <h1 className="text-2xl font-black italic">STUDIOX<span className="text-indigo-500 underline">AI</span></h1>
-                        <div className="bg-zinc-900 px-4 py-2 rounded-2xl border border-zinc-800 font-bold">⚡ {nrg}</div>
-                    </div>
-
-                    <div className="ui-card p-6 space-y-4">
-                        <textarea 
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            placeholder="Di cosa vuoi parlare?"
-                            className="w-full bg-transparent border-none text-white h-24 resize-none"
-                        />
-                        <button onClick={generate} disabled={loading} className="w-full btn-glow py-4 rounded-xl font-bold uppercase tracking-widest">
-                            {loading ? "Generazione..." : "Crea Post"}
-                        </button>
-                    </div>
-
-                    {result && (
-                        <div className="ui-card p-6 animate-in fade-in italic text-zinc-300 text-sm whitespace-pre-wrap">
-                            {result}
-                        </div>
-                    )}
-
-                    <button 
-                        onClick={() => { setNrg(nrg + 20); window.open('https://google.com', '_blank'); }}
-                        className="w-full bg-zinc-900 border border-zinc-800 p-6 rounded-3xl flex justify-between items-center hover:bg-zinc-800 transition-all"
-                    >
-                        <span className="font-bold text-sm">📺 Guarda Sponsor</span>
-                        <span className="text-green-500 font-bold">+20⚡</span>
-                    </button>
-                </div>
-            );
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        
+        body { 
+            background-color: #000; 
+            color: white; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        .ui-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 2rem;
+        }
+
+        .btn-main {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .nrg-glow {
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .scroll-hide::-webkit-scrollbar { display: none; }
+        .scroll-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .loading-shimmer { animation: pulse-soft 1.5s infinite; }
+    </style>
+</head>
+<body class="pb-10">
+
+    <div class="max-w-md mx-auto px-6 pt-8 space-y-6">
+        
+        <!-- Top Nav -->
+        <div class="flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-black italic tracking-tighter">STUDIOX<span class="text-indigo-500">AI</span></h1>
+                <p class="text-[7px] font-bold text-zinc-500 uppercase tracking-[0.4em]">Creator Engine v6.5</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="nrg-glow bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-2xl flex items-center gap-2">
+                    <span class="text-yellow-400 animate-pulse text-xs">⚡</span>
+                    <span id="energy-display" class="font-black text-sm">50</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- AREA SPONSOR / ADS -->
+        <div class="ui-card p-4 border-indigo-500/20 bg-indigo-500/5 cursor-pointer relative overflow-hidden" onclick="window.open('https://google.it', '_blank')">
+            <div class="absolute top-0 right-0 p-2 opacity-10">
+                <i class="fas fa-ad text-4xl"></i>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center text-white">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <div>
+                    <h3 class="text-[10px] font-black uppercase text-indigo-400 tracking-widest leading-none mb-1">Offerta Sponsorizzata</h3>
+                    <p class="text-xs font-bold">Rimuovi i limiti con StudioX Pro</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- GENERATORE -->
+        <div class="ui-card p-6 shadow-2xl space-y-4">
+            <textarea id="user-input" 
+                placeholder="Cosa vuoi creare oggi? (es. Post per palestra)" 
+                class="w-full bg-transparent border-none text-white text-lg h-32 focus:ring-0 placeholder:text-zinc-800 resize-none"
+            ></textarea>
+            
+            <button id="gen-btn" onclick="runGeneration()" class="w-full btn-main py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] transition-all active:scale-95 flex items-center justify-center gap-3">
+                <span id="btn-label">Genera Post Virale</span>
+                <div id="btn-loader" class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            </button>
+        </div>
+
+        <!-- AREA RISULTATO -->
+        <div id="result-area" class="hidden animate-in fade-in slide-in-from-bottom-4">
+            <div class="ui-card p-6 border-indigo-500/30">
+                <div class="flex justify-between items-center mb-4 border-b border-white/5 pb-2">
+                    <span class="text-[8px] font-black text-indigo-400 uppercase tracking-widest">Contenuto AI</span>
+                    <button onclick="copyToClipboard()" class="text-[10px] font-bold text-zinc-600 hover:text-white transition-colors">Copia</button>
+                </div>
+                <p id="result-text" class="text-sm text-zinc-300 leading-relaxed italic"></p>
+            </div>
+        </div>
+
+        <!-- SEZIONE AFFILIAZIONI (Creator Kit) -->
+        <div class="space-y-4">
+            <div class="flex justify-between items-end">
+                <h2 class="text-[10px] font-black uppercase tracking-widest text-zinc-500">Creator Kit Consigliato</h2>
+                <span class="text-[8px] font-bold text-indigo-400">OFFERTE AMAZON</span>
+            </div>
+            
+            <div class="flex gap-3 overflow-x-auto scroll-hide pb-2">
+                <!-- Prodotto 1 -->
+                <a href="YOUR_AMAZON_LINK_1" target="_blank" class="ui-card p-4 min-w-[140px] flex flex-col items-center text-center gap-2 group">
+                    <i class="fas fa-lightbulb text-xl text-yellow-500 group-hover:scale-110 transition-transform"></i>
+                    <p class="text-[10px] font-bold">Ring Light</p>
+                    <p class="text-[8px] text-zinc-500">Migliora i video</p>
+                </a>
+                <!-- Prodotto 2 -->
+                <a href="YOUR_AMAZON_LINK_2" target="_blank" class="ui-card p-4 min-w-[140px] flex flex-col items-center text-center gap-2 group">
+                    <i class="fas fa-microphone text-xl text-red-500 group-hover:scale-110 transition-transform"></i>
+                    <p class="text-[10px] font-bold">Microfono Pro</p>
+                    <p class="text-[8px] text-zinc-500">Audio cristallino</p>
+                </a>
+                <!-- Prodotto 3 -->
+                <a href="YOUR_AMAZON_LINK_3" target="_blank" class="ui-card p-4 min-w-[140px] flex flex-col items-center text-center gap-2 group">
+                    <i class="fas fa-camera text-xl text-blue-500 group-hover:scale-110 transition-transform"></i>
+                    <p class="text-[10px] font-bold">Treppiede</p>
+                    <p class="text-[8px] text-zinc-500">Stabilità totale</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- GUADAGNA CREDITI -->
+        <div class="grid grid-cols-2 gap-3">
+            <button onclick="addCredit(10, 'Condivisione')" class="ui-card p-4 flex flex-col items-center gap-2 active:bg-zinc-900 transition-colors">
+                <i class="fas fa-share-alt text-indigo-400"></i>
+                <span class="text-[8px] font-black uppercase tracking-widest">Condividi (+10)</span>
+            </button>
+            <button onclick="addCredit(20, 'Bonus Video')" class="ui-card p-4 flex flex-col items-center gap-2 active:bg-zinc-900 transition-colors">
+                <i class="fas fa-play text-green-400"></i>
+                <span class="text-[8px] font-black uppercase tracking-widest">Bonus (+20)</span>
+            </button>
+        </div>
+
+        <!-- FOOTER INFO -->
+        <footer class="text-center pt-4 opacity-20">
+            <p class="text-[7px] font-bold uppercase tracking-[0.5em]">StudioX AI Ecosystem • 2024</p>
+        </footer>
+
+    </div>
+
+    <!-- NOTIFICA (TOAST) -->
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-white text-black px-6 py-3 rounded-full font-black text-[9px] uppercase tracking-widest shadow-2xl z-50 hidden animate-bounce">
+        Azione Eseguita
+    </div>
+
+    <script>
+        const API_KEY = "AIzaSyCiaPmeuschK5EYRj96kKmcIw3CkXz_VOY";
+        let energy = parseInt(localStorage.getItem('sx_nrg')) || 50;
+
+        function updateUI() {
+            document.getElementById('energy-display').innerText = energy;
+            localStorage.setItem('sx_nrg', energy);
+        }
+
+        function notify(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.remove('hidden');
+            setTimeout(() => t.classList.add('hidden'), 3000);
+        }
+
+        function addCredit(amt, reason) {
+            energy = Math.min(100, energy + amt);
+            updateUI();
+            notify(`${reason}: +${amt}⚡`);
+            if(reason === 'Bonus Video') window.open('https://google.com', '_blank');
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('result-text').innerText;
+            navigator.clipboard.writeText(text);
+            notify("Copiato!");
+        }
+
+        async function runGeneration() {
+            const input = document.getElementById('user-input').value;
+            const btnLabel = document.getElementById('btn-label');
+            const loader = document.getElementById('btn-loader');
+            const resultArea = document.getElementById('result-area');
+
+            if (!input) return notify("Scrivi qualcosa!");
+            if (energy < 10) return notify("Energia bassa!");
+
+            // UI Loading
+            document.getElementById('gen-btn').disabled = true;
+            btnLabel.innerText = "L'AI sta creando...";
+            loader.classList.remove('hidden');
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: `Sei un esperto di social media marketing. Crea un post virale con emoji e hashtag strategici per: ${input}` }] }]
+                    })
+                });
+
+                const data = await response.json();
+                const text = data.candidates[0].content.parts[0].text;
+
+                document.getElementById('result-text').innerText = text;
+                resultArea.classList.remove('hidden');
+                
+                energy -= 10;
+                updateUI();
+                notify("Post creato! -10⚡");
+            } catch (err) {
+                notify("Errore: Riprova più tardi");
+                console.error(err);
+            } finally {
+                document.getElementById('gen-btn').disabled = false;
+                btnLabel.innerText = "Genera Post Virale";
+                loader.classList.add('hidden');
+            }
+        }
+
+        updateUI();
     </script>
 </body>
 </html>
