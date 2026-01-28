@@ -3,229 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>StudioX AI | Business & Social</title>
+    <title>StudioX AI | Creator Engine</title>
+    
+    <!-- Librerie -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        
-        body { 
-            background-color: #000; 
-            color: white; 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .ui-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 2rem;
-        }
-
-        .btn-main {
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
-        }
-
-        .nrg-glow {
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
-        }
-
+        body { background: #000; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+        .ui-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 2.2rem; }
+        .btn-primary { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); box-shadow: 0 12px 30px rgba(99, 102, 241, 0.3); transition: all 0.2s; }
+        .btn-primary:active { transform: scale(0.96); opacity: 0.9; }
+        .energy-glow { box-shadow: 0 0 15px rgba(234, 179, 8, 0.1); }
         .scroll-hide::-webkit-scrollbar { display: none; }
-        .scroll-hide { -ms-overflow-style: none; scrollbar-width: none; }
-
-        @keyframes pulse-soft {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        .loading-shimmer { animation: pulse-soft 1.5s infinite; }
+        #toast { transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     </style>
 </head>
-<body class="pb-10">
+<body class="min-h-screen pb-20 select-none">
 
-    <div class="max-w-md mx-auto px-6 pt-8 space-y-6">
+    <div class="max-w-md mx-auto px-6 pt-8 space-y-7">
         
-        <!-- Top Nav -->
-        <div class="flex justify-between items-center">
+        <!-- Header con Identità Brand -->
+        <header class="flex justify-between items-center">
             <div>
-                <h1 class="text-2xl font-black italic tracking-tighter">STUDIOX<span class="text-indigo-500">AI</span></h1>
-                <p class="text-[7px] font-bold text-zinc-500 uppercase tracking-[0.4em]">Creator Engine v6.5</p>
+                <h1 class="text-2xl font-black italic tracking-tighter leading-none uppercase">STUDIOX<span class="text-indigo-500">AI</span></h1>
+                <p class="text-[7px] font-extrabold text-zinc-600 uppercase tracking-[0.4em] mt-1">Creator Engine v6.5</p>
             </div>
+            
             <div class="flex items-center gap-3">
-                <div class="nrg-glow bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-2xl flex items-center gap-2">
-                    <span class="text-yellow-400 animate-pulse text-xs">⚡</span>
-                    <span id="energy-display" class="font-black text-sm">50</span>
+                <!-- LOGIN GOOGLE: Incolla il tuo ID Client qui sotto -->
+                <div id="g_id_onload"
+                     data-client_id="IL_TUO_ID_QUI.apps.googleusercontent.com"
+                     data-callback="handleCredentialResponse"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin" data-type="icon" data-shape="circle" data-theme="dark" data-size="large"></div>
+
+                <div class="bg-zinc-900/80 border border-zinc-800 px-4 py-2 rounded-2xl flex items-center gap-2 energy-glow">
+                    <span class="text-yellow-400 text-xs animate-pulse">⚡</span>
+                    <span id="nrg-val" class="font-black text-sm">70</span>
                 </div>
             </div>
+        </header>
+
+        <!-- Box Profilo (Appare dopo il login) -->
+        <div id="profile-box" class="hidden ui-card p-4 flex items-center justify-between border-indigo-500/20 bg-indigo-500/5 animate-in fade-in slide-in-from-top-2">
+            <div class="flex items-center gap-3">
+                <img id="user-pic" class="w-10 h-10 rounded-full border-2 border-indigo-500/30">
+                <div>
+                    <p id="user-name" class="text-xs font-black text-white"></p>
+                    <p class="text-[8px] font-bold text-indigo-400 uppercase tracking-widest italic">Partner Verificato</p>
+                </div>
+            </div>
+            <button onclick="location.reload()" class="text-zinc-700 hover:text-white p-2"><i class="fas fa-power-off"></i></button>
         </div>
 
-        <!-- AREA SPONSOR / ADS -->
-        <div class="ui-card p-4 border-indigo-500/20 bg-indigo-500/5 cursor-pointer relative overflow-hidden" onclick="window.open('https://google.it', '_blank')">
-            <div class="absolute top-0 right-0 p-2 opacity-10">
-                <i class="fas fa-ad text-4xl"></i>
-            </div>
+        <!-- Banner Offerta (Ads) -->
+        <div class="ui-card p-5 border-indigo-500/20 bg-indigo-500/5 flex items-center justify-between group cursor-pointer" onclick="window.open('https://canva.com', '_blank')">
             <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center text-white">
-                    <i class="fas fa-rocket"></i>
+                <div class="w-12 h-12 rounded-2xl bg-indigo-500 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+                    <i class="fas fa-rocket text-xl"></i>
                 </div>
                 <div>
-                    <h3 class="text-[10px] font-black uppercase text-indigo-400 tracking-widest leading-none mb-1">Offerta Sponsorizzata</h3>
-                    <p class="text-xs font-bold">Rimuovi i limiti con StudioX Pro</p>
+                    <h3 class="text-[9px] font-black uppercase text-indigo-400 tracking-widest mb-0.5">Offerta Sponsorizzata</h3>
+                    <p class="text-[11px] font-bold text-zinc-100">Rimuovi i limiti con StudioX Pro</p>
                 </div>
             </div>
+            <div class="bg-zinc-800/50 px-2 py-1 rounded text-[9px] font-black text-zinc-500">Ad</div>
         </div>
 
-        <!-- GENERATORE -->
-        <div class="ui-card p-6 shadow-2xl space-y-4">
-            <textarea id="user-input" 
-                placeholder="Cosa vuoi creare oggi? (es. Post per palestra)" 
-                class="w-full bg-transparent border-none text-white text-lg h-32 focus:ring-0 placeholder:text-zinc-800 resize-none"
-            ></textarea>
+        <!-- Area Editor AI -->
+        <div class="ui-card p-8 shadow-2xl space-y-6">
+            <textarea id="prompt-input" placeholder="Gatto" class="w-full bg-transparent border-none text-white text-xl h-40 focus:ring-0 placeholder:text-zinc-800 resize-none font-medium leading-relaxed"></textarea>
             
-            <button id="gen-btn" onclick="runGeneration()" class="w-full btn-main py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] transition-all active:scale-95 flex items-center justify-center gap-3">
-                <span id="btn-label">Genera Post Virale</span>
-                <div id="btn-loader" class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            <button id="gen-btn" onclick="runGeneration()" class="w-full btn-primary py-5 rounded-3xl font-black text-[11px] uppercase tracking-[0.3em] flex items-center justify-center gap-3">
+                <span id="btn-text">Genera Post Virale</span>
+                <div id="loader" class="hidden w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
             </button>
         </div>
 
-        <!-- AREA RISULTATO -->
-        <div id="result-area" class="hidden animate-in fade-in slide-in-from-bottom-4">
-            <div class="ui-card p-6 border-indigo-500/30">
-                <div class="flex justify-between items-center mb-4 border-b border-white/5 pb-2">
-                    <span class="text-[8px] font-black text-indigo-400 uppercase tracking-widest">Contenuto AI</span>
-                    <button onclick="copyToClipboard()" class="text-[10px] font-bold text-zinc-600 hover:text-white transition-colors">Copia</button>
+        <!-- Risultato della Generazione -->
+        <div id="result-box" class="hidden animate-in fade-in slide-in-from-bottom-4">
+            <div class="ui-card p-7 border-indigo-500/30">
+                <div class="flex justify-between items-center mb-4 border-b border-white/5 pb-3">
+                    <span class="text-[9px] font-black text-indigo-400 uppercase tracking-widest italic">Ideato da StudioX AI</span>
+                    <button onclick="copyToClipboard()" class="text-[10px] font-bold text-zinc-500 hover:text-white uppercase tracking-tighter">Copia</button>
                 </div>
-                <p id="result-text" class="text-sm text-zinc-300 leading-relaxed italic"></p>
+                <div id="result-text" class="text-sm text-zinc-300 leading-relaxed italic whitespace-pre-wrap"></div>
             </div>
         </div>
 
-        <!-- SEZIONE AFFILIAZIONI (Creator Kit) -->
+        <!-- Sezione Creator Kit -->
         <div class="space-y-4">
-            <div class="flex justify-between items-end">
-                <h2 class="text-[10px] font-black uppercase tracking-widest text-zinc-500">Creator Kit Consigliato</h2>
-                <span class="text-[8px] font-bold text-indigo-400">OFFERTE AMAZON</span>
+            <div class="flex justify-between items-end px-2">
+                <h2 class="text-[10px] font-black uppercase tracking-widest text-zinc-600">Creator Kit Consigliato</h2>
+                <a href="#" class="text-[8px] font-bold text-indigo-500 uppercase">Offerte Amazon</a>
             </div>
             
-            <div class="flex gap-3 overflow-x-auto scroll-hide pb-2">
-                <!-- Prodotto 1 -->
-                <a href="YOUR_AMAZON_LINK_1" target="_blank" class="ui-card p-4 min-w-[140px] flex flex-col items-center text-center gap-2 group">
-                    <i class="fas fa-lightbulb text-xl text-yellow-500 group-hover:scale-110 transition-transform"></i>
-                    <p class="text-[10px] font-bold">Ring Light</p>
-                    <p class="text-[8px] text-zinc-500">Migliora i video</p>
-                </a>
-                <!-- Prodotto 2 -->
-                <a href="YOUR_AMAZON_LINK_2" target="_blank" class="ui-card p-4 min-w-[140px] flex flex-col items-center text-center gap-2 group">
-                    <i class="fas fa-microphone text-xl text-red-500 group-hover:scale-110 transition-transform"></i>
-                    <p class="text-[10px] font-bold">Microfono Pro</p>
-                    <p class="text-[8px] text-zinc-500">Audio cristallino</p>
-                </a>
-                <!-- Prodotto 3 -->
-                <a href="YOUR_AMAZON_LINK_3" target="_blank" class="ui-card p-4 min-w-[140px] flex flex-col items-center text-center gap-2 group">
-                    <i class="fas fa-camera text-xl text-blue-500 group-hover:scale-110 transition-transform"></i>
-                    <p class="text-[10px] font-bold">Treppiede</p>
-                    <p class="text-[8px] text-zinc-500">Stabilità totale</p>
-                </a>
+            <div class="flex gap-4 overflow-x-auto scroll-hide pb-2">
+                <div class="ui-card p-6 min-w-[170px] flex flex-col items-center gap-3 border-zinc-900 group">
+                    <i class="fas fa-lightbulb text-2xl text-yellow-500 group-hover:scale-110 transition-transform"></i>
+                    <div class="text-center">
+                        <p class="text-[10px] font-black uppercase">Ring Light</p>
+                        <p class="text-[8px] text-zinc-600">Migliora i video</p>
+                    </div>
+                </div>
+                <div class="ui-card p-6 min-w-[170px] flex flex-col items-center gap-3 border-zinc-900 group">
+                    <i class="fas fa-microphone text-2xl text-red-500 group-hover:scale-110 transition-transform"></i>
+                    <div class="text-center">
+                        <p class="text-[10px] font-black uppercase">Microfono Pro</p>
+                        <p class="text-[8px] text-zinc-600">Audio cristallino</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- GUADAGNA CREDITI -->
-        <div class="grid grid-cols-2 gap-3">
-            <button onclick="addCredit(10, 'Condivisione')" class="ui-card p-4 flex flex-col items-center gap-2 active:bg-zinc-900 transition-colors">
-                <i class="fas fa-share-alt text-indigo-400"></i>
-                <span class="text-[8px] font-black uppercase tracking-widest">Condividi (+10)</span>
+        <!-- Pulsanti Bonus -->
+        <div class="grid grid-cols-2 gap-4">
+            <button onclick="reward(10, 'Social')" class="ui-card p-6 flex flex-col items-center gap-3 active:bg-white/5 border-zinc-900 group">
+                <i class="fas fa-share-alt text-indigo-400 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[9px] font-black uppercase tracking-widest">Condividi (+10)</span>
             </button>
-            <button onclick="addCredit(20, 'Bonus Video')" class="ui-card p-4 flex flex-col items-center gap-2 active:bg-zinc-900 transition-colors">
-                <i class="fas fa-play text-green-400"></i>
-                <span class="text-[8px] font-black uppercase tracking-widest">Bonus (+20)</span>
+            <button onclick="reward(20, 'Bonus')" class="ui-card p-6 flex flex-col items-center gap-3 active:bg-white/5 border-zinc-900 group">
+                <i class="fas fa-play text-green-400 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[9px] font-black uppercase tracking-widest">Bonus (+20)</span>
             </button>
         </div>
 
-        <!-- FOOTER INFO -->
-        <footer class="text-center pt-4 opacity-20">
-            <p class="text-[7px] font-bold uppercase tracking-[0.5em]">StudioX AI Ecosystem • 2024</p>
-        </footer>
-
     </div>
 
-    <!-- NOTIFICA (TOAST) -->
-    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-white text-black px-6 py-3 rounded-full font-black text-[9px] uppercase tracking-widest shadow-2xl z-50 hidden animate-bounce">
-        Azione Eseguita
-    </div>
+    <!-- Sistema di Notifiche -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-white text-black px-8 py-4 rounded-full font-black text-[10px] uppercase tracking-widest shadow-2xl z-50 hidden opacity-0 translate-y-4"></div>
 
     <script>
         const API_KEY = "AIzaSyCiaPmeuschK5EYRj96kKmcIw3CkXz_VOY";
-        let energy = parseInt(localStorage.getItem('sx_nrg')) || 50;
+        let credits = parseInt(localStorage.getItem('studiox_nrg')) || 70;
 
-        function updateUI() {
-            document.getElementById('energy-display').innerText = energy;
-            localStorage.setItem('sx_nrg', energy);
+        function refreshEnergy() {
+            document.getElementById('nrg-val').innerText = credits;
+            localStorage.setItem('studiox_nrg', credits);
         }
 
         function notify(msg) {
             const t = document.getElementById('toast');
             t.innerText = msg;
             t.classList.remove('hidden');
-            setTimeout(() => t.classList.add('hidden'), 3000);
+            setTimeout(() => { t.style.opacity = "1"; t.style.transform = "translate(-50%, -10px)"; }, 10);
+            setTimeout(() => { 
+                t.style.opacity = "0"; t.style.transform = "translate(-50%, 10px)";
+                setTimeout(() => t.classList.add('hidden'), 500);
+            }, 3000);
         }
 
-        function addCredit(amt, reason) {
-            energy = Math.min(100, energy + amt);
-            updateUI();
-            notify(`${reason}: +${amt}⚡`);
-            if(reason === 'Bonus Video') window.open('https://google.com', '_blank');
+        // GESTIONE LOGIN GOOGLE
+        function handleCredentialResponse(response) {
+            const base64Url = response.credential.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const user = JSON.parse(window.atob(base64));
+            
+            document.getElementById('profile-box').classList.remove('hidden');
+            document.getElementById('user-name').innerText = user.name;
+            document.getElementById('user-pic').src = user.picture;
+            
+            notify(`Benvenuto, ${user.given_name}!`);
+        }
+
+        function reward(val, type) {
+            credits = Math.min(100, credits + val);
+            refreshEnergy();
+            notify(`+${val}⚡ Energia: Premio ${type}`);
+            if(type === 'Bonus') window.open('https://google.com', '_blank');
         }
 
         function copyToClipboard() {
             const text = document.getElementById('result-text').innerText;
             navigator.clipboard.writeText(text);
-            notify("Copiato!");
+            notify("Copiato negli appunti!");
         }
 
         async function runGeneration() {
-            const input = document.getElementById('user-input').value;
-            const btnLabel = document.getElementById('btn-label');
-            const loader = document.getElementById('btn-loader');
-            const resultArea = document.getElementById('result-area');
+            const prompt = document.getElementById('prompt-input').value;
+            const btn = document.getElementById('gen-btn');
+            const loader = document.getElementById('loader');
+            const txt = document.getElementById('btn-text');
 
-            if (!input) return notify("Scrivi qualcosa!");
-            if (energy < 10) return notify("Energia bassa!");
+            if (!prompt) return notify("Scrivi un argomento!");
+            if (credits < 10) return notify("Energia esaurita!");
 
-            // UI Loading
-            document.getElementById('gen-btn').disabled = true;
-            btnLabel.innerText = "L'AI sta creando...";
+            btn.disabled = true;
             loader.classList.remove('hidden');
+            txt.innerText = "L'AI sta scrivendo...";
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${API_KEY}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Sei un esperto di social media marketing. Crea un post virale con emoji e hashtag strategici per: ${input}` }] }]
+                        contents: [{ parts: [{ text: `Sei un social media manager esperto. Crea un post social virale, creativo e accattivante in italiano su: ${prompt}. Usa hashtag e emoji.` }] }]
                     })
                 });
 
                 const data = await response.json();
-                const text = data.candidates[0].content.parts[0].text;
-
-                document.getElementById('result-text').innerText = text;
-                resultArea.classList.remove('hidden');
+                const output = data.candidates[0].content.parts[0].text;
                 
-                energy -= 10;
-                updateUI();
+                document.getElementById('result-text').innerText = output;
+                document.getElementById('result-box').classList.remove('hidden');
+                
+                credits -= 10;
+                refreshEnergy();
                 notify("Post creato! -10⚡");
             } catch (err) {
-                notify("Errore: Riprova più tardi");
-                console.error(err);
+                notify("Errore di rete. Riprova.");
             } finally {
-                document.getElementById('gen-btn').disabled = false;
-                btnLabel.innerText = "Genera Post Virale";
+                btn.disabled = false;
                 loader.classList.add('hidden');
+                txt.innerText = "Genera Post Virale";
             }
         }
 
-        updateUI();
+        refreshEnergy();
     </script>
 </body>
 </html>
