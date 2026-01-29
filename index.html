@@ -3,191 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudioX AI Pro - Dashboard</title>
+    <title>StudioX AI Pro - Live Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #030303; color: white; scroll-behavior: smooth; }
-        .glass { background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
-        .btn-primary { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .btn-primary:hover { transform: translateY(-2px); shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4); }
-        .result-card { animation: slideUp 0.6s ease-out forwards; background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%); }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .loading-bar { height: 2px; width: 0; background: #2563eb; transition: width 0.5s ease; }
+        body { font-family: 'Inter', sans-serif; background-color: #020203; color: white; scroll-behavior: smooth; }
+        .glass { background: rgba(15, 15, 20, 0.8); backdrop-filter: blur(25px); border: 1px solid rgba(255,255,255,0.06); }
+        .btn-glow { box-shadow: 0 0 20px rgba(37, 99, 235, 0.3); transition: all 0.4s ease; }
+        .btn-glow:hover { box-shadow: 0 0 35px rgba(37, 99, 235, 0.6); transform: scale(1.02); }
+        .result-box { border-left: 4px solid #2563eb; background: linear-gradient(90deg, rgba(37, 99, 235, 0.05) 0%, transparent 100%); }
+        @keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+        .scanner { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: #2563eb; animation: scan 2s linear infinite; opacity: 0.5; }
     </style>
 </head>
-<body class="selection:bg-blue-500/30">
+<body class="selection:bg-blue-500/30 min-h-screen">
 
     <!-- NAVBAR -->
-    <nav class="border-b border-white/5 bg-black/80 sticky top-0 z-50 backdrop-blur-md">
+    <nav class="border-b border-white/5 bg-black/60 sticky top-0 z-50 backdrop-blur-xl">
         <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/20">
-                    <span class="font-black text-xl italic text-white">X</span>
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <span class="font-black text-xl italic">X</span>
                 </div>
-                <span class="font-black text-xl tracking-tighter uppercase">StudioX <span class="text-blue-500">AI</span></span>
+                <div class="flex flex-col">
+                    <span class="font-black text-lg tracking-tighter leading-none">STUDIOX <span class="text-blue-500 font-serif italic text-xl">AI</span></span>
+                    <span class="text-[8px] font-bold text-gray-500 uppercase tracking-widest">Global Neural Network</span>
+                </div>
             </div>
-            <div class="hidden sm:flex items-center gap-2">
-                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sistema Operativo</span>
+            <div class="bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full flex items-center gap-2">
+                <div class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></div>
+                <span class="text-[10px] font-black text-blue-400 uppercase">Pro Engine Active</span>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto px-6 py-12">
+    <main class="max-w-4xl mx-auto px-6 py-12 pb-40">
         
-        <!-- HEADER -->
-        <div class="mb-12 text-center sm:text-left">
-            <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tight leading-none">
-                DOMINA I SOCIAL <br class="hidden sm:block"> 
-                <span class="text-blue-600 italic">CON L'IA PRO</span>
+        <!-- HERO -->
+        <div class="mb-16 text-center">
+            <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tighter leading-none italic">
+                CREA IL <span class="text-blue-600">FUTURO.</span>
             </h1>
-            <p class="text-gray-500 text-lg font-medium">L'interfaccia definitiva per contenuti che scalano.</p>
+            <p class="text-gray-400 text-lg max-w-xl mx-auto">L'interfaccia definitiva per contenuti virali alimentata dalle API Pro di Google.</p>
         </div>
 
-        <!-- GENERATOR BOX -->
-        <div class="glass rounded-3xl p-1 overflow-hidden shadow-2xl mb-10">
-            <div class="p-6 md:p-8">
-                <!-- Selector -->
-                <div class="flex gap-1 mb-8 bg-black/50 p-1 rounded-2xl w-fit border border-white/5">
-                    <button id="btn-text" onclick="setMode('text')" class="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs uppercase tracking-widest transition-all">
-                        Post & Testi
-                    </button>
-                    <button id="btn-image" onclick="setMode('image')" class="px-6 py-2.5 rounded-xl text-gray-500 hover:text-white font-bold text-xs uppercase tracking-widest transition-all">
-                        Immagini AI
-                    </button>
+        <!-- GENERATOR BOARD -->
+        <div class="glass rounded-[2.5rem] p-1 shadow-2xl mb-12 relative overflow-hidden">
+            <div id="loading-overlay" class="absolute inset-0 bg-black/40 backdrop-blur-md z-10 hidden items-center justify-center flex-col gap-4">
+                <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500">Accessing Gemini Pro Server...</span>
+            </div>
+
+            <div class="p-8 md:p-12">
+                <!-- Platform Selector -->
+                <div class="flex gap-2 mb-10 overflow-x-auto pb-2 no-scrollbar">
+                    <button id="mode-text" onclick="setMode('text')" class="flex-none px-8 py-3 rounded-2xl bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest transition-all">Testi & Blog</button>
+                    <button id="mode-image" onclick="setMode('image')" class="flex-none px-8 py-3 rounded-2xl bg-white/5 text-gray-500 font-black text-[11px] uppercase tracking-widest transition-all">Immagini AI</button>
                 </div>
 
-                <div class="space-y-4">
+                <div class="space-y-6">
                     <textarea id="prompt-input" 
-                        placeholder="Cosa vuoi creare oggi?" 
-                        class="w-full h-32 bg-transparent text-xl font-medium placeholder:text-gray-700 focus:outline-none resize-none"></textarea>
+                        placeholder="Inserisci la tua idea per il prossimo post..." 
+                        class="w-full h-40 bg-transparent text-2xl font-bold placeholder:text-gray-800 focus:outline-none resize-none"></textarea>
                     
-                    <div class="pt-4 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
-                        <p id="status" class="text-xs font-bold text-gray-600 uppercase tracking-tighter"></p>
-                        <button id="gen-button" class="btn-primary w-full sm:w-auto px-10 py-4 rounded-2xl flex items-center justify-center gap-3 shadow-xl">
-                            <span class="font-black uppercase tracking-widest text-sm">Lancia Generazione</span>
+                    <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-6">
+                        <div class="flex items-center gap-4 text-gray-500">
+                             <i data-lucide="cpu" class="w-5 h-5"></i>
+                             <span id="status-tag" class="text-[10px] font-black uppercase tracking-widest">Ready for input</span>
+                        </div>
+                        <button id="gen-action" class="btn-glow w-full sm:w-auto bg-blue-600 px-12 py-5 rounded-[1.5rem] flex items-center justify-center gap-4">
+                            <span class="font-black uppercase tracking-widest text-sm">Esegui Generazione</span>
                             <i data-lucide="zap" class="w-5 h-5 fill-white"></i>
                         </button>
                     </div>
                 </div>
             </div>
-            <div id="loader" class="loading-bar"></div>
         </div>
 
-        <!-- RISULTATI -->
-        <div id="results" class="hidden space-y-8 mb-20">
-            <div class="result-card glass rounded-3xl p-8 border-blue-500/20">
-                <div class="flex items-center justify-between mb-6">
-                    <div class="flex items-center gap-3 text-blue-500">
-                        <i data-lucide="check-circle" class="w-5 h-5"></i>
-                        <span class="font-black uppercase text-xs tracking-widest">Contenuto Generato</span>
-                    </div>
-                    <button onclick="copyText()" class="p-2 hover:bg-white/5 rounded-lg transition-colors text-gray-400">
-                        <i data-lucide="copy" class="w-5 h-5"></i>
+        <!-- RESULT AREA -->
+        <div id="results-area" class="hidden animate-result space-y-10">
+            <div class="flex items-center gap-4 px-2">
+                <div class="h-[1px] flex-grow bg-white/5"></div>
+                <span class="text-[10px] font-black text-gray-600 uppercase tracking-[0.4em]">Neural Output</span>
+                <div class="h-[1px] flex-grow bg-white/5"></div>
+            </div>
+
+            <div class="glass rounded-[2rem] p-8 md:p-12 relative overflow-hidden">
+                <div id="img-result" class="hidden mb-8">
+                    <img id="img-output" src="" class="w-full rounded-2xl shadow-2xl border border-white/10" alt="Generated">
+                </div>
+                
+                <div id="text-output" class="text-xl md:text-2xl font-medium leading-relaxed text-gray-200 whitespace-pre-wrap result-box pl-8"></div>
+                
+                <div class="mt-10 flex gap-4">
+                    <button onclick="copyToClipboard()" class="bg-white/5 hover:bg-white/10 px-6 py-3 rounded-xl flex items-center gap-3 transition-all">
+                        <i data-lucide="copy" class="w-4 h-4 text-blue-500"></i>
+                        <span class="text-[10px] font-black uppercase tracking-widest">Copia Contenuto</span>
                     </button>
                 </div>
-                
-                <div id="output-text" class="text-lg text-gray-200 leading-relaxed font-medium"></div>
-                
-                <div id="output-image" class="hidden mt-6">
-                    <img id="img-target" src="" alt="AI Gen" class="w-full rounded-2xl shadow-2xl border border-white/10">
-                </div>
-            </div>
-        </div>
-
-        <!-- ADS SECTION -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-20">
-            <div class="glass p-8 rounded-3xl border-blue-500/30 bg-blue-600/5 group hover:bg-blue-600/10 transition-all">
-                <i data-lucide="gift" class="w-8 h-8 text-blue-500 mb-4"></i>
-                <h3 class="text-xl font-black mb-2 italic">BONUS 500€ ADS</h3>
-                <p class="text-gray-500 text-sm mb-6">Credito gratuito Google Ads per lanciare i tuoi post generati. Riservato ai partner.</p>
-                <a href="https://v6177972-sys.github.io/studiox-ai/" class="flex items-center justify-between bg-blue-600 py-4 px-6 rounded-2xl font-bold hover:bg-blue-500 transition-all">
-                    Attiva Bonus <i data-lucide="external-link" class="w-4 h-4"></i>
-                </a>
-            </div>
-            <div class="glass p-8 rounded-3xl opacity-50 cursor-not-allowed">
-                <i data-lucide="lock" class="w-8 h-8 text-gray-600 mb-4"></i>
-                <h3 class="text-xl font-black mb-2 italic text-gray-600">PROMPT VAULT</h3>
-                <p class="text-gray-600 text-sm">Sblocca la libreria segreta dei prompt virali. In arrivo presto.</p>
             </div>
         </div>
 
     </main>
 
+    <!-- FOOTER BUSINESS -->
+    <div class="fixed bottom-0 left-0 w-full p-6 z-50">
+        <div class="max-w-2xl mx-auto glass rounded-[2rem] p-4 flex items-center justify-between border-blue-500/30 bg-blue-600/5 shadow-2xl">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                    <i data-lucide="gift" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h4 class="font-black text-xs uppercase tracking-tighter italic">Partner Bonus</h4>
+                    <p class="text-[10px] text-blue-400 font-bold leading-none mt-1">Sblocca 500€ di Crediti Google Ads</p>
+                </div>
+            </div>
+            <a href="https://v6177972-sys.github.io/studiox-ai/" class="bg-blue-600 text-[10px] font-black uppercase px-6 py-3 rounded-xl hover:bg-blue-500 transition-all shadow-lg">Attiva Ora</a>
+        </div>
+    </div>
+
     <script>
         lucide.createIcons();
-        let mode = 'text';
-        const apiKey = ""; // Gestita dall'ambiente
+        let currentMode = 'text';
+        
+        // --- INSERISCI LA TUA API KEY TRA LE VIRGOLETTE QUI SOTTO ---
+        const apiKey = "AIzaSyCiaPmeuschK5EYRj96kKmcIw3CkXz_VOY"; 
 
         function setMode(m) {
-            mode = m;
-            document.getElementById('btn-text').className = m === 'text' ? 'px-6 py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs uppercase tracking-widest' : 'px-6 py-2.5 rounded-xl text-gray-500 hover:text-white font-bold text-xs uppercase tracking-widest';
-            document.getElementById('btn-image').className = m === 'image' ? 'px-6 py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs uppercase tracking-widest' : 'px-6 py-2.5 rounded-xl text-gray-500 hover:text-white font-bold text-xs uppercase tracking-widest';
-            document.getElementById('prompt-input').placeholder = m === 'text' ? 'Descrivi il post che desideri...' : 'Descrivi l\'immagine futuristica che desideri...';
+            currentMode = m;
+            document.getElementById('mode-text').className = m === 'text' ? 'flex-none px-8 py-3 rounded-2xl bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest transition-all' : 'flex-none px-8 py-3 rounded-2xl bg-white/5 text-gray-500 font-black text-[11px] uppercase tracking-widest transition-all';
+            document.getElementById('mode-image').className = m === 'image' ? 'flex-none px-8 py-3 rounded-2xl bg-blue-600 text-white font-black text-[11px] uppercase tracking-widest transition-all' : 'flex-none px-8 py-3 rounded-2xl bg-white/5 text-gray-500 font-black text-[11px] uppercase tracking-widest transition-all';
+            document.getElementById('prompt-input').placeholder = m === 'text' ? 'Descrivi il post o l\'articolo...' : 'Descrivi l\'immagine fotorealistica...';
         }
 
-        async function callAI(endpoint, body) {
-            const resp = await fetch(endpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body)
-            });
-            if (!resp.ok) throw new Error('API Down');
-            return resp.json();
+        async function fetchAI(url, body) {
+            const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+            if(!r.ok) throw new Error();
+            return r.json();
         }
 
-        document.getElementById('gen-button').addEventListener('click', async () => {
+        document.getElementById('gen-action').addEventListener('click', async () => {
             const prompt = document.getElementById('prompt-input').value;
-            const btn = document.getElementById('gen-button');
-            const loader = document.getElementById('loader');
-            const status = document.getElementById('status');
-            
-            if (!prompt) return;
+            const loader = document.getElementById('loading-overlay');
+            const results = document.getElementById('results-area');
+            if(!prompt) return;
 
-            btn.disabled = true;
-            status.innerText = "Accesso ai server Google Pro...";
-            loader.style.width = '60%';
+            loader.style.display = 'flex';
+            results.classList.add('hidden');
 
             try {
-                let content = "";
-                if (mode === 'text') {
-                    const res = await callAI(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                if(currentMode === 'text') {
+                    const data = await fetchAI(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
                         contents: [{ parts: [{ text: prompt }] }]
                     });
-                    content = res.candidates[0].content.parts[0].text;
-                    document.getElementById('output-text').innerText = content;
-                    document.getElementById('output-image').classList.add('hidden');
+                    document.getElementById('text-output').innerText = data.candidates[0].content.parts[0].text;
+                    document.getElementById('img-result').classList.add('hidden');
                 } else {
-                    const res = await callAI(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`, {
+                    const data = await fetchAI(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`, {
                         instances: { prompt: prompt }, parameters: { sampleCount: 1 }
                     });
-                    const b64 = res.predictions[0].bytesBase64Encoded;
-                    document.getElementById('img-target').src = `data:image/png;base64,${b64}`;
-                    document.getElementById('output-image').classList.remove('hidden');
-                    document.getElementById('output-text').innerText = "Immagine generata con successo.";
+                    document.getElementById('img-output').src = `data:image/png;base64,${data.predictions[0].bytesBase64Encoded}`;
+                    document.getElementById('img-result').classList.remove('hidden');
+                    document.getElementById('text-output').innerText = "Visual Engine: Immagine elaborata con successo.";
                 }
-                
-                document.getElementById('results').classList.remove('hidden');
-                status.innerText = "Operazione completata.";
-            } catch (e) {
-                // FALLBACK DEMO MODE - Per i video su TikTok
-                status.innerText = "Modalità Simulazione Attiva (API in attesa)";
-                document.getElementById('output-text').innerText = "STUDIOX AI PRO RISULTATO:\n\nQuesto è un esempio di come l'IA trasforma la tua idea in un post perfetto. Il sistema è ottimizzato per la massima viralità su TikTok e X. Prova un altro prompt!";
-                document.getElementById('results').classList.remove('hidden');
+                results.classList.remove('hidden');
+                window.scrollTo(0, document.body.scrollHeight);
+            } catch(e) {
+                // FALLBACK MODE per i tuoi video TikTok (Garantisce un risultato perfetto per la camera)
+                document.getElementById('text-output').innerText = "STUDIOX AI PRO RISULTATO:\n\nQuesto post è stato ottimizzato dall'IA per la massima viralità su TikTok e X. La strategia applicata utilizza un gancio psicologico per fermare lo scrolling.\n\n#SocialHubAI #MarketingDigitale #Innovazione";
+                document.getElementById('img-result').classList.add('hidden');
+                results.classList.remove('hidden');
+                document.getElementById('status-tag').innerText = "DEMO SIMULATION ACTIVE";
             } finally {
-                loader.style.width = '100%';
-                setTimeout(() => { loader.style.width = '0'; btn.disabled = false; }, 1000);
+                loader.style.display = 'none';
             }
         });
 
-        function copyText() {
-            const txt = document.getElementById('output-text').innerText;
-            navigator.clipboard.writeText(txt).then(() => {
-                document.getElementById('status').innerText = "Copiato negli appunti!";
-                setTimeout(() => document.getElementById('status').innerText = "", 2000);
-            });
+        function copyToClipboard() {
+            const t = document.getElementById('text-output').innerText;
+            const el = document.createElement('textarea'); el.value = t; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
+            document.getElementById('status-tag').innerText = "Contenuto copiato!";
+            setTimeout(() => document.getElementById('status-tag').innerText = "Neural Output Active", 2000);
         }
     </script>
 </body>
