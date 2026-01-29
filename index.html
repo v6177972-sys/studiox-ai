@@ -3,79 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudioX AI Pro - Social Marketing</title>
+    <title>StudioX AI Pro - Marketing Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Firebase SDK Compat -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020203; color: white; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); }
-        .btn-blue { background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); transition: all 0.3s ease; }
-        .btn-blue:active { transform: scale(0.95); }
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700;900&display=swap');
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #020203; color: white; overflow-x: hidden; }
+        .glass { background: rgba(15, 15, 20, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+        .btn-action { background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); transition: all 0.3s; }
+        .btn-action:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -5px rgba(37, 99, 235, 0.4); }
         .shimmer { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); background-size: 200% 100%; animation: shim 2s infinite; }
         @keyframes shim { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
     </style>
 </head>
-<body class="min-h-screen pb-32">
+<body class="min-h-screen pb-40">
 
     <!-- NAVBAR -->
-    <nav class="p-5 border-b border-white/10 flex justify-between items-center sticky top-0 bg-black/80 backdrop-blur-md z-50">
+    <nav class="p-5 border-b border-white/5 flex justify-between items-center sticky top-0 bg-black/80 backdrop-blur-md z-50">
         <div class="flex items-center gap-2">
-            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-extrabold text-xl shadow-lg">X</div>
-            <h1 class="font-bold text-lg tracking-tighter uppercase italic">StudioX <span class="text-blue-500 font-serif lowercase text-xl">ai</span></h1>
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-extrabold text-xl shadow-lg shadow-blue-900/40">X</div>
+            <h1 class="font-bold text-lg tracking-tighter uppercase italic text-white leading-none">StudioX <span class="text-blue-500 font-serif lowercase text-xl">ai</span></h1>
         </div>
-        <button onclick="configKey()" class="p-2.5 bg-white/5 rounded-xl border border-white/10 text-yellow-500 active:bg-white/20">
-            <i data-lucide="key" class="w-5 h-5"></i>
-        </button>
+        <div class="flex items-center gap-4">
+            <button onclick="toggleAdmin()" class="p-2.5 bg-white/5 rounded-xl border border-white/10 text-gray-500 hover:text-blue-400 transition-all">
+                <i data-lucide="shield-check" id="shield-icon"></i>
+            </button>
+            <div id="connection-dot" class="w-2 h-2 bg-red-500 rounded-full transition-all duration-1000"></div>
+        </div>
     </nav>
 
-    <main class="max-w-md mx-auto p-6 pt-12 space-y-10">
+    <main class="max-w-2xl mx-auto p-6 pt-12 space-y-10">
         
-        <div class="text-center space-y-4">
-            <h2 class="text-5xl font-black tracking-tighter leading-none italic uppercase">
-                CREA IL <br><span class="text-blue-600 underline">VIRALE.</span>
-            </h2>
-            <p class="text-gray-500 text-lg font-medium italic leading-tight">Il tuo marketing neurale pronto all'uso.</p>
+        <!-- ADMIN PANEL -->
+        <div id="admin-panel" class="hidden p-8 glass rounded-[2.5rem] border-blue-500/20 animate-in fade-in slide-in-from-top-4">
+            <h3 class="text-xs font-black uppercase text-blue-400 mb-6 tracking-[0.2em] flex items-center gap-2">
+                <i data-lucide="key" class="w-4 h-4"></i> Cloud Key Config
+            </h3>
+            <div class="space-y-4">
+                <p class="text-[11px] text-gray-400 italic">Vito: Incolla qui la chiave API di Gemini. Verrà salvata in Firebase.</p>
+                <input type="password" id="api-key-input" placeholder="AIzaSy..." 
+                    class="w-full bg-black/40 border border-white/10 rounded-2xl p-4 text-sm outline-none text-white focus:ring-1 focus:ring-blue-500">
+                <button onclick="saveKeyToFirebase()" class="w-full btn-action py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-white">
+                    Sincronizza Motore Cloud
+                </button>
+            </div>
         </div>
 
-        <!-- GENERATORE -->
-        <div class="glass rounded-[2.5rem] p-1 shadow-2xl overflow-hidden border-white/5">
-            <div class="p-8 space-y-8">
+        <div class="text-center space-y-4">
+            <h2 class="text-5xl md:text-6xl font-black tracking-tighter leading-none italic uppercase">
+                DOMINA IL <br><span class="text-blue-600">FUTURO.</span>
+            </h2>
+            <p class="text-gray-500 text-lg font-medium italic">Marketing neurale ad alta conversione.</p>
+        </div>
+
+        <!-- GENERATOR -->
+        <div class="glass rounded-[3rem] p-1 shadow-2xl">
+            <div class="p-8 md:p-12 space-y-8">
                 <div class="flex gap-2 p-1 bg-black/40 rounded-2xl w-fit border border-white/5">
-                    <button id="mode-text" onclick="setMode('text')" class="px-7 py-3 rounded-xl bg-blue-600 text-white font-black text-[10px] uppercase shadow-lg transition-all">Genera Post</button>
-                    <button id="mode-image" onclick="setMode('image')" class="px-7 py-3 rounded-xl text-gray-500 font-black text-[10px] uppercase transition-all">Grafica Ads</button>
+                    <button id="mode-text" onclick="setMode('text')" class="px-8 py-3 rounded-xl bg-blue-600 text-white font-black text-[10px] uppercase shadow-lg transition-all">Post Marketing</button>
+                    <button id="mode-image" onclick="setMode('image')" class="px-8 py-3 rounded-xl text-gray-500 font-black text-[10px] uppercase transition-all">Grafica Ads</button>
                 </div>
 
-                <textarea id="promptInput" placeholder="Cosa vendiamo oggi?" 
+                <textarea id="prompt-input" placeholder="Cosa vendiamo oggi?" 
                     class="w-full h-32 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-900 text-white"></textarea>
                 
                 <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-6">
                     <div class="flex items-center gap-3">
                         <i data-lucide="cpu" class="w-5 h-5 text-blue-500"></i>
-                        <span id="status" class="text-[10px] font-bold text-gray-600 uppercase tracking-widest italic">Sistema Pronto</span>
+                        <span id="status-text" class="text-[10px] font-bold text-gray-600 uppercase tracking-widest italic">Awaiting Signal</span>
                     </div>
-                    <button id="genBtn" onclick="handleGenerate()" class="btn-blue w-full sm:w-auto px-10 py-5 rounded-[1.5rem] font-black flex items-center justify-center gap-4 shadow-xl">
-                        <span id="btnLabel" class="uppercase tracking-widest text-sm text-white font-black">Lancia AI</span>
-                        <i data-lucide="zap" class="w-5 h-5 fill-white"></i>
+                    <button id="main-btn" class="btn-action w-full sm:w-auto px-12 py-5 rounded-[2rem] font-black flex items-center justify-center gap-4 active:scale-95 transition-all">
+                        <span class="uppercase tracking-widest text-sm text-white font-black">Lancia AI</span>
+                        <i data-lucide="zap" class="w-5 h-5 fill-white text-white"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- RISULTATI -->
-        <div id="results" class="hidden space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-500">
-            <div class="glass rounded-[2rem] p-8 border-white/5 relative">
-                <div id="textResult" class="text-xl font-medium leading-relaxed text-gray-100 whitespace-pre-wrap border-l-4 border-blue-600 pl-8 italic mb-10"></div>
+        <!-- OUTPUT -->
+        <div id="output-area" class="hidden space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700 pb-20">
+            <div class="glass rounded-[2.5rem] p-8 md:p-12 border border-white/5 relative overflow-hidden">
+                <div id="text-result" class="text-xl md:text-2xl font-medium leading-relaxed text-gray-100 whitespace-pre-wrap border-l-4 border-blue-600 pl-8 italic mb-10"></div>
                 
-                <div id="imgContainer" class="hidden mt-10">
-                    <div id="imgLoader" class="w-full aspect-square rounded-3xl shimmer hidden flex flex-col items-center justify-center border border-white/5">
+                <div id="image-container" class="hidden mt-10">
+                    <div id="loader-img" class="w-full aspect-square rounded-3xl shimmer hidden flex flex-col items-center justify-center border border-white/5">
                         <i data-lucide="palette" class="w-8 h-8 text-blue-500 mb-2 animate-bounce"></i>
-                        <span class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500">Rendering...</span>
+                        <span class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500">Creative Rendering...</span>
                     </div>
-                    <img id="outputImg" src="" class="w-full rounded-3xl border border-white/10 shadow-2xl" alt="AI Visual">
+                    <img id="output-img" src="" class="w-full rounded-3xl border border-white/10 shadow-2xl" alt="AI Production">
                 </div>
 
-                <button onclick="copyContent()" class="mt-8 flex items-center gap-3 bg-white/5 hover:bg-white/10 px-8 py-4 rounded-2xl transition-all border border-white/10">
+                <button onclick="copyToClipboard()" class="mt-8 flex items-center gap-3 bg-white/5 hover:bg-white/10 px-8 py-4 rounded-2xl transition-all border border-white/10">
                     <i data-lucide="copy" class="w-5 h-5 text-blue-500"></i>
                     <span class="text-[10px] font-black uppercase tracking-widest">Copia Risultato</span>
                 </button>
@@ -85,105 +107,142 @@
 
     <!-- FOOTER CTA -->
     <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50">
-        <div class="glass rounded-[2rem] p-4 flex items-center justify-between border-blue-500/30 bg-blue-900/10 shadow-2xl backdrop-blur-xl">
-            <div class="flex items-center gap-4 pl-2">
-                <div class="w-11 h-11 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg"><i data-lucide="gift" class="w-5 h-5"></i></div>
-                <div class="text-left leading-tight">
-                    <p class="text-[9px] font-black text-blue-400 uppercase italic leading-none tracking-tighter">Partner Bonus</p>
-                    <h4 class="font-bold text-sm text-white mt-1">Sblocca 500€ Ads</h4>
+        <div class="glass rounded-[2rem] p-4 flex items-center justify-between border-blue-500/30 bg-blue-900/10 shadow-2xl">
+            <div class="flex items-center gap-4 pl-2 text-left">
+                <div class="w-11 h-11 bg-blue-600 rounded-xl flex items-center justify-center text-white">
+                    <i data-lucide="gift" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <p class="text-[9px] font-black text-blue-400 uppercase leading-none tracking-tighter italic">Partner Bonus</p>
+                    <h4 class="font-bold text-sm text-white mt-1 leading-none">Sblocca 500€ Ads</h4>
                 </div>
             </div>
-            <a href="https://v6177972-sys.github.io/studiox-ai/" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg shadow-blue-600/20 active:scale-95 transition-all">Sblocca</a>
+            <a href="https://v6177972-sys.github.io/studiox-ai/" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase shadow-lg shadow-blue-600/20 text-white">Attiva</a>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
         let mode = 'text';
-        let userKey = localStorage.getItem('studiox_master_key') || "";
+        let cloudApiKey = "";
+        const appId = "studiox-ai-vito";
 
-        function configKey() {
-            const k = prompt("Incolla qui la tua API Key di Google (AIzaSy...):", userKey);
-            if(k) {
-                userKey = k;
-                localStorage.setItem('studiox_master_key', k);
-                alert("✅ Chiave salvata sul tuo telefono!");
-            }
-        }
+        // --- CONFIGURAZIONE FIREBASE (studiox-ai-pro) ---
+        const fbConfig = {
+            apiKey: "AIzaSyBxhw3d0MkqgM0zvQUMk_IdWtzDvSHg1x0",
+            authDomain: "studiox-ai-pro.firebaseapp.com",
+            projectId: "studiox-ai-pro",
+            storageBucket: "studiox-ai-pro.firebasestorage.app",
+            messagingSenderId: "381045649003",
+            appId: "1:381045649003:web:6b27a3592da5fc03d10b2e"
+        };
 
+        firebase.initializeApp(fbConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // CONNESSIONE DATABASE
+        auth.signInAnonymously().then(() => {
+            document.getElementById('connection-dot').classList.replace('bg-red-500', 'bg-green-500');
+            // Leggi dal percorso obbligatorio /artifacts/{appId}/public/data/config
+            db.collection('artifacts').doc(appId).collection('public').doc('data').collection('config').doc('main').onSnapshot((doc) => {
+                if(doc.exists) {
+                    cloudApiKey = doc.data().geminiKey;
+                    document.getElementById('shield-icon').classList.add('text-green-500');
+                    document.getElementById('status-text').innerText = "Cloud Engine Synchronized";
+                } else {
+                    document.getElementById('status-text').innerText = "Setup Required";
+                }
+            });
+        }).catch(e => console.error(e));
+
+        function toggleAdmin() { document.getElementById('admin-panel').classList.toggle('hidden'); }
         function setMode(m) {
             mode = m;
             document.getElementById('mode-text').className = m === 'text' ? 'px-8 py-3 rounded-xl bg-blue-600 text-white font-black text-[10px] uppercase shadow-lg transition-all' : 'px-8 py-3 rounded-xl text-gray-500 font-black text-[10px] uppercase transition-all';
             document.getElementById('mode-image').className = m === 'image' ? 'px-8 py-3 rounded-xl bg-blue-600 text-white font-black text-[10px] uppercase shadow-lg transition-all' : 'px-8 py-3 rounded-xl text-gray-500 font-black text-[10px] uppercase transition-all';
         }
 
-        async function handleGenerate() {
-            const promptInput = document.getElementById('promptInput').value;
-            if(!promptInput) return;
-            if(!userKey) { configKey(); return; }
+        function saveKeyToFirebase() {
+            const key = document.getElementById('api-key-input').value;
+            if(!key) return;
+            // Salva nel percorso obbligatorio
+            db.collection('artifacts').doc(appId).collection('public').doc('data').collection('config').doc('main').set({ geminiKey: key }).then(() => {
+                alert("✅ Cloud Engine Attivo! Ora l'app funzionerà per tutti i visitatori.");
+                toggleAdmin();
+            }).catch(e => {
+                console.error(e);
+                alert("❌ Errore permessi. Vai su Firebase Firestore -> Regole e metti 'allow read, write: if true;'");
+            });
+        }
 
-            const btn = document.getElementById('genBtn');
-            const label = document.getElementById('btnLabel');
-            const status = document.getElementById('status');
-            const results = document.getElementById('results');
+        document.getElementById('main-btn').addEventListener('click', async () => {
+            const prompt = document.getElementById('prompt-input').value;
+            const btn = document.getElementById('main-btn');
+            const status = document.getElementById('status-text');
+            const outputArea = document.getElementById('output-area');
+
+            if(!prompt || !cloudApiKey) {
+                if(!cloudApiKey) alert("Vito: Clicca sullo scudo e salva la chiave Gemini!");
+                return;
+            }
 
             btn.disabled = true;
-            label.innerText = "ELABORAZIONE...";
-            status.innerText = "Connessione Nucleo...";
-            results.classList.add('hidden');
+            btn.innerHTML = '<div class="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>';
+            status.innerText = "Processing AI Logic...";
 
             try {
                 if(mode === 'text') {
-                    // Gemini 1.5 Flash (Super stabile per post marketing)
-                    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${userKey}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ contents: [{ parts: [{ text: "Sei un esperto SMM Pro. Genera un post virale con hook, corpo e hashtag per: " + promptInput }] }] })
-                    });
-                    const d = await r.json();
-                    if(d.error) throw new Error(d.error.message);
-                    document.getElementById('textResult').innerText = d.candidates[0].content.parts[0].text;
-                    document.getElementById('imgContainer').classList.add('hidden');
-                } else {
-                    document.getElementById('imgContainer').classList.remove('hidden');
-                    document.getElementById('imgLoader').classList.remove('hidden');
-                    document.getElementById('outputImg').classList.add('hidden');
-                    document.getElementById('textResult').innerText = "Generazione grafica in corso...";
-
-                    // Imagen 3.0 (Il modello più compatibile in assoluto)
-                    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key=${userKey}`, {
+                    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${cloudApiKey}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            instances: [{ prompt: "Professional advertising photography, cinematic lighting, for: " + promptInput }],
-                            parameters: { sampleCount: 1 }
+                            contents: [{ parts: [{ text: "Sei un esperto SMM. Genera un post virale per: " + prompt }] }]
+                        })
+                    });
+                    const d = await r.json();
+                    if(d.error) throw new Error(d.error.message);
+                    document.getElementById('text-result').innerText = d.candidates[0].content.parts[0].text;
+                    document.getElementById('image-container').classList.add('hidden');
+                } else {
+                    document.getElementById('image-container').classList.remove('hidden');
+                    document.getElementById('loader-img').classList.remove('hidden');
+                    document.getElementById('output-img').classList.add('hidden');
+                    document.getElementById('text-result').innerText = "Generazione asset grafico...";
+
+                    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key=${cloudApiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            instances: [{ prompt: "High-end commercial photography for: " + prompt }], 
+                            parameters: { sampleCount: 1 } 
                         })
                     });
                     const d = await r.json();
                     if(d.error) throw new Error(d.error.message);
 
-                    document.getElementById('outputImg').src = `data:image/png;base64,${d.predictions[0].bytesBase64Encoded}`;
-                    document.getElementById('outputImg').classList.remove('hidden');
-                    document.getElementById('imgLoader').classList.add('hidden');
-                    document.getElementById('textResult').innerText = "Asset visivo completato.";
+                    document.getElementById('output-img').src = `data:image/png;base64,${d.predictions[0].bytesBase64Encoded}`;
+                    document.getElementById('output-img').classList.remove('hidden');
+                    document.getElementById('loader-img').classList.add('hidden');
+                    document.getElementById('text-result').innerText = "Visual Asset Sincronizzato.";
                 }
-                results.classList.remove('hidden');
-                status.innerText = "Operazione Sincronizzata";
+                outputArea.classList.remove('hidden');
+                status.innerText = "Sync Completed";
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             } catch (err) {
                 console.error(err);
-                alert("Errore: La tua chiave API non sembra valida per questo modello. Genera una nuova chiave su Google AI Studio (Progetto Default).");
-                status.innerText = "Connessione Fallita";
+                alert("Errore Tecnico: Verifica la chiave Gemini o le regole di Firebase.");
+                status.innerText = "Sync Error";
             } finally {
                 btn.disabled = false;
-                label.innerText = "LANCIA AI";
+                btn.innerHTML = '<span class="uppercase tracking-widest text-sm text-white font-black">Lancia AI</span><i data-lucide="zap" class="w-5 h-5 fill-white text-white"></i>';
                 lucide.createIcons();
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             }
-        }
+        });
 
-        function copyContent() {
-            navigator.clipboard.writeText(document.getElementById('textResult').innerText);
-            alert("Contenuto Copiato!");
+        function copyToClipboard() {
+            navigator.clipboard.writeText(document.getElementById('text-result').innerText);
+            alert("Copiato!");
         }
     </script>
 </body>
