@@ -1,178 +1,157 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Sparkles, 
-  Send, 
-  Zap, 
-  Layout, 
-  Image as ImageIcon, 
-  MessageSquare, 
-  ArrowRight, 
-  ShieldCheck, 
-  Gift,
-  ExternalLink,
-  ChevronRight,
-  MousePointer2
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudioX AI Pro - Generatore Virale</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; }
+        .glass { background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        .neon-border { position: relative; }
+        .neon-border::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; h: 1px;
+            background: linear-gradient(90deg, transparent, #2563eb, transparent);
+            opacity: 0.5;
+        }
+        .animate-pulse-slow { animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+    </style>
+</head>
+<body class="selection:bg-blue-500/30">
 
-const App = () => {
-  const [prompt, setPrompt] = useState('');
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [activeTab, setActiveTab] = useState('text');
-
-  const handleGenerate = () => {
-    if (!prompt) return;
-    setIsGenerating(true);
-    setTimeout(() => setIsGenerating(false), 2000);
-  };
-
-  return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-blue-500/30">
-      {/* --- NAVBAR --- */}
-      <nav className="border-b border-white/10 bg-black/50 backdrop-blur-xl sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.5)]">
-              <span className="font-bold text-xl">X</span>
+    <!-- NAVBAR -->
+    <nav class="border-b border-white/10 bg-black/50 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.5)]">
+                    <span class="font-bold text-xl text-white">X</span>
+                </div>
+                <span class="font-bold text-xl tracking-tight uppercase">StudioX <span class="text-blue-500">AI</span></span>
             </div>
-            <span className="font-bold text-xl tracking-tight hidden sm:block">STUDIOX <span className="text-blue-500">AI</span></span>
-          </div>
-          <div className="flex items-center gap-4">
-             <span className="bg-blue-500/10 text-blue-400 text-xs font-bold px-2 py-1 rounded-full border border-blue-500/20">PRO VERSION</span>
-          </div>
+            <div class="flex items-center gap-4">
+                <span class="bg-blue-500/10 text-blue-400 text-[10px] font-bold px-2 py-1 rounded-full border border-blue-500/20 uppercase">Pro Version 2.0</span>
+            </div>
         </div>
-      </nav>
+    </nav>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 md:py-16">
+    <main class="max-w-4xl mx-auto px-4 py-12 md:py-20">
         
-        {/* --- HERO SECTION --- */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-6 animate-pulse">
-            <Sparkles className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm text-gray-400 font-medium italic">Potenziato con Gemini 2.5 & Veo 3.1</span>
-          </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
-            Crea Contenuti Virali <br /> In Pochi Secondi.
-          </h1>
-          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            L'unica piattaforma AI che scrive i tuoi testi e genera le tue grafiche contemporaneamente. Smetti di pensare, inizia a postare.
-          </p>
+        <!-- HERO -->
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-6 animate-pulse-slow">
+                <i data-lucide="sparkles" class="w-4 h-4 text-yellow-400"></i>
+                <span class="text-sm text-gray-400 font-medium">Potenziato con Gemini 2.5 & Veo 3.1</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                Crea Contenuti Virali <br> 
+                <span class="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">In Pochi Secondi.</span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+                L'unica piattaforma AI che scrive i tuoi testi e genera le tue grafiche contemporaneamente. Smetti di pensare, inizia a postare.
+            </p>
         </div>
 
-        {/* --- MAIN INTERFACE --- */}
-        <div className="bg-[#0f0f0f] border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl mb-12 relative overflow-hidden group">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
-          
-          {/* Tab Selector */}
-          <div className="flex gap-2 mb-8 p-1 bg-black/40 rounded-xl w-fit">
-            <button 
-              onClick={() => setActiveTab('text')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${activeTab === 'text' ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-500 hover:text-white'}`}
-            >
-              <MessageSquare className="w-4 h-4" /> <span className="text-sm font-semibold">Post & Blog</span>
-            </button>
-            <button 
-              onClick={() => setActiveTab('image')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${activeTab === 'image' ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-500 hover:text-white'}`}
-            >
-              <ImageIcon className="w-4 h-4" /> <span className="text-sm font-semibold">Grafica AI</span>
-            </button>
-          </div>
-
-          <div className="space-y-6">
-            <div className="relative">
-              <textarea 
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                placeholder={activeTab === 'text' ? "Esempio: Scrivi un post motivazionale per LinkedIn su come l'IA cambierà il lavoro..." : "Esempio: Un logo minimalista blu neon per una startup tech..."}
-                className="w-full h-40 bg-black/40 border border-white/10 rounded-2xl p-5 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-gray-600 resize-none"
-              />
-              <div className="absolute bottom-4 right-4 flex items-center gap-3">
-                <span className="text-xs text-gray-500 hidden sm:block">Premi Ctrl + Invio</span>
-                <button 
-                  onClick={handleGenerate}
-                  disabled={isGenerating || !prompt}
-                  className={`p-3 rounded-xl transition-all ${isGenerating ? 'bg-gray-800' : 'bg-blue-600 hover:bg-blue-500 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(37,99,235,0.3)]'}`}
-                >
-                  {isGenerating ? (
-                    <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                  ) : (
-                    <Send className="w-6 h-6" />
-                  )}
+        <!-- INTERFACCIA -->
+        <div class="glass rounded-3xl p-6 md:p-10 shadow-2xl mb-12 neon-border">
+            <div class="flex gap-2 mb-8 p-1 bg-black/40 rounded-xl w-fit">
+                <button id="tab-text" class="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold text-sm transition-all shadow-lg flex items-center gap-2">
+                    <i data-lucide="message-square" class="w-4 h-4"></i> Post & Blog
                 </button>
-              </div>
+                <button id="tab-image" class="px-6 py-2 rounded-lg text-gray-500 hover:text-white font-semibold text-sm transition-all flex items-center gap-2">
+                    <i data-lucide="image" class="w-4 h-4"></i> Grafica AI
+                </button>
             </div>
-          </div>
+
+            <div class="relative">
+                <textarea id="prompt-input" 
+                    placeholder="Esempio: Scrivi un post motivazionale per LinkedIn su come l'IA cambierà il marketing..." 
+                    class="w-full h-48 bg-black/40 border border-white/10 rounded-2xl p-6 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-gray-600 resize-none"></textarea>
+                
+                <div class="absolute bottom-4 right-4 flex items-center gap-4">
+                    <button id="generate-btn" class="bg-blue-600 hover:bg-blue-500 p-4 rounded-xl transition-all hover:scale-105 active:scale-95 shadow-[0_0_25px_rgba(37,99,235,0.4)]">
+                        <i data-lucide="send" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
         </div>
 
-        {/* --- AFFILIATE / BONUS SECTION (THE MONEY MAKER) --- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-          
-          {/* Affiliazione 1: AdCreative (Placeholder) */}
-          <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 border border-blue-500/30 rounded-2xl p-6 relative group overflow-hidden">
-            <div className="absolute top-0 right-0 p-3">
-               <Gift className="w-6 h-6 text-blue-400" />
+        <!-- SEZIONE GUADAGNO (AFFILIAZIONE) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
+            <div class="bg-gradient-to-br from-blue-900/20 to-indigo-900/20 border border-blue-500/30 rounded-2xl p-8 relative overflow-hidden group">
+                <div class="absolute -top-4 -right-4 bg-blue-500/10 p-8 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-all"></div>
+                <i data-lucide="gift" class="w-10 h-10 text-blue-400 mb-4"></i>
+                <h3 class="text-2xl font-bold mb-2">Bonus 500€ Ads</h3>
+                <p class="text-gray-400 mb-8 text-sm">
+                    Ottieni credito gratuito per sponsorizzare i tuoi post su Google e scalare il tuo business AI.
+                </p>
+                <a href="https://v6177972-sys.github.io/studiox-ai/" target="_blank" class="flex items-center justify-between w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-6 rounded-xl transition-all">
+                    <span>Attiva Bonus Partner</span>
+                    <i data-lucide="external-link" class="w-5 h-5"></i>
+                </a>
             </div>
-            <h3 className="text-xl font-bold mb-2">Bonus 500€ Ads</h3>
-            <p className="text-sm text-gray-400 mb-6">
-              Ottieni credito gratuito per sponsorizzare i tuoi post su Google e scalare il tuo business.
-            </p>
-            <a 
-              href="#" /* Incolla qui il tuo link di affiliazione appena arriva */
-              className="flex items-center justify-between w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-xl transition-all group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]"
-            >
-              <span>Attiva Bonus</span>
-              <ExternalLink className="w-4 h-4" />
-            </a>
-            <p className="text-[10px] text-gray-600 mt-3 text-center uppercase tracking-widest">Offerta limitata partner StudioX</p>
-          </div>
 
-          {/* Affiliazione 2: Amazon/Altro (Placeholder) */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 group">
-            <h3 className="text-xl font-bold mb-2">Risorse Pro</h3>
-            <p className="text-sm text-gray-400 mb-6">
-              I migliori strumenti hardware e software selezionati dai nostri esperti per il tuo setup AI.
-            </p>
-            <button className="flex items-center justify-between w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-4 rounded-xl transition-all">
-              <span>Scopri Lista</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-8 group hover:border-white/20 transition-all">
+                <i data-lucide="zap" class="w-10 h-10 text-yellow-500 mb-4"></i>
+                <h3 class="text-2xl font-bold mb-2">Prompt Vault</h3>
+                <p class="text-gray-400 mb-8 text-sm">
+                    Accedi alla libreria segreta dei prompt che usiamo per rendere i contenuti virali.
+                </p>
+                <button class="flex items-center justify-between w-full bg-white/10 hover:bg-white/20 text-white font-bold py-4 px-6 rounded-xl transition-all cursor-not-allowed opacity-50">
+                    <span>In Arrivo...</span>
+                    <i data-lucide="lock" class="w-5 h-5"></i>
+                </button>
+            </div>
         </div>
 
-        {/* --- FEATURES GRID --- */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center border-t border-white/10 pt-16">
-          <div className="space-y-4">
-            <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center mx-auto">
-              <Zap className="w-6 h-6 text-yellow-500" />
+        <!-- FOOTER INFO -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-12 text-center border-t border-white/10 pt-16 mb-20">
+            <div>
+                <i data-lucide="shield-check" class="w-8 h-8 text-blue-500 mx-auto mb-4"></i>
+                <h4 class="font-bold mb-2 uppercase text-xs tracking-widest">Sicuro</h4>
+                <p class="text-gray-500 text-xs">I tuoi dati sono protetti e criptati.</p>
             </div>
-            <h4 className="font-bold">Ultra Veloce</h4>
-            <p className="text-sm text-gray-500">Risposte in meno di 2 secondi grazie alla rete Google Pro.</p>
-          </div>
-          <div className="space-y-4">
-            <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center mx-auto">
-              <ShieldCheck className="w-6 h-6 text-green-500" />
+            <div>
+                <i data-lucide="zap" class="w-8 h-8 text-yellow-500 mx-auto mb-4"></i>
+                <h4 class="font-bold mb-2 uppercase text-xs tracking-widest">Veloce</h4>
+                <p class="text-gray-500 text-xs">Generazione istantanea con Gemini.</p>
             </div>
-            <h4 className="font-bold">Privato & Sicuro</h4>
-            <p className="text-sm text-gray-500">I tuoi prompt non vengono mai salvati o condivisi.</p>
-          </div>
-          <div className="space-y-4">
-            <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center mx-auto">
-              <Layout className="w-6 h-6 text-blue-500" />
+            <div>
+                <i data-lucide="layout" class="w-8 h-8 text-purple-500 mx-auto mb-4"></i>
+                <h4 class="font-bold mb-2 uppercase text-xs tracking-widest">Multi-Social</h4>
+                <p class="text-gray-500 text-xs">Ottimizzato per TikTok, X e Reels.</p>
             </div>
-            <h4 className="font-bold">Multi-Piattaforma</h4>
-            <p className="text-sm text-gray-500">Ottimizzato per TikTok, Reels, LinkedIn e X.</p>
-          </div>
         </div>
-      </main>
+    </main>
 
-      <footer className="py-12 text-center text-gray-600 text-sm border-t border-white/10 mt-16">
-        <p>© 2026 StudioX AI Pro. Tutti i diritti riservati.</p>
-        <p className="mt-2 italic">Costruito per la nuova generazione di creatori.</p>
-      </footer>
-    </div>
-  );
-};
+    <footer class="py-10 text-center text-gray-600 text-[10px] uppercase tracking-[4px]">
+        © 2026 StudioX AI Pro • Designed for the future
+    </footer>
 
-export default App;
+    <script>
+        // Inizializza icone
+        lucide.createIcons();
+
+        // Logica semplice Tab e Bottoni
+        const btn = document.getElementById('generate-btn');
+        const input = document.getElementById('prompt-input');
+
+        btn.addEventListener('click', () => {
+            if(!input.value) return;
+            btn.innerHTML = '<div class="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>';
+            setTimeout(() => {
+                btn.innerHTML = '<i data-lucide="check" class="w-6 h-6"></i>';
+                lucide.createIcons();
+                setTimeout(() => {
+                    btn.innerHTML = '<i data-lucide="send" class="w-6 h-6"></i>';
+                    lucide.createIcons();
+                    input.value = "Ottimo! L'IA ha elaborato la tua richiesta. I risultati appariranno qui sotto (Versione Demo).";
+                }, 2000);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
 
