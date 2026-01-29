@@ -3,142 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudioX AI Pro - Dashboard</title>
+    <title>StudioX AI - Viral Marketing</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #020203; color: white; -webkit-tap-highlight-color: transparent; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
-        .btn-primary { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); transition: all 0.2s ease; }
-        .btn-primary:active { transform: scale(0.96); }
-        .loader { border-top-color: #2563eb; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030303; color: white; -webkit-tap-highlight-color: transparent; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.08); }
+        .btn-blue { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); transition: all 0.3s; }
+        .btn-blue:active { transform: scale(0.95); }
+        .viral-line { border-left: 3px solid #2563eb; padding-left: 1rem; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade { animation: fadeIn 0.4s ease-out forwards; }
     </style>
 </head>
-<body class="min-h-screen pb-32">
+<body class="min-h-screen pb-40">
 
-    <!-- Navbar -->
-    <nav class="p-5 border-b border-white/10 flex justify-between items-center sticky top-0 bg-black/80 backdrop-blur-md z-50">
+    <!-- NAVBAR -->
+    <nav class="p-5 border-b border-white/5 flex justify-between items-center sticky top-0 bg-black/80 backdrop-blur-lg z-50">
         <div class="flex items-center gap-2">
-            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-2xl shadow-lg">X</div>
-            <h1 class="font-bold text-xl tracking-tighter uppercase italic">StudioX <span class="text-blue-500 font-serif lowercase text-xl">ai</span></h1>
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-extrabold text-2xl shadow-lg shadow-blue-900/40">X</div>
+            <h1 class="font-bold text-lg tracking-tighter uppercase italic text-white">StudioX <span class="text-blue-500">AI</span></h1>
         </div>
-        <button onclick="configKey()" class="p-2.5 bg-white/5 rounded-xl border border-white/10 text-yellow-500 active:bg-white/20">
+        <button onclick="askKey()" class="p-2.5 bg-white/5 rounded-xl border border-white/10 text-yellow-500 active:bg-yellow-500/20">
             <i data-lucide="key" class="w-5 h-5"></i>
         </button>
     </nav>
 
-    <main class="max-w-md mx-auto p-6 pt-10">
-        <header class="text-center mb-10">
-            <h2 class="text-4xl font-black text-white leading-tight uppercase italic">Crea il <span class="text-blue-500">Futuro.</span></h2>
-            <p class="text-gray-500 mt-2 font-medium">Post e immagini virali in 5 secondi.</p>
+    <main class="max-w-md mx-auto p-6 pt-10 space-y-12">
+        <header class="text-center space-y-4">
+            <h2 class="text-5xl font-black tracking-tighter uppercase italic leading-[0.9]">
+                SCALA I <br><span class="text-blue-600">SOCIAL.</span>
+            </h2>
+            <p class="text-gray-500 font-medium">Post strategici e grafiche 8K in pochi secondi.</p>
         </header>
 
-        <!-- Area Input -->
-        <div class="glass rounded-[2.5rem] p-8 mb-8 shadow-2xl">
-            <div class="flex gap-2 mb-8 bg-black/50 p-1 rounded-xl w-fit">
-                <button id="mode-text" onclick="setMode('text')" class="px-6 py-2 rounded-lg bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest transition-all">Testo</button>
-                <button id="mode-image" onclick="setMode('image')" class="px-6 py-2 rounded-lg text-gray-500 text-[10px] font-black uppercase tracking-widest transition-all">Immagine</button>
+        <!-- INPUT BOX -->
+        <div class="glass rounded-[2.5rem] p-8 shadow-2xl space-y-8">
+            <div class="flex gap-2 p-1 bg-black/40 rounded-2xl w-fit border border-white/5">
+                <button id="mode-text" onclick="setMode('text')" class="px-7 py-2.5 rounded-xl bg-blue-600 text-white font-black text-[10px] uppercase shadow-lg transition-all">Solo Post</button>
+                <button id="mode-image" onclick="setMode('image')" class="px-7 py-2.5 rounded-xl text-gray-500 font-black text-[10px] uppercase transition-all">Post + Grafica</button>
             </div>
 
-            <textarea id="promptInput" placeholder="Cosa vuoi vendere oggi?" 
-                class="w-full h-32 bg-transparent text-xl font-bold border-none focus:ring-0 p-0 resize-none text-white placeholder:text-gray-800 outline-none"></textarea>
+            <textarea id="promptInput" placeholder="Di cosa parla il tuo post?" 
+                class="w-full h-32 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-900 text-white"></textarea>
             
-            <button id="genBtn" onclick="handleGenerate()" 
-                class="w-full mt-8 btn-primary text-white py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-xl">
-                <span id="btnLabel">GENERA ORA</span>
-                <i data-lucide="zap" class="w-5 h-5 fill-white"></i>
-            </button>
+            <div class="pt-8 border-t border-white/5 flex flex-col justify-between items-center gap-6">
+                <div class="flex items-center gap-3 w-full">
+                    <div id="status-dot" class="w-2 h-2 bg-red-500 rounded-full"></div>
+                    <span id="status-text" class="text-[10px] font-black uppercase text-gray-600">Configurazione Richiesta</span>
+                </div>
+                <button id="genBtn" onclick="handleGenerate()" class="btn-blue w-full py-5 rounded-[1.5rem] font-black flex items-center justify-center gap-4 shadow-xl">
+                    <span id="btnLabel" class="uppercase tracking-widest text-sm text-white font-black">Lancia AI</span>
+                    <i data-lucide="zap" class="w-5 h-5 fill-white text-white"></i>
+                </button>
+            </div>
         </div>
 
-        <!-- Risultati -->
-        <div id="results" class="hidden space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div class="glass rounded-[2rem] overflow-hidden border-white/5 shadow-2xl">
-                <div id="imgContainer" class="hidden aspect-square bg-white/5 flex items-center justify-center relative">
-                    <div id="imgLoader" class="hidden flex flex-col items-center gap-3">
-                        <div class="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
-                        <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest">IA sta creando...</span>
+        <!-- RISULTATI -->
+        <div id="results" class="hidden space-y-10 animate-fade">
+            <div class="glass rounded-[2.2rem] p-8 border-white/10 relative overflow-hidden">
+                
+                <div id="imgContainer" class="hidden aspect-square rounded-3xl mb-8 overflow-hidden bg-white/5 border border-white/10 relative">
+                    <div id="imgLoader" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm">
+                        <div class="w-8 h-8 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
+                        <span class="text-[9px] font-black text-blue-500 uppercase mt-4 tracking-widest">Rendering...</span>
                     </div>
                     <img id="outputImg" src="" class="w-full h-full object-cover">
                 </div>
 
-                <div class="p-8">
-                    <div class="flex justify-between items-center mb-6">
-                        <span class="bg-blue-600/20 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-blue-500/20 italic">Output StudioX</span>
-                        <i data-lucide="check-circle" class="text-blue-500 w-5 h-5"></i>
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center">
+                        <span class="bg-blue-600/20 text-blue-400 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest">Marketing Copy</span>
+                        <i data-lucide="sparkles" class="text-blue-500 w-5 h-5"></i>
                     </div>
-                    <p id="outputText" class="text-lg leading-relaxed text-gray-200 italic whitespace-pre-wrap"></p>
                     
-                    <button onclick="copyContent()" class="w-full mt-8 bg-white/5 hover:bg-white/10 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 border border-white/10 active:scale-95 transition-all">
-                        <i data-lucide="copy" class="w-4 h-4"></i>
-                        COPIA TESTO
+                    <div id="outputText" class="viral-line text-lg font-medium leading-relaxed text-gray-100 whitespace-pre-wrap italic"></div>
+                    
+                    <button onclick="copyContent()" class="w-full mt-4 bg-white/5 hover:bg-white/10 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 border border-white/10">
+                        <i data-lucide="copy" class="w-4 h-4 text-blue-500"></i>
+                        <span class="text-[10px] uppercase font-black tracking-widest">Copia Testo</span>
                     </button>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Footer Monetizzazione -->
+    <!-- FOOTER -->
     <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50">
-        <div class="glass rounded-[2rem] p-4 flex items-center justify-between border-blue-500/30 bg-black shadow-2xl">
-            <div class="flex items-center gap-3 pl-2">
-                <div class="w-11 h-11 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg"><i data-lucide="gift" class="w-5 h-5"></i></div>
-                <div class="text-left leading-tight">
-                    <p class="text-[9px] font-black text-blue-400 uppercase tracking-tighter">Partner Program</p>
+        <div class="glass rounded-[2.2rem] p-4 flex items-center justify-between border-blue-500/30 bg-blue-900/10 shadow-2xl backdrop-blur-xl">
+            <div class="flex items-center gap-4 pl-2">
+                <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-900/20">
+                    <i data-lucide="trending-up" class="w-6 h-6"></i>
+                </div>
+                <div class="text-left">
+                    <p class="text-[9px] font-black text-blue-400 uppercase leading-none italic tracking-tighter">SMM Power-Up</p>
                     <h4 class="font-bold text-sm text-white mt-1">Sblocca 500€ Ads</h4>
                 </div>
             </div>
-            <a href="https://v6177972-sys.github.io/studiox-ai/" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg active:scale-95 transition-all">Sblocca</a>
+            <a href="https://v6177972-sys.github.io/studiox-ai/" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg active:scale-95 transition-all">Attiva</a>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
-        
         let mode = 'text';
-        let apiKey = localStorage.getItem('vito_key_secure') || "";
+        let apiKey = localStorage.getItem('studiox_vito_pro_key') || "";
 
-        function configKey() {
-            const key = prompt("Incolla qui la tua API Key di Google AI Studio (AIzaSy...):", apiKey);
-            if(key) {
-                apiKey = key;
-                localStorage.setItem('vito_key_secure', key);
-                alert("✅ Chiave salvata nel telefono!");
+        if(apiKey) {
+            document.getElementById('status-dot').classList.replace('bg-red-500', 'bg-green-500');
+            document.getElementById('status-text').innerText = "Sistema Pronto";
+        }
+
+        function askKey() {
+            const k = prompt("Incolla la tua API Key di Google (AIza...):", apiKey);
+            if(k) {
+                apiKey = k;
+                localStorage.setItem('studiox_vito_pro_key', k);
                 location.reload();
             }
         }
 
         function setMode(m) {
             mode = m;
-            document.getElementById('mode-text').className = m === 'text' ? 'px-6 py-2 rounded-lg bg-blue-600 text-white text-[10px] font-black uppercase shadow-lg transition-all' : 'px-6 py-2 rounded-lg text-gray-500 text-[10px] font-black uppercase transition-all';
-            document.getElementById('mode-image').className = m === 'image' ? 'px-6 py-2 rounded-lg bg-blue-600 text-white text-[10px] font-black uppercase shadow-lg transition-all' : 'px-6 py-2 rounded-lg text-gray-500 text-[10px] font-black uppercase transition-all';
+            document.getElementById('mode-text').className = m === 'text' ? 'px-7 py-3 rounded-xl bg-blue-600 text-white font-black text-[10px] uppercase shadow-lg transition-all' : 'px-7 py-3 rounded-xl text-gray-500 font-black text-[10px] uppercase transition-all';
+            document.getElementById('mode-image').className = m === 'image' ? 'px-7 py-3 rounded-xl bg-blue-600 text-white font-black text-[10px] uppercase shadow-lg transition-all' : 'px-7 py-3 rounded-xl text-gray-500 font-black text-[10px] uppercase transition-all';
         }
 
         async function handleGenerate() {
             const promptInput = document.getElementById('promptInput').value;
             if(!promptInput) return;
-            if(!apiKey) { configKey(); return; }
+            if(!apiKey) { askKey(); return; }
 
             const btn = document.getElementById('genBtn');
             const label = document.getElementById('btnLabel');
             const results = document.getElementById('results');
             const outText = document.getElementById('outputText');
-            const outImg = document.getElementById('outputImg');
-            const imgCont = document.getElementById('imgContainer');
-            const imgLoad = document.getElementById('imgLoader');
 
             btn.disabled = true;
-            label.innerText = "ELABORAZIONE...";
+            label.innerText = "IA STA SCRIVENDO...";
             results.classList.add('hidden');
 
             try {
-                // 1. TESTO (Gemini 2.5 Flash)
+                // MODELLO CORRETTO PER V1BETA
                 const textResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
-                        contents: [{ parts: [{ text: "Sei StudioX AI Pro. Scrivi un post social professionale e virale per: " + promptInput }] }] 
+                        contents: [{ parts: [{ text: `Agisci come un Social Media Manager Pro. Crea un post virale e BREVE per: "${promptInput}". Usa questa struttura: 1. Hook d'impatto. 2. Corpo di massimo 3 frasi. 3. Call to Action. 4. Max 5 hashtag. Non scrivere nient'altro fuori dal post.` }] }] 
                     })
                 });
                 
@@ -148,50 +160,48 @@
                 outText.innerText = data.candidates[0].content.parts[0].text;
                 results.classList.remove('hidden');
 
-                // 2. IMMAGINE (Imagen 4.0)
                 if(mode === 'image') {
+                    const imgCont = document.getElementById('imgContainer');
+                    const imgLoad = document.getElementById('imgLoader');
+                    const outImg = document.getElementById('outputImg');
+                    
                     imgCont.classList.remove('hidden');
                     imgLoad.classList.remove('hidden');
                     outImg.classList.add('hidden');
+                    label.innerText = "IA STA DISEGNANDO...";
 
                     const imgResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            instances: { prompt: "High-end commercial marketing photography for: " + promptInput },
+                            instances: [{ prompt: "Professional high-end commercial advertising photo for social media, cinematic lighting, modern style, 8k for: " + promptInput }],
                             parameters: { sampleCount: 1 }
                         })
                     });
                     
                     const imgData = await imgResponse.json();
-                    if(imgData.predictions && imgData.predictions[0]) {
+                    if(imgData.predictions?.[0]) {
                         outImg.src = `data:image/png;base64,${imgData.predictions[0].bytesBase64Encoded}`;
                         outImg.classList.remove('hidden');
                         imgLoad.classList.add('hidden');
                     }
                 } else {
-                    imgCont.classList.add('hidden');
+                    document.getElementById('imgContainer').classList.add('hidden');
                 }
 
             } catch (err) {
                 console.error(err);
-                alert("Errore: La tua chiave API non sembra valida o è stata disattivata da Google. Generane una NUOVA e inseriscila tramite la chiavetta gialla.");
+                alert("Errore API: verifica la chiave cliccando sulla chiavetta.");
             } finally {
                 btn.disabled = false;
-                label.innerText = "GENERA ORA";
+                label.innerText = "GENERA VIRALE";
                 lucide.createIcons();
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                window.scrollTo({ top: 150, behavior: 'smooth' });
             }
         }
 
         function copyContent() {
-            const t = document.getElementById('outputText').innerText;
-            const el = document.createElement('textarea');
-            el.value = t;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
+            navigator.clipboard.writeText(document.getElementById('outputText').innerText);
             alert("Copiato!");
         }
     </script>
