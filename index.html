@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudioX AI Pro - Cloud Dashboard</title>
+    <title>StudioX AI Pro - Cloud Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Firebase SDK Compat -->
@@ -19,6 +19,8 @@
         .result-box { border-left: 4px solid #2563eb; background: rgba(255,255,255,0.03); padding: 20px; border-radius: 0 15px 15px 0; }
         @keyframes pulse-blue { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         .status-active { animation: pulse-blue 2s infinite; }
+        .loading-shimmer { background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
     </style>
 </head>
 <body class="min-h-screen">
@@ -27,7 +29,7 @@
     <nav class="p-6 border-b border-white/10 flex justify-between items-center sticky top-0 bg-black/50 backdrop-blur-md z-50">
         <div class="flex items-center gap-2">
             <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-2xl shadow-lg">X</div>
-            <h1 class="text-xl font-bold tracking-tighter uppercase leading-none italic">StudioX <span class="text-blue-500 font-serif">AI</span></h1>
+            <h1 class="text-xl font-bold tracking-tighter uppercase leading-none italic text-white">StudioX <span class="text-blue-500 font-serif">AI</span></h1>
         </div>
         <div class="flex items-center gap-3">
             <button onclick="toggleAdmin()" class="p-2 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10">
@@ -39,18 +41,18 @@
 
     <main class="max-w-3xl mx-auto p-6 pt-12 pb-40">
         
-        <!-- PANNELLO ADMIN (Solo per Vito) -->
+        <!-- PANNELLO ADMIN -->
         <div id="admin-panel" class="hidden mb-10 p-8 glass rounded-[2.5rem] border-blue-500/30 animate-in fade-in slide-in-from-top-4">
             <div class="flex items-center gap-2 mb-6 text-blue-400">
                 <i data-lucide="settings" class="w-4 h-4"></i>
-                <h3 class="text-xs font-black uppercase tracking-[0.2em]">Configurazione Cloud</h3>
+                <h3 class="text-xs font-black uppercase tracking-[0.2em]">Configurazione Nucleo</h3>
             </div>
-            <p class="text-xs text-gray-400 mb-4 italic font-medium">Incolla qui la tua Gemini API Key (quella che inizia con AIza...). Verrà salvata nel database e l'app funzionerà per tutti i tuoi visitatori.</p>
+            <p class="text-xs text-gray-400 mb-4 italic font-medium">Salva qui la tua Gemini API Key. Verrà criptata nel Cloud Firebase.</p>
             <div class="space-y-4">
                 <input type="password" id="master-key-input" placeholder="Incolla API Key di Google..." 
                     class="w-full bg-black/50 border border-white/10 rounded-2xl p-4 text-sm focus:ring-1 focus:ring-blue-500 outline-none text-white font-mono">
                 <button onclick="saveKeyToCloud()" class="w-full btn-action py-5 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl">
-                    Attiva Motore Cloud
+                    Aggiorna Cloud Engine
                 </button>
             </div>
         </div>
@@ -60,60 +62,63 @@
                 DOMINA IL <span class="text-blue-600">SOCIAL.</span>
             </h2>
             <p class="text-gray-400 text-lg font-medium max-w-lg mx-auto leading-tight italic">
-                L'intelligenza artificiale pro che scrive e crea viralità con un solo click.
+                Crea post virali e immagini fotorealistiche con un solo click.
             </p>
         </div>
 
-        <!-- AREA INPUT -->
+        <!-- INPUT BOX -->
         <div class="glass rounded-[2.5rem] p-1 shadow-2xl mb-12 relative overflow-hidden">
             <div class="p-8 md:p-12">
                 <div class="flex gap-2 mb-10 p-1 bg-black/40 rounded-2xl w-fit border border-white/5">
-                    <button id="mode-text" onclick="setMode('text')" class="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-black text-[10px] uppercase tracking-widest transition-all">Genera Post</button>
+                    <button id="mode-text" onclick="setMode('text')" class="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-black text-[10px] uppercase tracking-widest transition-all">Genera Testo</button>
                     <button id="mode-image" onclick="setMode('image')" class="px-6 py-2.5 rounded-xl text-gray-500 font-black text-[10px] uppercase tracking-widest transition-all">Genera Grafica</button>
                 </div>
 
                 <div class="space-y-6">
                     <textarea id="prompt-input" 
-                        placeholder="Cosa vuoi promuovere o vendere oggi?" 
+                        placeholder="Descrivi cosa vuoi creare..." 
                         class="w-full h-40 bg-transparent text-2xl font-bold placeholder:text-gray-800 focus:outline-none resize-none text-white"></textarea>
                     
                     <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-6">
                         <div class="flex items-center gap-3 text-gray-500">
                              <i data-lucide="cpu" class="w-5 h-5 text-blue-500"></i>
-                             <span id="status-tag" class="text-[10px] font-black uppercase tracking-widest italic">In attesa di comando</span>
+                             <span id="status-tag" class="text-[10px] font-black uppercase tracking-widest italic">Sistema Sincronizzato</span>
                         </div>
                         <button id="gen-button" class="btn-action w-full sm:w-auto px-12 py-5 rounded-[1.5rem] font-black flex items-center justify-center gap-4 shadow-xl active:scale-95 transition-all">
-                            <span class="uppercase tracking-widest text-sm text-white font-black">Crea Viralità</span>
-                            <i data-lucide="zap" class="w-5 h-5 fill-white text-white"></i>
+                            <span class="uppercase tracking-widest text-sm text-white font-black" id="btn-label">Crea Viralità</span>
+                            <i data-lucide="zap" id="btn-icon" class="w-5 h-5 fill-white text-white"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- RISULTATI -->
+        <!-- OUTPUT -->
         <div id="output-area" class="hidden space-y-10 animate-in fade-in slide-in-from-bottom-10 duration-700">
             <div class="glass rounded-[2rem] p-8 md:p-12 border border-white/5 shadow-xl">
-                <div id="text-result" class="text-xl md:text-2xl font-medium leading-relaxed text-gray-200 whitespace-pre-wrap result-box pl-8 italic"></div>
+                <div id="text-result" class="text-xl md:text-2xl font-medium leading-relaxed text-gray-200 whitespace-pre-wrap result-box pl-8 italic mb-8"></div>
                 
-                <div id="image-result" class="hidden mt-10">
-                    <img id="output-img" src="" class="w-full rounded-2xl border border-white/10 shadow-2xl" alt="AI Production">
+                <div id="image-result" class="hidden">
+                    <div id="image-loader" class="w-full aspect-square rounded-2xl loading-shimmer hidden flex items-center justify-center border border-white/10">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-blue-500">Rendering Grafico in corso...</span>
+                    </div>
+                    <img id="output-img" src="" class="w-full rounded-2xl border border-white/10 shadow-2xl" alt="StudioX Production">
                 </div>
 
                 <div class="mt-10 flex gap-4">
                     <button onclick="copyToClipboard()" class="bg-white/5 hover:bg-white/10 px-8 py-4 rounded-2xl flex items-center gap-3 transition-all border border-white/10 group">
                         <i data-lucide="copy" class="w-5 h-5 text-blue-500 group-hover:scale-110 transition-transform"></i>
-                        <span class="text-[10px] font-black uppercase tracking-widest">Copia Contenuto</span>
+                        <span class="text-[10px] font-black uppercase tracking-widest">Copia Risultato</span>
                     </button>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- BANNER PARTNER -->
+    <!-- FOOTER BONUS -->
     <div class="fixed bottom-0 left-0 w-full p-6 z-50">
         <div class="max-w-md mx-auto glass rounded-[2rem] p-4 flex items-center justify-between border-blue-500/30 bg-blue-900/10 shadow-2xl backdrop-blur-xl">
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3">
                 <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg">
                     <i data-lucide="gift" class="w-6 h-6"></i>
                 </div>
@@ -146,41 +151,28 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // Login Anonimo & Sincronizzazione Chiave Cloud
+        // Login & Sincronizzazione
         auth.signInAnonymously().then(() => {
             document.getElementById('connection-dot').classList.replace('bg-red-500', 'bg-green-500');
             document.getElementById('connection-dot').classList.add('status-active');
             
-            // Ascolta i cambiamenti della chiave nel database
             db.collection('config').doc('engine').onSnapshot((doc) => {
                 if(doc.exists) {
                     cloudApiKey = doc.data().key;
                     document.getElementById('admin-icon').classList.replace('text-gray-500', 'text-green-500');
                     document.getElementById('status-tag').innerText = "Cloud Engine Synchronized";
-                } else {
-                    document.getElementById('status-tag').innerText = "Configurazione Richiesta";
                 }
             });
-        }).catch(err => {
-            console.error("Firebase Error:", err);
-            document.getElementById('status-tag').innerText = "Errore Connessione Database";
-        });
+        }).catch(err => console.error("Firebase Error:", err));
 
         function toggleAdmin() { document.getElementById('admin-panel').classList.toggle('hidden'); }
 
         function saveKeyToCloud() {
             const key = document.getElementById('master-key-input').value;
             if(!key) return;
-            
-            db.collection('config').doc('engine').set({ key: key })
-              .then(() => {
-                  alert("✅ Motore Attivato! Ora StudioX AI Pro è online per tutti i tuoi utenti.");
-                  toggleAdmin();
-              })
-              .catch(e => {
-                  console.error(e);
-                  alert("❌ Errore: Assicurati di aver attivato Firestore in modalità TEST su Firebase.");
-              });
+            db.collection('config').doc('engine').set({ key: key }).then(() => {
+                alert("Cloud Engine Attivo!"); toggleAdmin();
+            }).catch(e => alert("Errore: abilita Firestore in modalità TEST!"));
         }
 
         function setMode(m) {
@@ -193,16 +185,13 @@
             const prompt = document.getElementById('prompt-input').value;
             const btn = document.getElementById('gen-button');
             const status = document.getElementById('status-tag');
+            const outputArea = document.getElementById('output-area');
             
-            if(!prompt) return;
-            if(!cloudApiKey) {
-                alert("Attenzione: Il proprietario deve configurare la Master Key cliccando sull'icona scudo.");
-                return;
-            }
+            if(!prompt || !cloudApiKey) return;
 
             btn.disabled = true;
             btn.innerHTML = '<div class="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>';
-            status.innerText = "Ottimizzazione Marketing...";
+            status.innerText = mode === 'text' ? "Analisi di mercato..." : "Elaborazione Grafica...";
 
             try {
                 if(mode === 'text') {
@@ -211,37 +200,42 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             contents: [{ role: "user", parts: [{ text: prompt }] }],
-                            systemInstruction: { parts: [{ text: "Sei StudioX AI Pro. Trasforma l'input dell'utente in un post virale. Struttura: Hook potente, Corpo persuasivo, Call to Action, Hashtag. Usa emoji e un tono moderno." }] }
+                            systemInstruction: { parts: [{ text: "Sei StudioX AI Pro. Genera un post virale immediato con Hook, Corpo Persuasivo e Hashtag. Sii audace." }] }
                         })
                     });
                     const data = await response.json();
-                    if(data.error) throw new Error(data.error.message);
-                    
                     document.getElementById('text-result').innerText = data.candidates[0].content.parts[0].text;
                     document.getElementById('image-result').classList.add('hidden');
                 } else {
+                    document.getElementById('image-result').classList.remove('hidden');
+                    document.getElementById('image-loader').classList.remove('hidden');
+                    document.getElementById('output-img').classList.add('hidden');
+                    document.getElementById('text-result').innerText = "Generazione visiva in corso...";
+
                     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${cloudApiKey}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ 
-                            instances: { prompt: "Advertising photo for: " + prompt + ". Cinematic lighting, studio quality, high resolution." }, 
+                            instances: [{ prompt: "High-end commercial photography, professional lighting, for: " + prompt }], 
                             parameters: { sampleCount: 1 } 
                         })
                     });
                     const data = await response.json();
                     if(data.error) throw new Error(data.error.message);
-                    
+
                     document.getElementById('output-img').src = `data:image/png;base64,${data.predictions[0].bytesBase64Encoded}`;
-                    document.getElementById('image-result').classList.remove('hidden');
-                    document.getElementById('text-result').innerText = "Elaborazione Grafica Completata.";
+                    document.getElementById('output-img').classList.remove('hidden');
+                    document.getElementById('image-loader').classList.add('hidden');
+                    document.getElementById('text-result').innerText = "Grafica pubblicitaria completata.";
                 }
                 
-                document.getElementById('output-area').classList.remove('hidden');
+                outputArea.classList.remove('hidden');
                 status.innerText = "Sincronizzazione completata.";
                 window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             } catch (err) {
-                alert("Errore generazione: verifica la tua API Key.");
-                status.innerText = "Connessione Fallita";
+                console.error(err);
+                alert("Errore generazione: Assicurati che la tua Gemini API Key supporti Imagen 4.0 o riprova.");
+                status.innerText = "Errore Engine";
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = '<span class="uppercase tracking-widest text-sm text-white font-black">Crea Viralità</span><i data-lucide="zap" class="w-5 h-5 fill-white text-white"></i>';
@@ -252,8 +246,7 @@
         function copyToClipboard() {
             const text = document.getElementById('text-result').innerText;
             navigator.clipboard.writeText(text);
-            document.getElementById('status-tag').innerText = "Copiato negli appunti!";
-            setTimeout(() => document.getElementById('status-tag').innerText = "Cloud Engine Synchronized", 2000);
+            alert("Copiato!");
         }
     </script>
 </body>
