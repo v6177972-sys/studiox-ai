@@ -3,178 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudioX AI - Social Hub</title>
+    <title>StudioX AI Pro - Marketing Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
-        .app-card { background: white; border-radius: 2.5rem; box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.1); }
-        .btn-primary { background: #2563eb; transition: all 0.2s; }
-        .btn-primary:active { transform: scale(0.95); }
-        .result-box { border-left: 4px solid #2563eb; background: #f1f5f9; }
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700;900&display=swap');
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #020203; color: white; overflow-x: hidden; }
+        .glass { background: rgba(15, 15, 20, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+        .btn-action { background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); transition: all 0.3s; }
+        .btn-action:active { transform: scale(0.95); }
+        .shimmer { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); background-size: 200% 100%; animation: shim 2s infinite; }
+        @keyframes shim { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
     </style>
 </head>
-<body class="min-h-screen pb-32">
+<body class="min-h-screen pb-40">
 
     <!-- NAVBAR -->
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 px-6 py-4">
-        <div class="max-w-md mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-200">
-                    <i data-lucide="sparkles" class="text-white w-5 h-5"></i>
-                </div>
-                <h1 class="font-bold text-xl tracking-tight text-slate-800">StudioX <span class="text-blue-600 italic">AI</span></h1>
-            </div>
-            <button onclick="setNewKey()" class="p-2 text-slate-400 hover:text-blue-600 transition-colors">
-                <i data-lucide="key" class="w-5 h-5"></i>
-            </button>
+    <nav class="p-5 border-b border-white/5 flex justify-between items-center sticky top-0 bg-black/80 backdrop-blur-md z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-extrabold text-xl shadow-lg">X</div>
+            <h1 class="font-bold text-lg tracking-tighter uppercase italic text-white">StudioX <span class="text-blue-500 font-serif lowercase text-xl">ai</span></h1>
         </div>
+        <button onclick="askForKey()" class="p-2.5 bg-white/5 rounded-xl border border-white/10 text-yellow-500 active:bg-white/20">
+            <i data-lucide="key" class="w-5 h-5"></i>
+        </button>
     </nav>
 
-    <main class="max-w-md mx-auto p-6">
-        <header class="mt-4 mb-8">
-            <h2 class="text-3xl font-black text-slate-800 leading-tight uppercase italic">Crea post virali</h2>
-            <p class="text-slate-500 font-medium">Testi e immagini con l'intelligenza artificiale.</p>
-        </header>
+    <main class="max-w-2xl mx-auto p-6 pt-12 space-y-10">
+        
+        <div class="text-center space-y-4">
+            <h2 class="text-5xl md:text-7xl font-black mb-6 tracking-tighter leading-none italic uppercase">
+                DOMINA IL <br><span class="text-blue-600 underline">FUTURO.</span>
+            </h2>
+            <p class="text-gray-500 text-lg font-medium italic">Marketing neurale ad alta conversione.</p>
+        </div>
 
-        <!-- INPUT -->
-        <div class="app-card p-8 mb-8 border border-slate-100">
-            <label class="flex items-center gap-2 mb-4 text-[10px] font-black text-blue-600 uppercase tracking-[0.2em]">
-                <i data-lucide="message-circle" class="w-4 h-4"></i>
-                Cosa vuoi creare oggi?
-            </label>
-            <textarea id="userInput" placeholder="Es: Un post per vendere magliette..." 
-                class="w-full h-32 text-xl font-medium border-none focus:ring-0 p-0 resize-none text-slate-700 placeholder:text-slate-200"></textarea>
-            
-            <button id="generateBtn" onclick="startGeneration()" 
-                class="w-full mt-6 btn-primary text-white py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-xl shadow-blue-200">
-                <span id="btnText">GENERA ORA</span>
-                <i data-lucide="zap" class="w-5 h-5 fill-white"></i>
-            </button>
+        <!-- GENERATORE -->
+        <div class="glass rounded-[3rem] p-1 shadow-2xl">
+            <div class="p-8 md:p-12 space-y-8 text-left">
+                <div class="flex gap-2 p-1 bg-black/40 rounded-2xl w-fit border border-white/5">
+                    <button id="mode-text" onclick="setMode('text')" class="px-8 py-3 rounded-xl bg-blue-600 text-white font-black text-[10px] uppercase shadow-lg transition-all">Genera Post</button>
+                    <button id="mode-image" onclick="setMode('image')" class="px-8 py-3 rounded-xl text-gray-500 font-black text-[10px] uppercase transition-all">Genera Grafica</button>
+                </div>
+
+                <textarea id="promptInput" placeholder="Cosa vendiamo oggi?" 
+                    class="w-full h-32 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-900 text-white"></textarea>
+                
+                <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-6">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="cpu" class="w-5 h-5 text-blue-500"></i>
+                        <span id="status" class="text-[10px] font-bold text-gray-600 uppercase tracking-widest italic">Sistema Pronto</span>
+                    </div>
+                    <button id="genBtn" onclick="handleGenerate()" class="btn-action w-full sm:w-auto px-12 py-5 rounded-[2rem] font-black flex items-center justify-center gap-4 shadow-xl">
+                        <span id="btnLabel" class="uppercase tracking-widest text-sm text-white font-black">Lancia AI</span>
+                        <i data-lucide="zap" class="w-5 h-5 fill-white"></i>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- RISULTATI -->
-        <div id="results" class="hidden space-y-8">
-            <div class="app-card overflow-hidden border border-slate-100">
-                <div class="p-4 bg-slate-50 border-b border-slate-100 flex justify-between items-center">
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Anteprima Grafica</span>
-                    <i data-lucide="image" class="w-4 h-4 text-slate-300"></i>
-                </div>
-                <div id="imageLoader" class="aspect-square bg-slate-50 flex items-center justify-center hidden">
-                    <div class="flex flex-col items-center gap-2">
-                        <div class="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
-                        <span class="text-[10px] font-bold text-blue-600 uppercase">Creazione...</span>
-                    </div>
-                </div>
-                <img id="outputImage" src="" class="w-full h-full object-cover hidden">
-            </div>
-
-            <div class="app-card p-8 border-2 border-blue-600 relative shadow-2xl">
-                <div class="flex justify-between items-start mb-6">
-                    <span class="bg-blue-600 text-white text-[10px] font-black px-4 py-1 rounded-full uppercase">Post Pronto</span>
-                    <i data-lucide="check-circle" class="text-blue-600 w-6 h-6"></i>
-                </div>
-                <p id="outputText" class="text-lg leading-relaxed text-slate-700 font-medium whitespace-pre-wrap"></p>
+        <div id="results" class="hidden space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <div class="glass rounded-[2.5rem] p-8 md:p-12 border border-white/5 relative overflow-hidden">
+                <div id="textResult" class="text-xl md:text-2xl font-medium leading-relaxed text-gray-100 whitespace-pre-wrap border-l-4 border-blue-600 pl-8 italic mb-10"></div>
                 
-                <button onclick="copyPost()" class="w-full mt-8 bg-slate-900 text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform">
-                    <i data-lucide="copy" class="w-5 h-5"></i>
-                    COPIA TESTO
+                <div id="imgContainer" class="hidden mt-10">
+                    <div id="imgLoader" class="w-full aspect-square rounded-3xl shimmer hidden flex flex-col items-center justify-center border border-white/5">
+                        <i data-lucide="palette" class="w-8 h-8 text-blue-500 mb-2 animate-bounce"></i>
+                        <span class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500">Creative Rendering...</span>
+                    </div>
+                    <img id="outputImg" src="" class="w-full rounded-3xl border border-white/10 shadow-2xl" alt="AI Visual">
+                </div>
+
+                <button onclick="copyContent()" class="mt-8 flex items-center gap-3 bg-white/5 hover:bg-white/10 px-8 py-4 rounded-2xl transition-all border border-white/10">
+                    <i data-lucide="copy" class="w-5 h-5 text-blue-500"></i>
+                    <span class="text-[10px] font-black uppercase tracking-widest">Copia Risultato</span>
                 </button>
             </div>
         </div>
     </main>
 
     <!-- FOOTER -->
-    <div class="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white via-white to-transparent z-40">
-        <div class="max-w-md mx-auto bg-slate-900 text-white p-4 rounded-3xl flex items-center justify-between shadow-2xl">
-            <div class="flex items-center gap-3">
-                <div class="bg-blue-600 p-2 rounded-xl"><i data-lucide="gift" class="w-5 h-5"></i></div>
-                <div>
-                    <p class="text-[10px] font-bold text-blue-400 uppercase">Bonus AdCreative</p>
-                    <p class="text-sm font-bold">Ricevi 500€ Gratis</p>
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50">
+        <div class="glass rounded-[2.2rem] p-4 flex items-center justify-between border-blue-500/30 bg-blue-900/10 shadow-2xl backdrop-blur-xl">
+            <div class="flex items-center gap-4 pl-2">
+                <div class="w-11 h-11 bg-blue-600 rounded-xl flex items-center justify-center text-white"><i data-lucide="gift" class="w-5 h-5"></i></div>
+                <div class="text-left">
+                    <p class="text-[9px] font-black text-blue-400 uppercase leading-none tracking-tighter italic">Partner Bonus</p>
+                    <h4 class="font-bold text-sm text-white mt-1">Sblocca 500€ Ads</h4>
                 </div>
             </div>
-            <a href="https://v6177972-sys.github.io/studiox-ai/" class="bg-blue-600 px-6 py-3 rounded-2xl text-[10px] font-black uppercase shadow-lg">ATTIVA</a>
+            <a href="https://v6177972-sys.github.io/studiox-ai/" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase shadow-lg shadow-blue-600/20 active:scale-95 transition-all">Attiva</a>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
-        
-        // RECUPERA LA CHIAVE SALVATA
-        let apiKey = localStorage.getItem('vito_key') || "";
+        let mode = 'text';
+        let apiKey = localStorage.getItem('vito_key_secure') || "";
 
-        function setNewKey() {
-            const key = prompt("Inserisci la tua API Key di Google (AIza...):", apiKey);
-            if(key) {
-                apiKey = key;
-                localStorage.setItem('vito_key', key);
-                alert("Chiave salvata correttamente!");
+        function askForKey() {
+            const k = prompt("Incolla qui la tua nuova API Key di Google (AIza...):", apiKey);
+            if(k) {
+                apiKey = k;
+                localStorage.setItem('vito_key_secure', k);
+                alert("Chiave Salvata nel Browser!");
             }
         }
 
-        async function startGeneration() {
-            const input = document.getElementById('userInput').value;
-            if(!input) return;
-            if(!apiKey) { setNewKey(); return; }
+        function setMode(m) {
+            mode = m;
+            document.getElementById('mode-text').className = m === 'text' ? 'px-8 py-3 rounded-xl bg-blue-600 text-white font-black text-[10px] uppercase shadow-lg transition-all' : 'px-8 py-3 rounded-xl text-gray-500 font-black text-[10px] uppercase transition-all';
+            document.getElementById('mode-image').className = m === 'image' ? 'px-8 py-3 rounded-xl bg-blue-600 text-white font-black text-[10px] uppercase shadow-lg transition-all' : 'px-8 py-3 rounded-xl text-gray-500 font-black text-[10px] uppercase transition-all';
+        }
 
-            const btn = document.getElementById('generateBtn');
-            const btnText = document.getElementById('btnText');
+        async function handleGenerate() {
+            const prompt = document.getElementById('promptInput').value;
+            if(!prompt) return;
+            if(!apiKey) { askForKey(); return; }
+
+            const btn = document.getElementById('genBtn');
+            const label = document.getElementById('btnLabel');
+            const status = document.getElementById('status');
             const results = document.getElementById('results');
-            const outText = document.getElementById('outputText');
-            const outImg = document.getElementById('outputImage');
-            const imgLoad = document.getElementById('imageLoader');
 
             btn.disabled = true;
-            btnText.innerText = "GENERANDO...";
+            label.innerText = "ELABORAZIONE...";
+            status.innerText = "Connessione Nucleo...";
             results.classList.add('hidden');
 
             try {
-                // 1. GENERA TESTO (Gemini 1.5 Flash - Il più stabile)
-                const tResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: "Sei un esperto social media. Scrivi un post virale per: " + input }] }] })
-                });
-                const tData = await tResp.json();
-                if(tData.error) throw new Error(tData.error.message);
-                
-                outText.innerText = tData.candidates[0].content.parts[0].text;
-                results.classList.remove('hidden');
+                if(mode === 'text') {
+                    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: "Sei StudioX AI Pro. Genera un post marketing virale in italiano per: " + prompt }] }] })
+                    });
+                    const d = await r.json();
+                    if(d.error) throw new Error(d.error.message);
+                    document.getElementById('textResult').innerText = d.candidates[0].content.parts[0].text;
+                    document.getElementById('imgContainer').classList.add('hidden');
+                } else {
+                    document.getElementById('imgContainer').classList.remove('hidden');
+                    document.getElementById('imgLoader').classList.remove('hidden');
+                    document.getElementById('outputImg').classList.add('hidden');
+                    document.getElementById('textResult').innerText = "Generazione visiva in corso...";
 
-                // 2. GENERA IMMAGINE (Imagen 3.0 - Più compatibile)
-                imgLoad.classList.remove('hidden');
-                outImg.classList.add('hidden');
+                    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            instances: [{ prompt: "Professional studio product photography for: " + prompt }], 
+                            parameters: { sampleCount: 1 } 
+                        })
+                    });
+                    const d = await r.json();
+                    if(d.error) throw new Error(d.error.message);
 
-                const iResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        instances: [{ prompt: "High-quality commercial advertising photo for: " + input }],
-                        parameters: { sampleCount: 1 } 
-                    })
-                });
-                const iData = await iResp.json();
-                
-                if(iData.predictions && iData.predictions[0]) {
-                    outImg.src = `data:image/png;base64,${iData.predictions[0].bytesBase64Encoded}`;
-                    outImg.classList.remove('hidden');
-                    imgLoad.classList.add('hidden');
+                    document.getElementById('outputImg').src = `data:image/png;base64,${d.predictions[0].bytesBase64Encoded}`;
+                    document.getElementById('outputImg').classList.remove('hidden');
+                    document.getElementById('imgLoader').classList.add('hidden');
+                    document.getElementById('textResult').innerText = "Asset grafico pronto.";
                 }
+                results.classList.remove('hidden');
+                status.innerText = "Completato";
             } catch (err) {
-                console.error(err);
-                alert("Errore: La tua chiave API non è valida o non è ancora attiva. Creane una nuova su Google AI Studio.");
+                alert("Errore API: Verifica che la chiave sia corretta o creane una nuova.");
+                status.innerText = "Errore Engine";
             } finally {
                 btn.disabled = false;
-                btnText.innerText = "GENERA ORA";
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                label.innerText = "LANCIA AI";
+                lucide.createIcons();
             }
         }
 
-        function copyPost() {
-            const t = document.getElementById('outputText').innerText;
-            navigator.clipboard.writeText(t);
+        function copyContent() {
+            navigator.clipboard.writeText(document.getElementById('textResult').innerText);
             alert("Copiato!");
         }
     </script>
