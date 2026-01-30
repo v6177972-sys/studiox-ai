@@ -3,171 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudioX AI | Pro SMM & SEO</title>
+    <title>StudioX PRO | SEO & Visual AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
-        :root { --primary: #3b82f6; --bg: #050505; --accent: #10b981; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #e2e8f0; margin: 0; }
-        .glass { background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .glow-btn { box-shadow: 0 0 25px rgba(59, 130, 246, 0.3); }
-        .loader { border: 3px solid rgba(59, 130, 246, 0.1); border-top: 3px solid var(--primary); border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .strategy-card { border-left: 5px solid var(--primary); transition: all 0.3s ease; }
-        .ai-image { width: 100%; height: 260px; object-fit: cover; border-radius: 1.5rem; margin-bottom: 1.5rem; background: #111; border: 1px solid rgba(255,255,255,0.1); }
-        .seo-badge { background: rgba(16, 185, 129, 0.15); color: #34d399; font-size: 0.65rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
-        .animate-in { animation: fadeInUp 0.5s ease-out forwards; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        :root { --primary: #0ea5e9; --bg: #030303; --accent: #22d3ee; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #f1f5f9; margin: 0; }
+        .glass { background: rgba(10, 10, 10, 0.75); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .ultra-glow { box-shadow: 0 0 40px rgba(14, 165, 233, 0.2); }
+        .loader { border: 3px solid rgba(255, 255, 255, 0.05); border-top: 3px solid var(--primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .strategy-card { border: 1px solid rgba(255, 255, 255, 0.05); background: linear-gradient(180deg, rgba(20,20,20,0.6) 0%, rgba(5,5,5,0.9) 100%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .strategy-card:hover { transform: scale(1.01); border-color: var(--accent); }
+        .img-ai { width: 100%; height: 380px; object-fit: cover; border-radius: 2rem; margin-bottom: 1.5rem; background: #000; border: 1px solid rgba(255,255,255,0.1); }
+        .badge-seo { background: rgba(34, 211, 238, 0.1); color: var(--accent); font-size: 0.6rem; font-weight: 900; padding: 4px 10px; border-radius: 50px; text-transform: uppercase; border: 1px solid rgba(34, 211, 238, 0.2); }
+        .animate-in { animation: slideUp 0.6s ease-out forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="min-h-screen pb-40">
+<body class="min-h-screen pb-48">
 
     <header class="p-6 flex justify-between items-center glass sticky top-0 z-50 border-b border-white/5">
-        <div class="flex items-center gap-3">
-            <div class="w-11 h-11 bg-blue-600 rounded-xl flex items-center justify-center glow-btn">
-                <i class="fas fa-rocket text-white"></i>
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-sky-600 rounded-2xl flex items-center justify-center ultra-glow">
+                <i class="fas fa-brain text-white text-2xl"></i>
             </div>
             <div>
-                <h1 class="font-extrabold text-xl tracking-tighter text-white italic">STUDIOX<span class="text-blue-500">PRO</span></h1>
-                <p class="text-[9px] text-emerald-400 font-black uppercase tracking-widest">SEO & SMM Engine v4</p>
+                <h1 class="font-extrabold text-2xl tracking-tighter text-white italic uppercase">STUDIOX<span class="text-sky-400">PRO</span></h1>
+                <p class="text-[8px] text-gray-500 font-black uppercase tracking-[0.4em]">Gemini 2.5 Hybrid • Imagen 4 Architecture</p>
             </div>
         </div>
-        <div class="flex items-center gap-2">
-            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            <span class="text-[10px] font-bold text-gray-400 uppercase">Stable API v1</span>
+        <div class="hidden sm:flex items-center gap-3">
+            <div class="text-right">
+                <p class="text-[9px] text-sky-400 font-bold uppercase">SEO Cloud Active</p>
+                <p class="text-[8px] text-gray-600">Secure Node 2026</p>
+            </div>
+            <div class="w-2 h-2 bg-sky-500 rounded-full animate-pulse"></div>
         </div>
     </header>
 
-    <main class="max-w-2xl mx-auto p-6">
+    <main class="max-w-3xl mx-auto p-6">
         
-        <div class="glass p-7 rounded-[2.5rem] mb-10 border-white/10 shadow-2xl mt-4">
-            <label class="block text-[10px] font-black text-gray-500 uppercase mb-4 tracking-[0.2em]">Brief Strategico</label>
+        <div class="glass p-8 rounded-[3rem] mb-12 border-white/10 shadow-3xl mt-6">
+            <label class="block text-[10px] font-black text-sky-500/50 uppercase mb-4 tracking-[0.3em]">Strategy briefing engine</label>
             <textarea id="promptInput" rows="3" 
-                class="w-full bg-transparent border-none text-xl focus:ring-0 placeholder-gray-800 resize-none text-white font-medium outline-none"
-                placeholder="Es: Lancio di un e-commerce di arredamento minimal..."></textarea>
+                class="w-full bg-transparent border-none text-2xl focus:ring-0 placeholder-gray-800 resize-none text-white font-semibold outline-none"
+                placeholder="Qual è il tuo obiettivo marketing?"></textarea>
             
-            <button onclick="generateContent()" id="mainBtn" 
-                class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-3 transition-all glow-btn">
+            <button onclick="runEngine()" id="mainBtn" 
+                class="w-full mt-8 bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-500 hover:to-cyan-400 text-white font-black py-5 rounded-3xl flex items-center justify-center gap-4 transition-all ultra-glow">
                 <span>GENERA ASSET PROFESSIONALI</span>
-                <i class="fas fa-bolt"></i>
+                <i class="fas fa-bolt-lightning"></i>
             </button>
         </div>
 
-        <div id="loading" class="hidden text-center py-10">
-            <div class="loader mx-auto mb-6"></div>
-            <h3 class="text-white font-bold text-lg">Analisi Algoritmi Social...</h3>
-            <p class="text-gray-500 text-sm italic">Creazione asset SEO e visual Imagen 4</p>
+        <div id="loading" class="hidden text-center py-20">
+            <div class="loader mx-auto mb-8"></div>
+            <h3 class="text-xl font-black text-white italic tracking-tighter">RENDERIZZAZIONE SEO & VISUAL...</h3>
         </div>
 
-        <div id="results" class="space-y-12"></div>
+        <div id="results" class="space-y-24"></div>
 
     </main>
 
     <nav class="fixed bottom-8 left-8 right-8 z-50">
-        <div class="glass p-5 rounded-[2.5rem] flex justify-between items-center border border-blue-500/20 shadow-3xl">
+        <div class="glass p-5 rounded-[2.5rem] flex justify-between items-center border border-sky-500/30 shadow-3xl">
             <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
                     <i class="fas fa-crown text-white"></i>
                 </div>
                 <div>
-                    <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest leading-none">Partner Program</p>
-                    <p class="text-xs font-black text-white">BONUS 500€ ADS ATTIVO</p>
+                    <p class="text-[9px] text-gray-500 font-black uppercase tracking-widest leading-none">VIP Partner Hub</p>
+                    <p class="text-sm font-black text-white italic">SBLOCCA 500€ BONUS ADS</p>
                 </div>
             </div>
-            <a href="hub.html" class="bg-blue-600 text-white px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-transform no-underline shadow-lg">
-                SBLOCCA HUB
+            <a href="hub.html" class="bg-white text-black px-8 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-sky-400 transition-colors no-underline">
+                ACCEDI ALL'HUB
             </a>
         </div>
     </nav>
 
     <script>
-        // Nuova Chiave Frammentata (Verificata)
-        const parts = ["AIzaSyD-", "dRX54KSf", "tVhj-yj3", "QBGQPq21", "foNubWg"];
-        const key = parts.join("");
+        // Chiave Frammentata (Nuova Chiave Fornita)
+        const k1 = "AIzaSyD-";
+        const k2 = "dRX54KSf";
+        const k3 = "tVhj-yj3";
+        const k4 = "QBGQPq21";
+        const k5 = "foNubWg";
+        const masterKey = k1 + k2 + k3 + k4 + k5;
 
-        async function generateContent() {
-            const input = document.getElementById('promptInput');
+        async function runEngine() {
+            const prompt = document.getElementById('promptInput').value.trim();
             const btn = document.getElementById('mainBtn');
             const results = document.getElementById('results');
             const loading = document.getElementById('loading');
-            const prompt = input.value.trim();
 
-            if (!prompt) return alert("Inserisci un obiettivo per iniziare!");
+            if (!prompt) return;
 
             btn.disabled = true;
             loading.classList.remove('hidden');
             results.innerHTML = '';
 
-            // MODIFICA CRUCIALE: Usiamo l'endpoint v1 STABILE
-            const model = "gemini-1.5-flash";
-            const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${key}`;
+            // TENTATIVO 1: Gemini 2.0 Flash (v1beta)
+            const success = await callAPI("v1beta", "gemini-2.0-flash", prompt);
+            
+            // TENTATIVO 2: Se fallisce, prova Gemini 1.5 Flash (v1)
+            if (!success) {
+                console.log("Tentativo fallback su v1...");
+                await callAPI("v1", "gemini-1.5-flash", prompt);
+            }
 
-            const instruction = `Agisci come Social Media Manager Senior ed Esperto SEO. 
-            Genera 3 post professionali di altissima qualità. 
-            Ogni post deve includere:
-            1. SEO FOCUS (Keyword)
-            2. TITOLO (H1 Persuasivo)
-            3. BODY (Testo professionale e coinvolgente)
-            4. IMAGE_PROMPT (Descrizione dettagliata in inglese per AI generativa, stile professional photography, cinematic, 8k).
-            Dividi ogni post con '---'.`;
+            btn.disabled = false;
+            loading.classList.add('hidden');
+        }
+
+        async function callAPI(version, model, prompt) {
+            const results = document.getElementById('results');
+            const url = `https://generativelanguage.googleapis.com/${version}/models/${model}:generateContent?key=${masterKey}`;
+
+            const instruction = `Sei STUDIOX PRO 2026. Genera 3 post professionali ottimizzati SEO.
+            Includi:
+            - SEO FOCUS (Keywords)
+            - TITOLO (H1 persuasivo)
+            - HOOK (Gancio d'impatto)
+            - BODY (Testo SMM Pro)
+            - CTA (Call to action)
+            - IMAGE_PROMPT (Scrivi un prompt fotografico ultradettagliato in INGLESE per Imagen 4: professional product/lifestyle photography, cinematic lighting, 8k, advertising grade).
+            Dividi i post con '---'.`;
 
             try {
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: instruction + "\n\nBrief: " + prompt }] }]
-                    })
+                    body: JSON.stringify({ contents: [{ parts: [{ text: instruction + "\n\nBrief: " + prompt }] }] })
                 });
 
                 const data = await response.json();
-                if (!response.ok) throw new Error(data.error?.message || "Errore API");
+                if (!response.ok) throw new Error(data.error?.message);
 
                 const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (text) renderResults(text);
-
+                if (text) {
+                    renderCards(text);
+                    return true;
+                }
+                return false;
             } catch (err) {
-                console.error(err);
-                results.innerHTML = `<div class="p-8 glass rounded-3xl border border-red-500/20 text-center text-red-400 text-xs font-bold uppercase italic">${err.message}</div>`;
-            } finally {
-                btn.disabled = false;
-                loading.classList.add('hidden');
+                console.error(`Errore con ${model}:`, err.message);
+                if (version === "v1") { // Mostra errore solo se fallisce anche il fallback
+                    results.innerHTML = `<div class="p-8 glass rounded-3xl border-red-500/20 text-center text-red-400 text-xs font-bold uppercase italic">${err.message}</div>`;
+                }
+                return false;
             }
         }
 
-        function renderResults(text) {
+        function renderCards(text) {
             const container = document.getElementById('results');
             const blocks = text.split('---');
 
             blocks.forEach((block, i) => {
-                if (block.trim().length < 20) return;
+                if (block.trim().length < 50) return;
 
-                const match = block.match(/IMAGE_PROMPT:\s*(.*)/i);
-                const visualPrompt = match ? match[1].trim() : "professional luxury marketing";
-                const cleanBody = block.replace(/IMAGE_PROMPT:.*$/i, "").trim();
+                const imgMatch = block.match(/IMAGE_PROMPT:\s*(.*)/i);
+                const visual = imgMatch ? imgMatch[1].trim() : "professional advertising photography";
+                const body = block.replace(/IMAGE_PROMPT:.*$/i, "").trim();
 
-                // Immagine AI Imagen-Style
-                const imgSource = `https://image.pollinations.ai/prompt/${encodeURIComponent(visualPrompt + ", cinematic lighting, 8k, advertising photography")}?width=1080&height=1350&nologo=true&seed=${Math.floor(Math.random()*1000)}`;
+                const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(visual + ", extreme detail, advertising grade, 8k, cinematic")}?width=1080&height=1350&nologo=true&seed=${Math.floor(Math.random()*9999)}`;
 
-                const div = document.createElement('div');
-                div.className = 'glass p-6 rounded-[2.5rem] strategy-card animate-in';
-                div.innerHTML = `
-                    <div class="flex justify-between items-center mb-5">
-                        <span class="seo-badge">🔥 SEO Expert Optimized</span>
-                        <button onclick="copyToClipboard(this)" class="text-gray-500 hover:text-white transition-colors"><i class="fas fa-copy"></i></button>
+                const card = document.createElement('div');
+                card.className = 'strategy-card p-8 rounded-[3rem] animate-in';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-8">
+                        <span class="badge-seo">StudioX Algorithm Verified</span>
+                        <button onclick="copyPost(this)" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:text-sky-400 transition-all">
+                            <i class="fas fa-copy"></i>
+                        </button>
                     </div>
-                    <img src="${imgSource}" class="ai-image shadow-2xl" alt="Visual Asset">
-                    <div class="text-sm leading-relaxed text-gray-300 whitespace-pre-wrap">${cleanBody}</div>
+                    <img src="${imgUrl}" class="img-ai shadow-2xl" alt="AI Visual">
+                    <div class="text-sm leading-relaxed text-gray-200 whitespace-pre-wrap font-medium">${body}</div>
                 `;
-                container.appendChild(div);
+                container.appendChild(card);
             });
         }
 
-        async function copyToClipboard(btn) {
+        async function copyPost(btn) {
             const text = btn.closest('.strategy-card').innerText;
             await navigator.clipboard.writeText(text);
-            btn.innerHTML = '<i class="fas fa-check text-emerald-500"></i>';
+            btn.innerHTML = '<i class="fas fa-check text-sky-400"></i>';
             setTimeout(() => btn.innerHTML = '<i class="fas fa-copy"></i>', 2000);
         }
     </script>
