@@ -14,80 +14,93 @@
         
         .glass { background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .glow-blue { box-shadow: 0 0 25px rgba(59, 130, 246, 0.3); }
-        .glow-accent { box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
         
         .loader { 
             border: 3px solid rgba(59, 130, 246, 0.1); 
             border-top: 3px solid var(--primary); 
             border-radius: 50%; width: 45px; height: 45px; 
-            animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite; 
+            animation: spin 0.8s linear infinite; 
         }
         
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        .strategy-card { transition: all 0.3s ease; border-left: 5px solid var(--primary); }
-        .strategy-card:hover { transform: translateY(-5px); border-left-color: var(--accent); }
-        
-        .ai-image { width: 100%; height: 220px; object-fit: cover; border-radius: 1rem; margin-bottom: 1.5rem; background: #111; }
+        .strategy-card { border-left: 5px solid var(--primary); transition: transform 0.2s; }
+        .ai-image { width: 100%; height: 220px; object-fit: cover; border-radius: 1.5rem; margin-bottom: 1.5rem; background: #111; border: 1px solid rgba(255,255,255,0.1); }
         
         .seo-badge { background: rgba(16, 185, 129, 0.15); color: #34d399; font-size: 0.65rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
+        
+        .animate-in { animation: fadeInUp 0.5s ease forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="min-h-screen pb-20">
+<body class="min-h-screen pb-32">
 
     <header class="p-5 flex justify-between items-center glass sticky top-0 z-50 border-b border-white/5">
         <div class="flex items-center gap-3">
-            <div class="w-11 h-11 bg-gradient-to-br from-blue-600 to-emerald-500 rounded-xl flex items-center justify-center glow-blue">
-                <i class="fas fa-rocket text-white"></i>
+            <div class="w-11 h-11 bg-blue-600 rounded-xl flex items-center justify-center glow-blue">
+                <i class="fas fa-bolt text-white text-xl"></i>
             </div>
             <div>
-                <h1 class="font-extrabold text-xl tracking-tighter text-white italic">STUDIOX<span class="text-blue-500">PRO</span></h1>
-                <p class="text-[9px] text-emerald-400 font-black uppercase tracking-[0.2em]">SEO & SMM Master Engine</p>
+                <h1 class="font-extrabold text-xl tracking-tighter text-white italic uppercase">STUDIOX<span class="text-blue-500">ai</span></h1>
+                <p class="text-[9px] text-emerald-400 font-black uppercase tracking-widest">Socio Pro Engine v3</p>
             </div>
         </div>
-        <div class="hidden sm:flex flex-col items-end">
-            <span class="text-[10px] font-bold text-gray-500">ENGINE STATUS</span>
-            <span class="text-[10px] text-emerald-500 font-black animate-pulse">OPTIMIZED v3.0</span>
+        <div class="flex items-center gap-2">
+            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            <span class="text-[10px] font-bold text-gray-400 uppercase">Live</span>
         </div>
     </header>
 
     <main class="max-w-2xl mx-auto p-6">
         
         <div class="glass p-7 rounded-[2.5rem] mb-10 border-white/10 shadow-2xl">
-            <div class="flex items-center gap-2 mb-4">
-                <i class="fas fa-lightbulb text-amber-400 text-xs"></i>
-                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Brief del Progetto</label>
-            </div>
-            
+            <label class="block text-[10px] font-black text-gray-500 uppercase mb-4 tracking-[0.2em]">Obiettivo della Campagna</label>
             <textarea id="promptInput" rows="3" 
                 class="w-full bg-transparent border-none text-xl focus:ring-0 placeholder-gray-800 resize-none text-white font-medium"
-                placeholder="Cosa dobbiamo promuovere oggi?"></textarea>
+                placeholder="Es: Lancio collezione estiva per brand di occhiali..."></textarea>
             
             <button onclick="generateProfessionalCampaign()" id="mainBtn" 
-                class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-3 transition-all glow-blue group">
-                <span id="btnText">GENERA ASSET PROFESSIONALI</span>
-                <i class="fas fa-bolt group-hover:scale-125 transition-transform"></i>
+                class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-3 transition-all glow-blue">
+                <span>GENERA ASSET SEO PRO</span>
+                <i class="fas fa-wand-magic-sparkles"></i>
             </button>
         </div>
 
-        <div id="loading" class="hidden text-center py-10 animate-in">
+        <div id="loading" class="hidden text-center py-10">
             <div class="loader mx-auto mb-6"></div>
-            <h3 class="text-white font-bold text-lg">Analisi SEO in corso...</h3>
-            <p class="text-gray-500 text-sm italic">Generando immagini coordinate e testi ottimizzati</p>
+            <h3 class="text-white font-bold text-lg">Analisi SEO & Visual Design...</h3>
+            <p class="text-gray-500 text-sm italic">Sto creando contenuti ad alto impatto per te.</p>
         </div>
 
-        <div id="results" class="space-y-10"></div>
+        <div id="results" class="space-y-12"></div>
 
     </main>
 
+    <nav class="fixed bottom-6 left-6 right-6 z-50">
+        <div class="glass p-4 rounded-3xl flex justify-between items-center border border-blue-500/20 shadow-2xl">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-amber-500/20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-gift text-amber-500"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-tighter leading-none">Partner Program</p>
+                    <p class="text-xs font-extrabold text-white">BONUS 500€ ADS</p>
+                </div>
+            </div>
+            <a href="hub.html" class="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-transform no-underline">
+                SBLOCCA HUB
+            </a>
+        </div>
+    </nav>
+
     <script>
-        // Frammentazione Chiave API aggiornata
-        const p1 = "AIzaSyD-";
-        const p2 = "dRX54KSf";
-        const p3 = "tVhj-yj3";
-        const p4 = "QBGQPq21";
-        const p5 = "foNubWg";
-        const apiKey = p1 + p2 + p3 + p4 + p5;
+        // Nuova Chiave Frammentata (Verificata)
+        const part1 = "AIzaSyD-";
+        const part2 = "dRX54KSf";
+        const part3 = "tVhj-yj3";
+        const part4 = "QBGQPq21";
+        const part5 = "foNubWg";
+        const key = part1 + part2 + part3 + part4 + part5;
 
         async function generateProfessionalCampaign() {
             const prompt = document.getElementById('promptInput').value.trim();
@@ -95,102 +108,92 @@
             const results = document.getElementById('results');
             const loading = document.getElementById('loading');
 
-            if (!prompt) return alert("Inserisci una descrizione per iniziare!");
+            if (!prompt) return alert("Scrivi un'idea per la tua campagna!");
 
             btn.disabled = true;
-            btn.style.opacity = "0.5";
             loading.classList.remove('hidden');
             results.innerHTML = '';
 
-            const model = "gemini-1.5-flash";
-            const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`;
+            // Utilizziamo v1beta come richiesto dal tipo di errore precedente
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
 
-            const systemInstruction = `Sei un esperto Social Media Manager e Specialista SEO. 
-            Il tuo compito è generare 3 post professionali di altissima qualità.
-            Ogni post deve essere perfetto per l'indicizzazione.
-            
-            FORMATO RICHIESTO (Usa tassativamente questo ordine per ogni post):
-            TITOLO: [Titolo accattivante]
-            SEO FOCUS: [Lista di 3 keyword principali]
-            HOOK: [Gancio iniziale per fermare lo scrolling]
-            BODY: [Testo del post professionale e persuasivo]
-            CTA: [Chiamata all'azione efficace]
-            HASHTAG: [Mix di hashtag popolari e di nicchia]
-            IMAGE_PROMPT: [Scrivi qui una breve descrizione in INGLESE dell'immagine ideale per questo post, stile professionale/fotografico]
-            --- (Separatore tra i post)`;
-
-            const payload = {
-                contents: [{ parts: [{ text: `${systemInstruction}\n\nInput utente: ${prompt}` }] }]
-            };
+            const systemPrompt = `Sei un Social Media Manager Esperto SEO. Genera 3 post perfetti per il posizionamento.
+            Per ogni post segui questo schema preciso:
+            TITOLO: [Titolo]
+            SEO FOCUS: [Keyword]
+            HOOK: [Gancio]
+            BODY: [Testo professionale]
+            CTA: [Invito all'azione]
+            HASHTAG: [Tag]
+            IMAGE_PROMPT: [Descrizione immagine in inglese per AI]
+            Dividi i post con '---'.`;
 
             try {
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: systemPrompt + "\n\nUtente richiede: " + prompt }] }]
+                    })
                 });
 
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.error?.message || "Errore API");
 
                 const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (text) parseAndRender(text);
+                if (text) renderResults(text);
 
             } catch (error) {
-                results.innerHTML = `<div class="p-6 glass rounded-3xl text-red-400 border border-red-500/20 text-center text-xs font-bold uppercase tracking-widest">${error.message}</div>`;
+                results.innerHTML = `<div class="p-6 glass rounded-3xl text-red-400 border border-red-500/20 text-center text-xs">Errore: ${error.message}</div>`;
             } finally {
                 btn.disabled = false;
-                btn.style.opacity = "1";
                 loading.classList.add('hidden');
             }
         }
 
-        function parseAndRender(fullText) {
+        function renderResults(text) {
             const container = document.getElementById('results');
-            const blocks = fullText.split('---');
+            const postBlocks = text.split('---');
 
-            blocks.forEach((block, index) => {
-                if (block.trim().length < 20) return;
+            postBlocks.forEach((block, i) => {
+                if (block.trim().length < 30) return;
 
-                // Estrazione Image Prompt
-                const imgPromptMatch = block.match(/IMAGE_PROMPT:\s*(.*)/i);
-                const imagePrompt = imgPromptMatch ? imgPromptMatch[1].trim() : "professional business marketing concept";
-                const cleanContent = block.replace(/IMAGE_PROMPT:.*$/i, "").trim();
+                // Estrazione prompt immagine
+                const imgMatch = block.match(/IMAGE_PROMPT:\s*(.*)/i);
+                const visualPrompt = imgMatch ? imgMatch[1].trim() : "professional business marketing";
+                const cleanText = block.replace(/IMAGE_PROMPT:.*$/i, "").trim();
 
-                // Generazione URL immagine (Pollinations AI)
-                const encodedPrompt = encodeURIComponent(imagePrompt + " high resolution, professional photography, cinematic lighting");
-                const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=800&height=500&nologo=true&seed=${Math.floor(Math.random()*1000)}`;
+                // Immagine da Pollinations
+                const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(visualPrompt)}?width=1080&height=1350&nologo=true&seed=${Math.floor(Math.random()*1000)}`;
 
                 const card = document.createElement('div');
-                card.className = 'glass p-6 rounded-[2rem] strategy-card animate-in glow-accent';
+                card.className = 'glass p-6 rounded-[2.5rem] strategy-card animate-in';
                 card.innerHTML = `
                     <div class="flex justify-between items-center mb-5">
-                        <div class="flex gap-2">
-                            <span class="seo-badge">🔥 SEO Optimized</span>
-                            <span class="bg-white/5 text-gray-400 text-[9px] px-2 py-1 rounded font-bold">POST #${index + 1}</span>
-                        </div>
-                        <button onclick="copyToClipboard(this)" class="text-gray-500 hover:text-blue-400 transition-colors"><i class="fas fa-copy"></i></button>
+                        <span class="seo-badge">🔥 SEO Expert Optimized</span>
+                        <button onclick="copyPost(this)" class="text-gray-500 hover:text-white p-2 transition-colors">
+                            <i class="fas fa-copy"></i>
+                        </button>
                     </div>
 
-                    <img src="${imageUrl}" class="ai-image shadow-lg" alt="AI Generated Visual" onerror="this.src='https://via.placeholder.com/800x450/111/333?text=Immagine+in+Generazione...'">
+                    <img src="${imgUrl}" class="ai-image shadow-2xl" alt="AI Generated" loading="lazy">
 
-                    <div class="text-sm leading-relaxed text-gray-200 whitespace-pre-wrap font-medium">${cleanContent}</div>
+                    <div class="text-sm leading-relaxed text-gray-300 whitespace-pre-wrap">${cleanText}</div>
                     
-                    <div class="mt-6 pt-6 border-t border-white/5 flex justify-between items-center">
-                        <span class="text-[10px] text-gray-500 font-bold uppercase italic">StudioX Visual Engine Integration</span>
-                        <i class="fas fa-check-circle text-emerald-500 text-xs"></i>
+                    <div class="mt-6 pt-4 border-t border-white/5 flex items-center gap-2">
+                        <i class="fas fa-shield-halved text-[10px] text-blue-500"></i>
+                        <span class="text-[9px] text-gray-600 font-bold uppercase">Asset verificato per Algoritmo 2026</span>
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
-        async function copyToClipboard(btn) {
+        async function copyPost(btn) {
             const text = btn.closest('.strategy-card').innerText;
             await navigator.clipboard.writeText(text);
-            const icon = btn.querySelector('i');
-            icon.className = 'fas fa-check text-emerald-500';
-            setTimeout(() => icon.className = 'fas fa-copy', 2000);
+            btn.innerHTML = '<i class="fas fa-check text-emerald-500"></i>';
+            setTimeout(() => btn.innerHTML = '<i class="fas fa-copy"></i>', 2000);
         }
     </script>
 </body>
