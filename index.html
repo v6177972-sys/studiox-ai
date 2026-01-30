@@ -27,7 +27,7 @@
         </div>
         <div class="flex items-center gap-2 bg-zinc-800 px-3 py-1 rounded-full border border-purple-500/30">
             <div class="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
-            <span class="text-[9px] font-bold text-purple-400">v3.1 VIRAL</span>
+            <span class="text-[9px] font-bold text-purple-400">v3.2 POLLEN</span>
         </div>
     </header>
 
@@ -51,6 +51,12 @@
         </div>
 
         <div id="results" class="space-y-8"></div>
+
+        <div class="text-center mt-10 mb-5 opacity-50">
+            <a href="https://pollinations.ai" target="_blank" class="text-[10px] text-zinc-600 font-bold tracking-widest no-underline hover:text-zinc-400 transition">
+                BUILT WITH POLLINATIONS.AI
+            </a>
+        </div>
 
     </main>
 
@@ -91,4 +97,73 @@
                     method: "POST",
                     headers: { "Authorization": `Bearer ${API_KEY}`, "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        model: "llama-3.
+                        model: "llama-3.3-70b-versatile",
+                        messages: [
+                            {
+                                role: "system",
+                                content: "Agisci come un Copywriter esperto in Viral Marketing e Psicologia della Vendita. Il tuo obiettivo è vendere prodotti in affiliazione su TikTok e Instagram. NON usare un linguaggio robotico o troppo formale. Usa un tono entusiasta, diretto e colloquiale (dai del 'tu'). Crea 3 varianti di post. Per ogni post segui RIGOROSAMENTE questa struttura:\n1. HOOK: Una prima frase esplosiva, controversa o che crea estrema curiosità (usa CAPS LOCK per parole chiave).\n2. BODY: Spiega i benefici usando bullet points o frasi brevissime. Crea FOMO (paura di perdere l'occasione).\n3. CTA: Ordine imperativo chiaro + Link in bio.\n4. HASHTAGS: 15 tag mixando nicchia e virali.\n5. IMAGE_PROMPT: Descrizione visiva in INGLESE per foto 8k, stile 'Cinematic', 'Hyper-realistic', 'Product Photography'.\nSepara i 3 post con la stringa '---'."
+                            },
+                            { role: "user", content: input }
+                        ],
+                        temperature: 0.8
+                    })
+                });
+
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error?.message || "Errore sconosciuto");
+                renderCards(data.choices[0].message.content);
+
+            } catch (error) {
+                alert("Errore API: " + error.message);
+                results.innerHTML = `<div class="p-4 border border-red-500/30 rounded-xl text-red-400 text-center text-xs font-bold uppercase">Riprova.</div>`;
+            } finally {
+                btn.disabled = false;
+                btnText.innerText = "CREA POST VIRALI";
+                loading.classList.add('hidden');
+            }
+        }
+
+        function renderCards(fullText) {
+            const container = document.getElementById('results');
+            const posts = fullText.split('---');
+            const fallbackUrl = "https://placehold.co/1080x1350/1a1a1a/333333?text=Immagine+in+elaborazione...";
+
+            posts.forEach((post, index) => {
+                if (post.trim().length < 30) return;
+
+                const imgMatch = post.match(/IMAGE_PROMPT:\s*(.*)/i);
+                const visual = imgMatch ? imgMatch[1].trim() : "product photography";
+                const cleanBody = post.replace(/IMAGE_PROMPT:.*$/i, "").trim();
+                const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(visual + ", 8k, photorealistic, cinematic")}?width=1080&height=1350&nologo=true&seed=${Math.random()}`;
+
+                const card = document.createElement('div');
+                card.className = "card animate-[fadeIn_0.5s_ease-out]";
+                card.innerHTML = `
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="bg-purple-600 text-white text-[10px] font-bold px-2 py-1 rounded">VARIANTE ${index + 1}</span>
+                        <span class="text-[9px] text-gray-500 font-bold uppercase">Viral Copy</span>
+                    </div>
+                    <img src="${imgUrl}" onerror="this.src='${fallbackUrl}'" class="w-full rounded-xl mb-5 shadow-lg border border-white/5" alt="Post Image">
+                    <div class="text-sm text-gray-300 whitespace-pre-wrap leading-relaxed font-medium mb-4 pl-3 border-l-2 border-purple-500">${cleanBody}</div>
+                    <button onclick="copyToClip(this)" class="w-full py-4 bg-zinc-800 rounded-xl text-[10px] text-purple-400 font-black uppercase tracking-widest hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2">
+                        <i class="fas fa-copy"></i> COPIA TUTTO
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        async function copyToClip(btn) {
+            const text = btn.parentElement.querySelector('.whitespace-pre-wrap').innerText;
+            await navigator.clipboard.writeText(text);
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> COPIATO!';
+            btn.classList.replace('text-purple-400', 'text-green-500');
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.replace('text-green-500', 'text-purple-400');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
