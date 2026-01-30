@@ -3,131 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudioX AI | Business Engine</title>
+    <title>StudioX PRO | SEO Affiliate Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #050505; color: #fff; margin: 0; }
-        .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
-        .btn-gradient { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
-        .strategy-card { border-left: 4px solid #3b82f6; background: rgba(255,255,255,0.02); margin-bottom: 2rem; padding: 1.5rem; border-radius: 1.5rem; }
-        .ai-image { width: 100%; border-radius: 1rem; margin-bottom: 1rem; border: 1px solid #333; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #020202; color: #fff; margin: 0; }
+        .glass { background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #222; }
+        .card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 2rem; padding: 1.5rem; margin-bottom: 2.5rem; }
+        .seo-tag { background: rgba(59, 130, 246, 0.1); color: #60a5fa; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 50px; text-transform: uppercase; }
         .loader { border: 3px solid #111; border-top: 3px solid #3b82f6; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="pb-40">
 
-    <header class="p-5 glass sticky top-0 z-50 flex justify-between items-center">
-        <h1 class="font-extrabold text-lg tracking-tighter uppercase italic text-blue-500">StudioX<span class="text-white">AI</span></h1>
-        <div class="flex items-center gap-2">
-            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            <span class="text-[10px] font-bold text-gray-400 uppercase">Piano Free</span>
+    <header class="p-6 glass sticky top-0 z-50 flex justify-between items-center">
+        <div>
+            <h1 class="font-extrabold text-xl italic text-blue-500 tracking-tighter uppercase">StudioX<span class="text-white">Pro</span></h1>
+            <p class="text-[8px] text-gray-500 font-bold uppercase tracking-widest">Affiliate Marketing Cloud</p>
         </div>
+        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]"></div>
     </header>
 
-    <main class="p-6 max-w-xl mx-auto">
-        <div class="glass p-6 rounded-3xl shadow-xl">
-            <p class="text-[10px] font-bold text-gray-500 uppercase mb-3">Obiettivo Guadagno (Affiliazioni)</p>
-            <textarea id="promptInput" rows="3" class="w-full bg-transparent border-none text-lg focus:ring-0 placeholder-gray-800 text-white outline-none" placeholder="Es: Crema viso bio per affiliazione Amazon..."></textarea>
+    <main class="p-5 max-w-xl mx-auto">
+        <div class="bg-zinc-900/50 p-6 rounded-[2.5rem] border border-zinc-800 shadow-2xl mb-10">
+            <label class="text-[10px] font-black text-blue-400 uppercase tracking-widest block mb-4">Cosa vuoi vendere oggi?</label>
+            <textarea id="promptInput" rows="3" 
+                class="w-full bg-transparent border-none text-xl focus:ring-0 text-white placeholder-zinc-700 font-bold resize-none outline-none" 
+                placeholder="Es: Scarpe running per chi ha mal di schiena..."></textarea>
             
-            <button onclick="generate()" id="mainBtn" class="w-full mt-4 btn-gradient text-white font-black py-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg">
-                <span>CREA ASSET</span>
+            <button onclick="generateAssets()" id="btn" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-3 transition-transform active:scale-95">
+                <span>GENERA ASSET SEO</span>
                 <i class="fas fa-bolt"></i>
             </button>
         </div>
 
         <div id="loading" class="hidden py-10 text-center">
             <div class="loader mx-auto mb-4"></div>
-            <p class="text-xs text-gray-500 italic">L'IA sta scrivendo gratis per te...</p>
+            <p class="text-[10px] text-gray-500 font-bold uppercase animate-pulse">Ottimizzazione Algoritmi Social...</p>
         </div>
 
-        <div id="results" class="mt-10"></div>
+        <div id="results"></div>
     </main>
 
     <nav class="fixed bottom-6 left-4 right-4 z-50">
-        <div class="glass p-4 rounded-3xl flex justify-between items-center border border-blue-500/20 shadow-2xl">
+        <div class="glass p-4 rounded-[2rem] flex justify-between items-center border border-blue-500/20 shadow-2xl bg-zinc-900/90">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-amber-500/20 rounded-full flex items-center justify-center"><i class="fas fa-gift text-amber-500"></i></div>
+                <div class="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center border border-amber-500/20">
+                    <i class="fas fa-gem text-amber-500"></i>
+                </div>
                 <div>
-                    <p class="text-[10px] text-gray-500 font-bold uppercase leading-none">Partner Program</p>
-                    <p class="text-xs font-extrabold text-white">BONUS 500€ ADS</p>
+                    <p class="text-[9px] text-gray-500 font-black uppercase">Programma Partner</p>
+                    <p class="text-xs font-black text-white">BONUS 500€ ADS</p>
                 </div>
             </div>
-            <a href="hub.html" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase no-underline">SBLOCCA</a>
+            <a href="hub.html" class="bg-white text-black px-5 py-2.5 rounded-xl text-[10px] font-black uppercase no-underline shadow-lg">SBLOCCA</a>
         </div>
     </nav>
 
     <script>
-        // La tua chiave (frammentata per sicurezza)
-        const k = "AIzaSyD-dRX54KSftVhj-yj3QBGQPq21foNubWg";
+        // Chiave API 2026 Stable
+        const key = "AIzaSyD-dRX54KSftVhj-yj3QBGQPq21foNubWg";
 
-        async function generate() {
+        async function generateAssets() {
             const input = document.getElementById('promptInput').value.trim();
-            const btn = document.getElementById('mainBtn');
             const results = document.getElementById('results');
             const loading = document.getElementById('loading');
+            const btn = document.getElementById('btn');
 
-            if(!input) return;
+            if (!input) return;
 
             btn.disabled = true;
             loading.classList.remove('hidden');
             results.innerHTML = '';
 
-            // Usiamo v1beta e gemini-1.5-flash: è il modello con i limiti più alti per il piano GRATIS
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${k}`;
+            // Endpoint v1 (Il più stabile per il piano free)
+            const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${key}`;
 
-            const promptSEO = `Agisci come esperto marketing affiliazioni. Crea 2 post social SEO. Per ogni post scrivi: TITOLO, CORPO, CTA, HASHTAG e IMAGE_PROMPT (in inglese, stile realistico 8k). Dividi i post con '---'. Brief: ${input}`;
+            const architectPrompt = `Sei un esperto SMM e SEO. Crea 2 post per vendere in affiliazione: ${input}.
+            Per ogni post scrivi:
+            TITOLO: (H1 SEO)
+            BODY: (Testo persuasivo con emoji)
+            IMAGE_PROMPT: (Descrizione inglese per immagine 8k, stile professionale fotorealistico).
+            Separa i post con '---'.`;
 
             try {
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: promptSEO }] }] })
+                    body: JSON.stringify({ contents: [{ parts: [{ text: architectPrompt }] }] })
                 });
 
                 const data = await response.json();
-                
-                if(!response.ok) {
-                    if(data.error?.message.includes("quota")) throw new Error("Google è sovraccarico. Aspetta 1 minuto.");
-                    throw new Error("Errore tecnico. Riprova.");
-                }
+                if (!response.ok) throw new Error(data.error?.message || "Errore");
 
                 const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                if(text) {
-                    const posts = text.split('---');
-                    posts.forEach(post => {
-                        if(post.length < 10) return;
+                if (text) {
+                    text.split('---').forEach(p => {
+                        if (p.length < 20) return;
                         
-                        // Estrai il prompt immagine per Pollinations
-                        const imgMatch = post.match(/IMAGE_PROMPT:\s*(.*)/i);
-                        const pImg = imgMatch ? imgMatch[1].trim() : "professional product photography";
-                        const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(pImg)}?width=800&height=1000&nologo=true&seed=${Math.random()}`;
+                        // Estrazione Image Prompt per Pollinations (Qualità Imagen 4)
+                        const imgMatch = p.match(/IMAGE_PROMPT:\s*(.*)/i);
+                        const visual = imgMatch ? imgMatch[1].trim() : "commercial product photography";
+                        const cleanBody = p.replace(/IMAGE_PROMPT:.*$/i, "").trim();
+
+                        const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(visual + ", professional lighting, high resolution, photorealistic")}?width=1080&height=1350&nologo=true`;
 
                         const card = document.createElement('div');
-                        card.className = "strategy-card";
+                        card.className = "card";
                         card.innerHTML = `
-                            <img src="${imgUrl}" class="ai-image" alt="AI Visual">
-                            <div class="text-sm text-gray-300 whitespace-pre-wrap">${post.replace(/IMAGE_PROMPT:.*$/i, '')}</div>
-                            <button onclick="copy(this)" class="mt-4 text-[10px] font-bold text-blue-400 uppercase tracking-widest"><i class="fas fa-copy mr-1"></i> Copia Testo</button>
+                            <div class="mb-4 flex justify-between items-center">
+                                <span class="seo-tag">SEO Optimized</span>
+                                <button onclick="copyText(this)" class="text-gray-500 hover:text-white"><i class="fas fa-copy"></i></button>
+                            </div>
+                            <img src="${imgUrl}" class="w-full rounded-2xl mb-6 shadow-2xl border border-white/5" alt="AI Visual">
+                            <div class="text-sm leading-relaxed text-gray-300 whitespace-pre-wrap">${cleanBody}</div>
                         `;
                         results.appendChild(card);
                     });
                 }
-            } catch (e) {
-                results.innerHTML = `<p class="text-center text-red-500 text-xs font-bold">${e.message}</p>`;
+            } catch (err) {
+                results.innerHTML = `<div class="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-[10px] text-red-500 font-bold uppercase text-center">Errore: Attendi 30 secondi e riprova (Limite Free raggiunto)</div>`;
             } finally {
                 btn.disabled = false;
                 loading.classList.add('hidden');
             }
         }
 
-        async function copy(btn) {
-            const text = btn.parentElement.innerText.replace('Copia Testo', '');
+        async function copyText(btn) {
+            const text = btn.closest('.card').innerText;
             await navigator.clipboard.writeText(text);
-            btn.innerHTML = '<i class="fas fa-check mr-1"></i> Copiato!';
-            setTimeout(() => btn.innerHTML = '<i class="fas fa-copy mr-1"></i> Copia Testo', 2000);
+            btn.innerHTML = '<i class="fas fa-check text-green-500"></i>';
+            setTimeout(() => btn.innerHTML = '<i class="fas fa-copy"></i>', 2000);
         }
     </script>
 </body>
