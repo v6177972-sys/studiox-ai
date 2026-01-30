@@ -8,27 +8,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
-        
         :root { --primary: #3b82f6; --bg: #050505; --accent: #10b981; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #e2e8f0; margin: 0; }
-        
         .glass { background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .glow-blue { box-shadow: 0 0 25px rgba(59, 130, 246, 0.3); }
-        
-        .loader { 
-            border: 3px solid rgba(59, 130, 246, 0.1); 
-            border-top: 3px solid var(--primary); 
-            border-radius: 50%; width: 45px; height: 45px; 
-            animation: spin 0.8s linear infinite; 
-        }
-        
+        .loader { border: 3px solid rgba(59, 130, 246, 0.1); border-top: 3px solid var(--primary); border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .strategy-card { border-left: 5px solid var(--primary); transition: transform 0.2s; }
-        .ai-image { width: 100%; height: 220px; object-fit: cover; border-radius: 1.5rem; margin-bottom: 1.5rem; background: #111; border: 1px solid rgba(255,255,255,0.1); }
-        
+        .strategy-card { border-left: 5px solid var(--primary); transition: all 0.3s ease; }
+        .strategy-card:hover { border-left-color: var(--accent); }
+        .ai-image { width: 100%; height: 240px; object-fit: cover; border-radius: 1.5rem; margin-bottom: 1.5rem; background: #111; border: 1px solid rgba(255,255,255,0.1); }
         .seo-badge { background: rgba(16, 185, 129, 0.15); color: #34d399; font-size: 0.65rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
-        
         .animate-in { animation: fadeInUp 0.5s ease forwards; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -38,42 +27,39 @@
     <header class="p-5 flex justify-between items-center glass sticky top-0 z-50 border-b border-white/5">
         <div class="flex items-center gap-3">
             <div class="w-11 h-11 bg-blue-600 rounded-xl flex items-center justify-center glow-blue">
-                <i class="fas fa-bolt text-white text-xl"></i>
+                <i class="fas fa-chart-line text-white text-xl"></i>
             </div>
             <div>
                 <h1 class="font-extrabold text-xl tracking-tighter text-white italic uppercase">STUDIOX<span class="text-blue-500">ai</span></h1>
-                <p class="text-[9px] text-emerald-400 font-black uppercase tracking-widest">Socio Pro Engine v3</p>
+                <p class="text-[9px] text-emerald-400 font-black uppercase tracking-widest">SEO & SMM Engine PRO</p>
             </div>
         </div>
         <div class="flex items-center gap-2">
             <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            <span class="text-[10px] font-bold text-gray-400 uppercase">Live</span>
+            <span class="text-[10px] font-bold text-gray-400 uppercase">System Ready</span>
         </div>
     </header>
 
     <main class="max-w-2xl mx-auto p-6">
-        
         <div class="glass p-7 rounded-[2.5rem] mb-10 border-white/10 shadow-2xl">
-            <label class="block text-[10px] font-black text-gray-500 uppercase mb-4 tracking-[0.2em]">Obiettivo della Campagna</label>
+            <label class="block text-[10px] font-black text-gray-500 uppercase mb-4 tracking-[0.2em]">Cosa vuoi promuovere?</label>
             <textarea id="promptInput" rows="3" 
-                class="w-full bg-transparent border-none text-xl focus:ring-0 placeholder-gray-800 resize-none text-white font-medium"
-                placeholder="Es: Lancio collezione estiva per brand di occhiali..."></textarea>
+                class="w-full bg-transparent border-none text-xl focus:ring-0 placeholder-gray-800 resize-none text-white font-medium outline-none"
+                placeholder="Es: Una nuova linea di integratori naturali per lo sport..."></textarea>
             
-            <button onclick="generateProfessionalCampaign()" id="mainBtn" 
+            <button onclick="generateCampaign()" id="mainBtn" 
                 class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-3 transition-all glow-blue">
-                <span>GENERA ASSET SEO PRO</span>
-                <i class="fas fa-wand-magic-sparkles"></i>
+                <span>GENERA CONTENUTI SEO</span>
+                <i class="fas fa-bolt"></i>
             </button>
         </div>
 
         <div id="loading" class="hidden text-center py-10">
             <div class="loader mx-auto mb-6"></div>
-            <h3 class="text-white font-bold text-lg">Analisi SEO & Visual Design...</h3>
-            <p class="text-gray-500 text-sm italic">Sto creando contenuti ad alto impatto per te.</p>
+            <h3 class="text-white font-bold text-lg italic">Ottimizzazione Algoritmi Social...</h3>
         </div>
 
         <div id="results" class="space-y-12"></div>
-
     </main>
 
     <nav class="fixed bottom-6 left-6 right-6 z-50">
@@ -94,102 +80,95 @@
     </nav>
 
     <script>
-        // Nuova Chiave Frammentata (Verificata)
-        const part1 = "AIzaSyD-";
-        const part2 = "dRX54KSf";
-        const part3 = "tVhj-yj3";
-        const part4 = "QBGQPq21";
-        const part5 = "foNubWg";
-        const key = part1 + part2 + part3 + part4 + part5;
+        // Nuova Chiave Frammentata
+        const k1 = "AIzaSyD-";
+        const k2 = "dRX54KSf";
+        const k3 = "tVhj-yj3";
+        const k4 = "QBGQPq21";
+        const k5 = "foNubWg";
+        const fullKey = k1 + k2 + k3 + k4 + k5;
 
-        async function generateProfessionalCampaign() {
+        async function generateCampaign() {
             const prompt = document.getElementById('promptInput').value.trim();
             const btn = document.getElementById('mainBtn');
             const results = document.getElementById('results');
             const loading = document.getElementById('loading');
 
-            if (!prompt) return alert("Scrivi un'idea per la tua campagna!");
+            if (!prompt) return alert("Scrivi un'idea per la tua strategia!");
 
             btn.disabled = true;
             loading.classList.remove('hidden');
             results.innerHTML = '';
 
-            // Utilizziamo v1beta come richiesto dal tipo di errore precedente
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
+            // Endpoint v1 (standard 2026)
+            const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${fullKey}`;
 
-            const systemPrompt = `Sei un Social Media Manager Esperto SEO. Genera 3 post perfetti per il posizionamento.
-            Per ogni post segui questo schema preciso:
-            TITOLO: [Titolo]
-            SEO FOCUS: [Keyword]
-            HOOK: [Gancio]
+            const instruction = `Agisci come Social Media Manager Senior ed Esperto SEO. 
+            Crea 3 post social perfetti per posizionamento e engagement. 
+            Per ogni post scrivi:
+            TITOLO: [Titolo SEO]
+            SEO FOCUS: [3 Keyword strategiche]
+            HOOK: [Gancio accattivante]
             BODY: [Testo professionale]
             CTA: [Invito all'azione]
-            HASHTAG: [Tag]
-            IMAGE_PROMPT: [Descrizione immagine in inglese per AI]
-            Dividi i post con '---'.`;
+            HASHTAG: [Tag ottimizzati]
+            IMAGE_PROMPT: [Descrizione dettagliata dell'immagine in inglese per AI]
+            Dividi ogni post con '---'.`;
 
             try {
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: systemPrompt + "\n\nUtente richiede: " + prompt }] }]
+                        contents: [{ parts: [{ text: instruction + "\n\nInput: " + prompt }] }]
                     })
                 });
 
                 const data = await response.json();
-                if (!response.ok) throw new Error(data.error?.message || "Errore API");
+                if (!response.ok) throw new Error(data.error?.message || "Errore sconosciuto");
 
                 const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (text) renderResults(text);
+                if (text) renderPosts(text);
+                else throw new Error("Risposta vuota dall'IA");
 
-            } catch (error) {
-                results.innerHTML = `<div class="p-6 glass rounded-3xl text-red-400 border border-red-500/20 text-center text-xs">Errore: ${error.message}</div>`;
+            } catch (err) {
+                results.innerHTML = `<div class="p-6 glass rounded-3xl border border-red-500/20 text-center text-red-400 text-xs">ERRORE: ${err.message}</div>`;
             } finally {
                 btn.disabled = false;
                 loading.classList.add('hidden');
             }
         }
 
-        function renderResults(text) {
+        function renderPosts(text) {
             const container = document.getElementById('results');
-            const postBlocks = text.split('---');
+            const items = text.split('---');
 
-            postBlocks.forEach((block, i) => {
-                if (block.trim().length < 30) return;
+            items.forEach((item, i) => {
+                if (item.trim().length < 20) return;
 
                 // Estrazione prompt immagine
-                const imgMatch = block.match(/IMAGE_PROMPT:\s*(.*)/i);
-                const visualPrompt = imgMatch ? imgMatch[1].trim() : "professional business marketing";
-                const cleanText = block.replace(/IMAGE_PROMPT:.*$/i, "").trim();
+                const match = item.match(/IMAGE_PROMPT:\s*(.*)/i);
+                const visual = match ? match[1].trim() : "professional digital marketing aesthetic";
+                const content = item.replace(/IMAGE_PROMPT:.*$/i, "").trim();
 
-                // Immagine da Pollinations
-                const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(visualPrompt)}?width=1080&height=1350&nologo=true&seed=${Math.floor(Math.random()*1000)}`;
+                // Generazione Immagine HQ (Pollinations)
+                const imgSource = `https://image.pollinations.ai/prompt/${encodeURIComponent(visual)}?width=1080&height=1350&nologo=true&seed=${Math.random()}`;
 
                 const card = document.createElement('div');
                 card.className = 'glass p-6 rounded-[2.5rem] strategy-card animate-in';
                 card.innerHTML = `
-                    <div class="flex justify-between items-center mb-5">
-                        <span class="seo-badge">🔥 SEO Expert Optimized</span>
-                        <button onclick="copyPost(this)" class="text-gray-500 hover:text-white p-2 transition-colors">
-                            <i class="fas fa-copy"></i>
-                        </button>
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="seo-badge">🔥 SEO Optimized</span>
+                        <button onclick="copyToClipboard(this)" class="text-gray-500 hover:text-white transition-colors"><i class="fas fa-copy"></i></button>
                     </div>
-
-                    <img src="${imgUrl}" class="ai-image shadow-2xl" alt="AI Generated" loading="lazy">
-
-                    <div class="text-sm leading-relaxed text-gray-300 whitespace-pre-wrap">${cleanText}</div>
-                    
-                    <div class="mt-6 pt-4 border-t border-white/5 flex items-center gap-2">
-                        <i class="fas fa-shield-halved text-[10px] text-blue-500"></i>
-                        <span class="text-[9px] text-gray-600 font-bold uppercase">Asset verificato per Algoritmo 2026</span>
-                    </div>
+                    <img src="${imgSource}" class="ai-image shadow-xl" alt="AI Social Content" loading="lazy">
+                    <div class="text-sm leading-relaxed text-gray-300 whitespace-pre-wrap">${content}</div>
                 `;
                 container.appendChild(card);
             });
         }
 
-        async function copyPost(btn) {
+        async function copyToClipboard(btn) {
             const text = btn.closest('.strategy-card').innerText;
             await navigator.clipboard.writeText(text);
             btn.innerHTML = '<i class="fas fa-check text-emerald-500"></i>';
