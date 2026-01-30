@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudioX Hub - Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050505; color: white; -webkit-tap-highlight-color: transparent; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .gradient-blue { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
+    </style>
+</head>
+<body class="min-h-screen p-6 pb-20">
+
+    <div class="max-w-md mx-auto space-y-12">
+        <header class="text-center pt-10 space-y-4">
+            <div class="w-20 h-20 gradient-blue rounded-[2.5rem] flex items-center justify-center mx-auto shadow-2xl shadow-blue-900/40">
+                <i data-lucide="layout-grid" class="w-10 h-10 text-white"></i>
+            </div>
+            <h1 class="text-3xl font-black uppercase italic tracking-tighter">StudioX <span class="text-blue-500">Toolkit</span></h1>
+            <p class="text-gray-500 text-sm font-medium italic">Strumenti professionali per scalare la tua presenza online.</p>
+        </header>
+
+        <section class="space-y-6">
+            <!-- CANVA -->
+            <a href="https://www.canva.com/" target="_blank" class="glass p-5 rounded-[2rem] flex items-center gap-5 block group no-underline text-white">
+                <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-purple-600 transition-colors">
+                    <i data-lucide="palette" class="w-6 h-6 text-purple-400 group-hover:text-white"></i>
+                </div>
+                <div class="flex-1 text-left leading-tight">
+                    <h3 class="font-bold text-sm uppercase italic leading-none">Canva Pro</h3>
+                    <p class="text-[9px] text-gray-500 mt-1 uppercase font-black tracking-tighter">Design & Social Kit</p>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-700"></i>
+            </a>
+
+            <!-- FIVERR -->
+            <a href="https://www.fiverr.com/" target="_blank" class="glass p-5 rounded-[2rem] flex items-center gap-5 block group no-underline text-white">
+                <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-green-600 transition-colors">
+                    <i data-lucide="zap" class="w-6 h-6 text-green-400 group-hover:text-white"></i>
+                </div>
+                <div class="flex-1 text-left leading-tight">
+                    <h3 class="font-bold text-sm uppercase italic leading-none">Freelance Experts</h3>
+                    <p class="text-[9px] text-gray-500 mt-1 uppercase font-black tracking-tighter">Delega l'operativo</p>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-700"></i>
+            </a>
+
+            <!-- HOSTING -->
+            <a href="https://www.hostinger.it/" target="_blank" class="glass p-5 rounded-[2rem] flex items-center gap-5 block group no-underline text-white">
+                <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                    <i data-lucide="server" class="w-6 h-6 text-blue-400 group-hover:text-white"></i>
+                </div>
+                <div class="flex-1 text-left leading-tight">
+                    <h3 class="font-bold text-sm uppercase italic leading-none">Web Hosting</h3>
+                    <p class="text-[9px] text-gray-500 mt-1 uppercase font-black tracking-tighter">Lancia il tuo sito</p>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-700"></i>
+            </a>
+        </section>
+
+        <div class="glass p-8 rounded-[2.5rem] text-center space-y-4 opacity-50">
+            <i data-lucide="shield-check" class="w-8 h-8 text-blue-500 mx-auto"></i>
+            <p class="text-[10px] text-gray-500 italic uppercase font-black tracking-widest">StudioX Business Ecosystem 2026</p>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+
