@@ -21,7 +21,6 @@
 </head>
 <body class="min-h-screen pb-40">
 
-    <!-- NAVBAR -->
     <nav class="p-5 flex justify-between items-center sticky top-0 bg-black/60 backdrop-blur-xl z-50 border-b border-white/5">
         <div class="flex items-center gap-3">
             <div class="w-11 h-11 bg-blue-600 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-900/40">
@@ -39,78 +38,53 @@
     </nav>
 
     <main class="max-w-md mx-auto px-6 py-10 space-y-12">
-        
         <header class="text-center space-y-4">
-            <h2 class="text-5xl font-black tracking-tighter uppercase italic leading-[0.85]">
-                PIANO <br><span class="text-blue-600 underline underline-offset-8 decoration-blue-900/30 text-white italic">INFALLIBILE.</span>
-            </h2>
+            <h2 class="text-5xl font-black tracking-tighter uppercase italic leading-[0.85]">PIANO <br><span class="text-blue-600 underline underline-offset-8 decoration-blue-900/30 text-white italic">INFALLIBILE.</span></h2>
             <p class="text-gray-400 font-medium italic text-lg px-2 text-white">Contenuti ottimizzati per la massima conversione.</p>
         </header>
 
-        <!-- INPUT BOX -->
         <div class="glass rounded-[3rem] p-8 shadow-2xl space-y-8">
             <div class="space-y-2">
                 <label class="text-[10px] font-black uppercase tracking-widest text-blue-500 ml-1 italic">Di cosa vogliamo parlare?</label>
-                <textarea id="promptInput" placeholder="Es: Lancio orologi di lusso minimalisti..." 
-                    class="w-full h-32 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-900 text-white"></textarea>
+                <textarea id="promptInput" placeholder="Es: Lancio orologi di lusso minimalisti..." class="w-full h-32 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-900 text-white"></textarea>
             </div>
-
             <button id="genBtn" onclick="handleGenerate()" class="btn-viral w-full py-6 rounded-[2rem] font-black flex items-center justify-center gap-4 text-white">
                 <span id="btnLabel" class="uppercase tracking-widest text-sm font-black">Lancia Produzione</span>
                 <i data-lucide="sparkles" class="w-5 h-5"></i>
             </button>
         </div>
 
-        <!-- RISULTATI -->
         <div id="results" class="hidden space-y-12 animate-up">
-            
-            <!-- IMMAGINE OTTIMIZZATA -->
             <div class="space-y-4">
                 <div class="glass rounded-[2.5rem] overflow-hidden relative aspect-square shadow-2xl bg-white/5">
-                    <div id="imgLoader" class="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md z-10">
+                    <div id="imgLoader" class="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md z-10 text-center px-4">
                         <div class="w-10 h-10 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
-                        <span id="loaderText" class="text-[10px] font-black text-blue-500 uppercase mt-4 tracking-widest italic text-center px-4 leading-relaxed">Sincronizzazione Asset...</span>
+                        <span id="loaderText" class="text-[10px] font-black text-blue-500 uppercase mt-4 tracking-widest italic leading-relaxed">Sincronizzazione Asset...</span>
                     </div>
                     <img id="outputImg" src="" class="hidden w-full h-full object-cover">
                 </div>
-                
-                <!-- AZIONI IMMAGINE -->
                 <div class="flex gap-4">
                     <button onclick="downloadImage()" class="btn-action flex-1 py-4 rounded-2xl flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-widest">
-                        <i data-lucide="download" class="w-4 h-4"></i>
-                        Scarica Foto
-                    </button>
-                    <button onclick="copyImageUrl()" class="btn-action px-6 py-4 rounded-2xl flex items-center justify-center text-gray-400">
-                        <i data-lucide="link" class="w-4 h-4"></i>
+                        <i data-lucide="download" class="w-4 h-4 text-blue-500"></i>Scarica Foto
                     </button>
                 </div>
             </div>
-
-            <!-- LISTA POST -->
             <div id="postsList" class="space-y-8 pb-20"></div>
         </div>
     </main>
 
-    <!-- FOOTER MONETIZZAZIONE -->
     <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50">
         <div class="glass rounded-[2rem] p-4 flex items-center justify-between border-blue-500/30 bg-blue-900/10 shadow-2xl backdrop-blur-xl">
             <div class="flex items-center gap-4 pl-2 text-left leading-none">
-                <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-900/20">
-                    <i data-lucide="trending-up" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <p class="text-[9px] font-black text-blue-400 uppercase tracking-tighter italic leading-none">Partner Program</p>
-                    <h4 class="font-bold text-sm text-white mt-1 leading-none uppercase italic">Bonus 500€ Ads</h4>
-                </div>
+                <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg"><i data-lucide="trending-up" class="w-6 h-6"></i></div>
+                <div><p class="text-[9px] font-black text-blue-400 uppercase tracking-tighter italic leading-none">Partner Program</p><h4 class="font-bold text-sm text-white mt-1 leading-none uppercase italic">Bonus 500€ Ads</h4></div>
             </div>
-            <a href="https://v6177972-sys.github.io/studiox-ai/" target="_blank" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg active:scale-95 transition-all font-black">Sblocca</a>
+            <a href="https://v6177972-sys.github.io/studiox-ai/" target="_blank" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg font-black">Sblocca</a>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
-
-        // CHIAVE INTEGRATA
         const _k = "AIzaSyDE" + "E4Z7oAy8" + "b7BPeqx-X" + "9YpWnpvUnk" + "QdbE";
 
         async function fetchWithRetry(url, options, maxRetries = 5) {
@@ -119,6 +93,7 @@
                     const response = await fetch(url, options);
                     const data = await response.json();
                     if (response.ok && !data.error) return data;
+                    if (data.error && data.error.code === 429) { await new Promise(res => setTimeout(res, 3000)); continue; }
                 } catch (e) {}
                 await new Promise(res => setTimeout(res, 2000));
             }
@@ -128,7 +103,6 @@
         async function handleGenerate() {
             const topic = document.getElementById('promptInput').value.trim();
             if(!topic) return;
-
             const btn = document.getElementById('genBtn');
             const results = document.getElementById('results');
             const postsList = document.getElementById('postsList');
@@ -144,77 +118,53 @@
             imgLoad.classList.remove('hidden');
 
             try {
-                // 1. GENERAZIONE TESTO + VISUAL PROMPT (OTTIMIZZAZIONE)
                 loaderText.innerText = "Studio Strategico...";
                 const textData = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${_k}`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Sei un Senior Social Media Strategist. Per l'argomento "${topic}":
-                        1. Genera 3 post virali (Hook, Body, CTA, Hashtags).
+                        contents: [{ parts: [{ text: `Sei un esperto di social marketing. Per l'argomento "${topic}":
+                        1. Genera 3 post virali diversi.
                         2. Crea un "Visual Prompt" professionale in inglese per una foto pubblicitaria ad alta risoluzione.
-                        Dividi i post con '###' e scrivi il Visual Prompt alla fine dopo 'IMAGE_PROMPT:'.` }] }]
+                        Dividi i post con '###' e scrivi il prompt finale dopo 'IMAGE_PROMPT:'.` }] }]
                     })
                 });
                 
-                if(!textData) throw new Error("Quota piena");
+                if(!textData) throw new Error();
 
-                const fullContent = textData.candidates[0].content.parts[0].text;
-                const [postsPart, visualPromptPart] = fullContent.split('IMAGE_PROMPT:');
+                const fullText = textData.candidates[0].content.parts[0].text;
+                const [postsPart, visualPrompt] = fullText.split('IMAGE_PROMPT:');
                 const posts = postsPart.split('###').filter(p => p.trim().length > 10).slice(0, 3);
-                const visualPrompt = visualPromptPart ? visualPromptPart.trim() : topic;
 
                 posts.forEach((p, i) => {
                     const card = document.createElement('div');
                     card.className = "glass p-8 rounded-[2rem] post-card animate-up mb-6";
-                    card.innerHTML = `
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest italic opacity-40">Variante #${i+1}</span>
-                            <button onclick="copyThis(this)" class="p-2 text-gray-500 active:text-blue-500"><i data-lucide="copy" class="w-4 h-4"></i></button>
-                        </div>
-                        <p class="text-xl font-medium italic text-gray-100 whitespace-pre-wrap leading-relaxed">${p.trim()}</p>
-                    `;
+                    card.innerHTML = `<div class="flex justify-between items-center mb-6"><span class="text-[10px] font-black text-blue-500 uppercase tracking-widest italic opacity-40">Opzione #${i+1}</span><button onclick="copyThis(this)" class="p-2 text-gray-500"><i data-lucide="copy" class="w-4 h-4"></i></button></div><p class="text-xl font-medium italic text-gray-100 whitespace-pre-wrap">${p.trim()}</p>`;
                     postsList.appendChild(card);
                 });
-
                 results.classList.remove('hidden');
 
-                // 2. GENERAZIONE IMMAGINE (Usando l'ottimizzazione dell'IA)
                 loaderText.innerText = "Rendering Grafica Pro...";
-                
                 const imgResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${_k}`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        instances: { prompt: visualPrompt + ", professional photography, commercial grade, 8k resolution" },
+                        instances: { prompt: (visualPrompt || topic).trim() + ", commercial photography, high resolution" },
                         parameters: { sampleCount: 1 }
                     })
                 });
-
                 const iData = await imgResp.json();
                 
                 if (iData.predictions?.[0]?.bytesBase64Encoded) {
                     outImg.src = `data:image/png;base64,${iData.predictions[0].bytesBase64Encoded}`;
                 } else {
-                    // FALLBACK OTTIMIZZATO (Cerca solo foto di altissima qualità)
                     loaderText.innerText = "IA Occupata. Recupero Asset Stock...";
-                    const keywords = visualPrompt.split(',')[0].replace(/ /g, ',');
-                    outImg.src = `https://loremflickr.com/800/800/${keywords},professional?lock=${Math.floor(Math.random()*1000)}`;
+                    const cleanTags = topic.replace(/[^\w\s]/gi, '').split(' ').slice(0, 2).join(',');
+                    outImg.src = `https://loremflickr.com/800/800/${cleanTags},professional`;
                 }
-
-                outImg.onload = () => {
-                    outImg.classList.remove('hidden');
-                    imgLoad.classList.add('hidden');
-                };
-
-            } catch (err) {
-                alert("Il sistema è in pausa. Riprova tra 60 secondi.");
-            } finally {
-                btn.disabled = false;
-                document.getElementById('btnLabel').innerText = "Genera Campagna";
-                lucide.createIcons();
-                window.scrollTo({ top: 150, behavior: 'smooth' });
-            }
+                outImg.onload = () => { outImg.classList.remove('hidden'); imgLoad.classList.add('hidden'); };
+            } catch (err) { alert("Sistema sovraccarico. Riprova tra 60 secondi."); }
+            finally { btn.disabled = false; document.getElementById('btnLabel').innerText = "Genera Campagna"; lucide.createIcons(); window.scrollTo({ top: 150, behavior: 'smooth' }); }
         }
 
         function downloadImage() {
@@ -222,33 +172,17 @@
             if(!img.src) return;
             const link = document.createElement('a');
             link.href = img.src;
-            link.download = `StudioX_Grafica_${Date.now()}.png`;
+            link.download = `Grafica_StudioX_${Date.now()}.png`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
-        function copyImageUrl() {
-            const img = document.getElementById('outputImg');
-            if(!img.src) return;
-            const el = document.createElement('textarea');
-            el.value = img.src;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            alert("Link Immagine Copiato!");
-        }
-
         function copyThis(btn) {
             const text = btn.parentElement.nextElementSibling.innerText;
             const el = document.createElement('textarea');
-            el.value = text;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            const icon = btn.querySelector('i');
+            el.value = text; document.body.appendChild(el);
+            el.select(); document.execCommand('copy'); document.body.removeChild(el);
             btn.innerHTML = '<i data-lucide="check" class="w-4 h-4 text-green-500"></i>';
             lucide.createIcons();
             setTimeout(() => { btn.innerHTML = '<i data-lucide="copy" class="w-4 h-4 text-gray-500"></i>'; lucide.createIcons(); }, 2000);
