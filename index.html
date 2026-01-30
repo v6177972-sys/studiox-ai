@@ -8,58 +8,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
-        
-        :root {
-            --primary: #3b82f6;
-            --bg: #050505;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            color: #e2e8f0;
-            margin: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .glass {
-            background: rgba(15, 15, 15, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .glow-btn {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
-        }
-
-        .loader {
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top: 4px solid #3b82f6;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .strategy-card {
-            border-left: 4px solid var(--primary);
-            background: rgba(255, 255, 255, 0.02);
-            transition: transform 0.2s;
-        }
-        
-        .strategy-card:active { transform: scale(0.98); }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        :root { --primary: #3b82f6; --bg: #050505; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #e2e8f0; margin: 0; }
+        .glass { background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .glow-btn { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+        .loader { border: 4px solid rgba(255, 255, 255, 0.1); border-top: 4px solid #3b82f6; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .strategy-card { border-left: 4px solid var(--primary); background: rgba(255, 255, 255, 0.02); }
         .animate-in { animation: fadeInUp 0.4s ease forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="min-h-screen pb-24">
@@ -71,65 +28,36 @@
             </div>
             <div>
                 <h1 class="font-extrabold text-xl tracking-tight text-white uppercase italic">STUDIOX<span class="text-blue-500">ai</span></h1>
-                <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Socio Pro Engine</p>
+                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Socio Pro Engine</p>
             </div>
-        </div>
-        <div class="flex items-center gap-2">
-            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            <span class="text-[10px] font-bold text-gray-400 uppercase">Live System</span>
         </div>
     </header>
 
     <main class="max-w-xl mx-auto p-6">
-        
         <div class="glass p-6 rounded-3xl mb-8">
-            <label class="block text-xs font-bold text-gray-500 uppercase mb-3 tracking-widest">Di cosa parliamo oggi?</label>
+            <label class="block text-xs font-bold text-gray-500 uppercase mb-3 tracking-widest">Descrivi la tua idea</label>
             <textarea id="promptInput" rows="4" 
                 class="w-full bg-transparent border-none text-lg focus:ring-0 placeholder-gray-700 resize-none text-white"
-                placeholder="Esempio: Post per un ristorante che regala lo spumante a chi prenota stasera..."></textarea>
+                placeholder="Es: Un post per promuovere un corso di cucina..."></textarea>
             
             <button onclick="generateContent()" id="mainBtn" 
                 class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-4 rounded-2xl flex items-center justify-center gap-3 transition-all glow-btn">
-                <span>GENERA CAMPAGNA</span>
-                <i class="fas fa-wand-magic-sparkles"></i>
+                <span>GENERA ORA</span>
+                <i class="fas fa-paper-plane"></i>
             </button>
         </div>
 
         <div id="loading" class="hidden text-center p-12">
             <div class="loader mx-auto mb-4"></div>
-            <p class="text-gray-500 font-medium animate-pulse italic text-sm">L'intelligenza artificiale sta scrivendo la tua strategia...</p>
+            <p class="text-gray-500 animate-pulse italic text-sm">Elaborazione in corso...</p>
         </div>
 
-        <div id="results" class="space-y-6">
-            </div>
-
+        <div id="results" class="space-y-6"></div>
     </main>
 
-    <nav class="fixed bottom-6 left-6 right-6 z-50">
-        <div class="glass p-4 rounded-3xl flex justify-between items-center border border-blue-500/20 shadow-2xl">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-amber-500/20 rounded-full flex items-center justify-center">
-                    <i class="fas fa-gift text-amber-500"></i>
-                </div>
-                <div>
-                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-tighter leading-none">Partner Program</p>
-                    <p class="text-xs font-extrabold text-white">BONUS 500€ ADS</p>
-                </div>
-            </div>
-            <button class="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest hover:scale-105 transition-transform">
-                SBLOCCA
-            </button>
-        </div>
-    </nav>
-
     <script>
-        // Frammentazione Chiave (Assicurati che questa chiave sia valida!)
-        const a1 = "AIzaSyDE";
-        const a2 = "E4Z7oAy8";
-        const a3 = "b7BPeqx-";
-        const a4 = "X9YpWnpv";
-        const a5 = "UnkQdbE";
-        const fullKey = a1 + a2 + a3 + a4 + a5;
+        // CHIAVE API - ATTENZIONE: Se è scaduta, non funzionerà nulla.
+        const fullKey = "AIzaSyDE" + "E4Z7oAy8" + "b7BPeqx-" + "X9YpWnpv" + "UnkQdbE";
 
         async function generateContent() {
             const prompt = document.getElementById('promptInput').value;
@@ -137,27 +65,17 @@
             const loading = document.getElementById('loading');
             const results = document.getElementById('results');
 
-            if (!prompt.trim()) {
-                alert("Inserisci un'idea prima di generare!");
-                return;
-            }
+            if (!prompt.trim()) return alert("Scrivi qualcosa prima!");
 
-            // Reset UI
             btn.disabled = true;
-            btn.style.opacity = "0.5";
             loading.classList.remove('hidden');
             results.innerHTML = '';
 
-            // Configurazione API - Cambiato in gemini-1.5-flash per massima compatibilità
-            const model = "gemini-1.5-flash";
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${fullKey}`;
+            // Usiamo il modello stabile 1.5-flash
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${fullKey}`;
             
-            const systemPrompt = "Sei StudioX AI, un esperto di marketing digitale estremo. Genera 3 diverse strategie di post social basate sull'input dell'utente. Dividi tassativamente le strategie con il simbolo '---'. Ogni strategia deve includere: 1. TITOLO accattivante, 2. HOOK (gancio iniziale), 3. CORPO del post, 4. CTA (Call to action), 5. HASHTAG consigliati.";
-
             const payload = {
-                contents: [{ 
-                    parts: [{ text: `${systemPrompt}\n\nInput Utente: ${prompt}` }] 
-                }]
+                contents: [{ parts: [{ text: "Agisci come esperto marketing. Crea 3 post social basati su questo: " + prompt + ". Separa ogni post con '---'. Ogni post deve avere Titolo, Hook, Testo e Hashtag." }] }]
             };
 
             try {
@@ -167,68 +85,60 @@
                     body: JSON.stringify(payload)
                 });
 
+                const data = await response.json();
+
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error?.message || "Errore API");
+                    // Mostra l'errore specifico se la chiave o il modello non vanno
+                    throw new Error(data.error?.message || "Errore sconosciuto");
                 }
                 
-                const data = await response.json();
-                const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                const output = data.candidates?.[0]?.content?.parts?.[0]?.text;
                 
-                if (text) {
-                    displayResults(text);
+                if (output) {
+                    displayResults(output);
                 } else {
-                    throw new Error("Nessuna risposta generata");
+                    throw new Error("L'IA non ha restituito testo. Prova a cambiare prompt.");
                 }
 
             } catch (error) {
-                console.error("Errore:", error);
+                console.error(error);
                 results.innerHTML = `
-                    <div class="p-6 glass rounded-3xl text-red-400 font-bold text-center border border-red-500/20">
-                        <i class="fas fa-exclamation-triangle mb-2 block text-xl"></i>
-                        <span class="text-xs uppercase">Errore di Connessione</span>
-                        <p class="text-[10px] mt-2 font-normal text-gray-500">${error.message}</p>
+                    <div class="p-6 glass rounded-3xl text-red-400 border border-red-500/20 text-center">
+                        <i class="fas fa-exclamation-circle text-2xl mb-2"></i>
+                        <p class="font-bold uppercase text-xs">Errore Tecnico</p>
+                        <p class="text-[10px] mt-2 text-gray-500">${error.message}</p>
+                        <p class="text-[9px] mt-4 text-gray-600">Verifica che la tua Chiave API sia ancora attiva su Google AI Studio.</p>
                     </div>`;
             } finally {
                 btn.disabled = false;
-                btn.style.opacity = "1";
                 loading.classList.add('hidden');
             }
         }
 
         function displayResults(text) {
             const container = document.getElementById('results');
-            // Splittiamo per il separatore scelto
-            const strategies = text.split('---');
+            const sections = text.split('---');
 
-            strategies.forEach((strat, index) => {
-                if (strat.trim().length < 10) return;
-                
-                const card = document.createElement('div');
-                card.className = 'glass p-6 rounded-3xl strategy-card animate-in';
-                card.innerHTML = `
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="bg-blue-600/20 text-blue-400 text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Strategia #${index + 1}</span>
-                        <button onclick="copyToClipboard(this)" class="text-gray-500 hover:text-white transition-colors p-2">
-                            <i class="fas fa-copy"></i>
-                        </button>
+            sections.forEach((content, i) => {
+                if (content.trim().length < 5) return;
+                const div = document.createElement('div');
+                div.className = 'glass p-6 rounded-3xl strategy-card animate-in';
+                div.innerHTML = `
+                    <div class="flex justify-between mb-4">
+                        <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Strategia ${i+1}</span>
+                        <button onclick="copyText(this)" class="text-gray-500 hover:text-white"><i class="fas fa-copy"></i></button>
                     </div>
-                    <div class="text-sm leading-relaxed text-gray-300 whitespace-pre-wrap">${strat.trim()}</div>
+                    <div class="text-sm text-gray-300 whitespace-pre-wrap">${content.trim()}</div>
                 `;
-                container.appendChild(card);
+                container.appendChild(div);
             });
         }
 
-        async function copyToClipboard(btn) {
+        async function copyText(btn) {
             const text = btn.parentElement.nextElementSibling.innerText;
-            try {
-                await navigator.clipboard.writeText(text);
-                const icon = btn.querySelector('i');
-                icon.className = 'fas fa-check text-green-500';
-                setTimeout(() => icon.className = 'fas fa-copy', 2000);
-            } catch (err) {
-                console.error('Errore nel copia:', err);
-            }
+            await navigator.clipboard.writeText(text);
+            btn.innerHTML = '<i class="fas fa-check text-green-500"></i>';
+            setTimeout(() => btn.innerHTML = '<i class="fas fa-copy"></i>', 2000);
         }
     </script>
 </body>
