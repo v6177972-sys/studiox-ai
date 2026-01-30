@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudioX AI | Links</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #3b82f6;
+            margin: 0 auto 20px;
+            padding: 5px;
+            background: linear-gradient(45deg, #3b82f6, #000000);
+        }
+
+        .btn-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 12px;
+            background: #111111;
+            border: 1px solid #222222;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-link:hover {
+            background: #1a1a1a;
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+        }
+
+        .btn-accent {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            border: none;
+        }
+
+        .icon {
+            position: absolute;
+            left: 20px;
+            font-size: 1.2rem;
+        }
+
+        .copy-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #3b82f6;
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo/Immagine Profilo -->
+        <div class="profile-img">
+            <img src="https://img.icons8.com/fluency/96/artificial-intelligence.png" alt="StudioX Logo" class="w-full h-full">
+        </div>
+
+        <h1 class="text-2xl font-extrabold mb-1">StudioX AI Pro 🤖</h1>
+        <p class="text-gray-400 mb-8 px-4 text-sm">Trasformo le tue idee in post virali in 10 secondi.</p>
+
+        <!-- Link Principale: L'APP -->
+        <a href="index.html" class="btn-link btn-primary">
+            <i class="fas fa-bolt icon"></i>
+            USA L'APP (GRATIS)
+        </a>
+
+        <!-- Link Secondario: L'HUB -->
+        <a href="hub.html" class="btn-link btn-accent">
+            <i class="fas fa-toolbox icon"></i>
+            CREATOR TOOLKIT & BONUS
+        </a>
+
+        <!-- Link Social: X -->
+        <a href="https://x.com/StudioX_AI_Pro" target="_blank" class="btn-link">
+            <i class="fab fa-x-twitter icon"></i>
+            SEGUIMI SU X
+        </a>
+
+        <!-- Link Social: TikTok -->
+        <a href="https://www.tiktok.com/@studiox_ai_pro" target="_blank" class="btn-link">
+            <i class="fab fa-tiktok icon"></i>
+            TIKTOK (VIDEO VIRALI)
+        </a>
+
+        <!-- Bottone Copia Link (Per chi ha problemi con la Bio) -->
+        <button onclick="copyToClipboard()" class="btn-link mt-8 bg-transparent border-dashed border-gray-600">
+            <i class="fas fa-copy icon"></i>
+            COPIA LINK APP
+        </button>
+
+        <p class="text-xs text-gray-600 mt-12">Powered by StudioX Engine • 2026</p>
+    </div>
+
+    <!-- Messaggio Copia Avvenuta -->
+    <div id="toast" class="copy-toast">Link copiato! 🚀</div>
+
+    <script>
+        function copyToClipboard() {
+            const url = "https://v6177972-sys.github.io/studiox-ai/";
+            const dummy = document.createElement("input");
+            document.body.appendChild(dummy);
+            dummy.value = url;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
+
