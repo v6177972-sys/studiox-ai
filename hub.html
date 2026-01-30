@@ -14,7 +14,7 @@
         .gradient-orange { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
         .animate-up { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .active-scale:active { transform: scale(0.98); }
+        .badge-new { background: #f97316; color: white; padding: 2px 8px; border-radius: 10px; font-size: 8px; font-weight: 900; text-transform: uppercase; }
     </style>
 </head>
 <body class="min-h-screen p-6 pb-24 text-left">
@@ -24,88 +24,61 @@
         <!-- HEADER -->
         <header class="text-center pt-8 space-y-4 animate-up">
             <div class="w-20 h-20 gradient-blue rounded-[2.5rem] flex items-center justify-center mx-auto shadow-2xl shadow-blue-900/40">
-                <i data-lucide="layout-grid" class="w-10 h-10 text-white fill-white/10"></i>
+                <i data-lucide="layout-grid" class="w-10 h-10 text-white"></i>
             </div>
-            <h1 class="text-3xl font-black uppercase italic tracking-tighter text-center">StudioX <span class="text-blue-500 italic">Toolkit</span></h1>
-            <p class="text-gray-500 text-sm font-medium italic text-center">Strumenti professionali selezionati per te.</p>
+            <h1 class="text-3xl font-black uppercase italic tracking-tighter text-center italic">StudioX <span class="text-blue-500 italic">Toolkit</span></h1>
+            <p class="text-gray-500 text-sm font-medium italic text-center italic text-center">Configura il tuo ufficio digitale con l'IA.</p>
         </header>
 
-        <!-- SEZIONE 1: HARDWARE (I TUOI 3 LINK AMAZON) -->
+        <!-- SEZIONE 1: HARDWARE (MONETIZZAZIONE IMMEDIATA) -->
         <section class="space-y-6 animate-up" style="animation-delay: 0.1s;">
             <div class="flex items-center justify-between px-2">
-                <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-orange-500 italic">Hardware & Gear</h2>
-                <span class="text-[8px] bg-orange-500/10 text-orange-500 px-2 py-1 rounded-full font-bold uppercase border border-orange-500/20 italic">Amazon Active</span>
+                <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-orange-500 italic">Creator Gear (Amazon)</h2>
+                <span class="badge-new">Offerte Attive</span>
             </div>
             
-            <!-- 1. KIT 3-IN-1 (PRINCIPALE) -->
+            <!-- KIT 3-IN-1 -->
             <div class="glass p-6 rounded-[2.5rem] border-orange-500/20 space-y-4">
                 <div class="flex items-center gap-4">
                     <div class="w-12 h-12 bg-orange-600/10 rounded-2xl flex items-center justify-center">
-                        <i data-lucide="award" class="w-6 h-6 text-orange-500"></i>
+                        <i data-lucide="video" class="w-6 h-6 text-orange-500"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-sm uppercase italic leading-none text-left">Creator Kit 3-in-1</h3>
+                        <h3 class="font-bold text-sm uppercase italic leading-none">Creator Kit 3-in-1</h3>
                         <p class="text-[9px] text-orange-400 mt-1 uppercase font-black tracking-widest italic text-left">Luce + Mic + Supporto</p>
                     </div>
                 </div>
-                <p class="text-[11px] text-gray-400 italic leading-relaxed text-left">La soluzione completa per iniziare subito a registrare video di alta qualità per TikTok e Reels.</p>
-                <a href="https://amzn.to/4k90Jg4" target="_blank" class="w-full py-4 gradient-orange rounded-2xl flex items-center justify-center text-[10px] font-black uppercase tracking-widest text-white shadow-lg no-underline active-scale italic transition-all">
-                    Vedi Offerta su Amazon
+                <p class="text-[11px] text-gray-400 italic leading-relaxed text-left">Indispensabile per chi inizia. Tutto ciò che ti serve in un unico pacchetto per video virali.</p>
+                <a href="https://amzn.to/4k90Jg4" target="_blank" class="w-full py-4 gradient-orange rounded-2xl flex items-center justify-center text-[10px] font-black uppercase tracking-widest text-white shadow-lg no-underline active:scale-95 transition-all italic">
+                    Vedi su Amazon
                 </a>
             </div>
 
-            <!-- 2. RING LIGHT & 3. MICROFONO (SECONDARI) -->
-            <div class="grid grid-cols-1 gap-4">
-                <a href="https://amzn.to/3MeUBWX" target="_blank" class="glass p-5 rounded-[2rem] flex items-center gap-5 no-underline text-white active-scale transition-all">
-                    <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0">
-                        <i data-lucide="sun" class="text-orange-400 w-5 h-5"></i>
-                    </div>
-                    <div class="flex-1 text-left">
-                        <h3 class="font-bold text-[13px] uppercase italic leading-none">Ring Light Pro</h3>
-                        <p class="text-[9px] text-gray-500 mt-1 uppercase font-black italic">Solo Illuminazione</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-700"></i>
+            <!-- RING LIGHT & MIC -->
+            <div class="grid grid-cols-2 gap-4">
+                <a href="https://amzn.to/3MeUBWX" target="_blank" class="glass p-4 rounded-[1.5rem] flex flex-col items-center gap-3 no-underline text-white active:scale-95 transition-all text-center">
+                    <i data-lucide="sun" class="text-orange-400 w-6 h-6"></i>
+                    <span class="text-[10px] font-bold uppercase italic leading-none">Ring Light</span>
                 </a>
-
-                <a href="https://amzn.to/4kbIfM3" target="_blank" class="glass p-5 rounded-[2rem] flex items-center gap-5 no-underline text-white active-scale transition-all">
-                    <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0">
-                        <i data-lucide="mic" class="text-orange-400 w-5 h-5"></i>
-                    </div>
-                    <div class="flex-1 text-left">
-                        <h3 class="font-bold text-[13px] uppercase italic leading-none">Microfono HD</h3>
-                        <p class="text-[9px] text-gray-500 mt-1 uppercase font-black italic">Solo Audio</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-700"></i>
+                <a href="https://amzn.to/4kbIfM3" target="_blank" class="glass p-4 rounded-[1.5rem] flex flex-col items-center gap-3 no-underline text-white active:scale-95 transition-all text-center">
+                    <i data-lucide="mic" class="text-orange-400 w-6 h-6"></i>
+                    <span class="text-[10px] font-bold uppercase italic leading-none">Microfono</span>
                 </a>
             </div>
         </section>
 
-        <!-- SEZIONE 2: SOFTWARE (CANVA & ADCREATIVE) -->
+        <!-- SEZIONE 2: SOFTWARE (IN ATTESA DI LINK) -->
         <section class="space-y-6 animate-up" style="animation-delay: 0.2s;">
-            <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-500 ml-2 italic">AI & Software Tools</h2>
+            <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-500 ml-2 italic text-left text-left">Digital Software</h2>
             
-            <!-- ADCREATIVE -->
-            <div class="glass p-5 rounded-[2rem] flex items-center gap-5 no-underline text-white opacity-80">
-                <div class="w-12 h-12 bg-blue-600/10 rounded-2xl flex items-center justify-center shrink-0">
-                    <i data-lucide="sparkles" class="text-blue-500 w-5 h-5"></i>
-                </div>
-                <div class="flex-1 text-left">
-                    <h3 class="font-bold text-[13px] uppercase italic leading-none">AdCreative AI</h3>
-                    <p class="text-[9px] text-gray-500 mt-1 uppercase font-black italic leading-none">Bonus $500 Ads Credit</p>
-                </div>
-                <span class="text-[8px] font-black text-blue-500 italic uppercase">Pronto</span>
-            </div>
-
-            <!-- CANVA -->
-            <div class="glass p-5 rounded-[2rem] flex items-center gap-5 no-underline text-white opacity-80">
+            <div class="glass p-5 rounded-[2rem] flex items-center gap-5 no-underline text-white opacity-60">
                 <div class="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center shrink-0">
                     <i data-lucide="palette" class="text-purple-400 w-5 h-5"></i>
                 </div>
                 <div class="flex-1 text-left">
-                    <h3 class="font-bold text-[13px] uppercase italic leading-none">Canva Pro Social</h3>
-                    <p class="text-[9px] text-gray-500 mt-1 uppercase font-black italic leading-none">Template Premium</p>
+                    <h3 class="font-bold text-[13px] uppercase italic leading-none">Canva Pro</h3>
+                    <p class="text-[9px] text-gray-500 mt-1 uppercase font-black italic">In Approvazione...</p>
                 </div>
-                <span class="text-[8px] font-black text-purple-500 italic uppercase">Pronto</span>
             </div>
         </section>
 
