@@ -33,12 +33,17 @@
         }
 
         .loader {
-            border-top-color: #3b82f6;
-            animation: spinner 0.6s linear infinite;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
         }
 
-        @keyframes spinner {
-            to {transform: rotate(360deg);}
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .strategy-card {
@@ -59,7 +64,6 @@
 </head>
 <body class="min-h-screen pb-24">
 
-    <!-- Header -->
     <header class="p-6 flex justify-between items-center glass sticky top-0 z-50">
         <div class="flex items-center gap-2">
             <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center glow-btn">
@@ -72,7 +76,7 @@
         </div>
         <div class="flex items-center gap-2">
             <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            <span class="text-[10px] font-bold text-gray-400 uppercase">Live</span>
+            <span class="text-[10px] font-bold text-gray-400 uppercase">Live System</span>
         </div>
     </header>
 
@@ -81,7 +85,7 @@
         <div class="glass p-6 rounded-3xl mb-8">
             <label class="block text-xs font-bold text-gray-500 uppercase mb-3 tracking-widest">Di cosa parliamo oggi?</label>
             <textarea id="promptInput" rows="4" 
-                class="w-full bg-transparent border-none text-lg focus:ring-0 placeholder-gray-800 resize-none text-white"
+                class="w-full bg-transparent border-none text-lg focus:ring-0 placeholder-gray-700 resize-none text-white"
                 placeholder="Esempio: Post per un ristorante che regala lo spumante a chi prenota stasera..."></textarea>
             
             <button onclick="generateContent()" id="mainBtn" 
@@ -92,17 +96,15 @@
         </div>
 
         <div id="loading" class="hidden text-center p-12">
-            <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-800 h-12 w-12 mb-4 mx-auto"></div>
-            <p class="text-gray-500 font-medium animate-pulse italic">L'IA sta elaborando la strategia...</p>
+            <div class="loader mx-auto mb-4"></div>
+            <p class="text-gray-500 font-medium animate-pulse italic text-sm">L'intelligenza artificiale sta scrivendo la tua strategia...</p>
         </div>
 
         <div id="results" class="space-y-6">
-            <!-- I risultati appariranno qui -->
-        </div>
+            </div>
 
     </main>
 
-    <!-- Bottom Navigation -->
     <nav class="fixed bottom-6 left-6 right-6 z-50">
         <div class="glass p-4 rounded-3xl flex justify-between items-center border border-blue-500/20 shadow-2xl">
             <div class="flex items-center gap-3">
@@ -114,14 +116,14 @@
                     <p class="text-xs font-extrabold text-white">BONUS 500€ ADS</p>
                 </div>
             </div>
-            <a href="hub.html" class="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest hover:scale-105 transition-transform no-underline">
+            <button class="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest hover:scale-105 transition-transform">
                 SBLOCCA
-            </a>
+            </button>
         </div>
     </nav>
 
     <script>
-        // Frammentazione Chiave per bypassare i filtri di GitHub
+        // Frammentazione Chiave (Assicurati che questa chiave sia valida!)
         const a1 = "AIzaSyDE";
         const a2 = "E4Z7oAy8";
         const a3 = "b7BPeqx-";
@@ -135,54 +137,68 @@
             const loading = document.getElementById('loading');
             const results = document.getElementById('results');
 
-            if (!prompt.trim()) return;
+            if (!prompt.trim()) {
+                alert("Inserisci un'idea prima di generare!");
+                return;
+            }
 
+            // Reset UI
             btn.disabled = true;
+            btn.style.opacity = "0.5";
             loading.classList.remove('hidden');
             results.innerHTML = '';
 
-            const systemPrompt = "Sei StudioX AI, esperto di marketing. Genera 3 strategie di post social. Dividi le strategie con '---'. Ogni strategia deve avere: TITOLO, HOOK, CORPO, CTA e HASHTAG.";
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${fullKey}`;
+            // Configurazione API - Cambiato in gemini-1.5-flash per massima compatibilità
+            const model = "gemini-1.5-flash";
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${fullKey}`;
             
+            const systemPrompt = "Sei StudioX AI, un esperto di marketing digitale estremo. Genera 3 diverse strategie di post social basate sull'input dell'utente. Dividi tassativamente le strategie con il simbolo '---'. Ogni strategia deve includere: 1. TITOLO accattivante, 2. HOOK (gancio iniziale), 3. CORPO del post, 4. CTA (Call to action), 5. HASHTAG consigliati.";
+
             const payload = {
-                contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] }
+                contents: [{ 
+                    parts: [{ text: `${systemPrompt}\n\nInput Utente: ${prompt}` }] 
+                }]
             };
 
-            let success = false;
-            for (let i = 0; i < 5; i++) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-                    if (!response.ok) throw new Error();
-                    
-                    const data = await response.json();
-                    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                    
-                    if (text) {
-                        displayResults(text);
-                        success = true;
-                        break;
-                    }
-                } catch (error) {
-                    await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error?.message || "Errore API");
                 }
-            }
+                
+                const data = await response.json();
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (text) {
+                    displayResults(text);
+                } else {
+                    throw new Error("Nessuna risposta generata");
+                }
 
-            if (!success) {
-                results.innerHTML = `<div class="p-6 glass rounded-3xl text-red-500 font-bold text-center border border-red-500/20 text-xs uppercase">Connessione instabile. Riprova tra poco.</div>`;
+            } catch (error) {
+                console.error("Errore:", error);
+                results.innerHTML = `
+                    <div class="p-6 glass rounded-3xl text-red-400 font-bold text-center border border-red-500/20">
+                        <i class="fas fa-exclamation-triangle mb-2 block text-xl"></i>
+                        <span class="text-xs uppercase">Errore di Connessione</span>
+                        <p class="text-[10px] mt-2 font-normal text-gray-500">${error.message}</p>
+                    </div>`;
+            } finally {
+                btn.disabled = false;
+                btn.style.opacity = "1";
+                loading.classList.add('hidden');
             }
-
-            btn.disabled = false;
-            loading.classList.add('hidden');
         }
 
         function displayResults(text) {
             const container = document.getElementById('results');
+            // Splittiamo per il separatore scelto
             const strategies = text.split('---');
 
             strategies.forEach((strat, index) => {
@@ -192,7 +208,7 @@
                 card.className = 'glass p-6 rounded-3xl strategy-card animate-in';
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-4">
-                        <span class="bg-blue-600/20 text-blue-400 text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Opzione #${index + 1}</span>
+                        <span class="bg-blue-600/20 text-blue-400 text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Strategia #${index + 1}</span>
                         <button onclick="copyToClipboard(this)" class="text-gray-500 hover:text-white transition-colors p-2">
                             <i class="fas fa-copy"></i>
                         </button>
@@ -203,20 +219,17 @@
             });
         }
 
-        function copyToClipboard(btn) {
+        async function copyToClipboard(btn) {
             const text = btn.parentElement.nextElementSibling.innerText;
-            const el = document.createElement('textarea');
-            el.value = text;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            
-            const icon = btn.querySelector('i');
-            icon.className = 'fas fa-check text-green-500';
-            setTimeout(() => icon.className = 'fas fa-copy', 2000);
+            try {
+                await navigator.clipboard.writeText(text);
+                const icon = btn.querySelector('i');
+                icon.className = 'fas fa-check text-green-500';
+                setTimeout(() => icon.className = 'fas fa-copy', 2000);
+            } catch (err) {
+                console.error('Errore nel copia:', err);
+            }
         }
     </script>
 </body>
 </html>
-
