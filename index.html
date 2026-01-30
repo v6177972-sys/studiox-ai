@@ -19,7 +19,6 @@
 </head>
 <body class="min-h-screen pb-40">
 
-    <!-- NAVBAR -->
     <nav class="p-5 flex justify-between items-center sticky top-0 bg-black/60 backdrop-blur-xl z-50 border-b border-white/5">
         <div class="flex items-center gap-3">
             <div class="w-11 h-11 bg-blue-600 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-900/40">
@@ -36,33 +35,21 @@
         </div>
     </nav>
 
-    <main class="max-w-md mx-auto px-6 py-10 space-y-12">
-        
+    <main class="max-w-md mx-auto px-6 py-10 space-y-12 text-left">
         <header class="text-center space-y-4">
-            <h2 class="text-5xl font-black tracking-tighter uppercase italic leading-[0.85]">
-                PIANO <br><span class="text-blue-600 underline underline-offset-8 decoration-blue-900/30 text-white italic">VIRALE.</span>
-            </h2>
-            <p class="text-gray-400 font-medium italic text-lg px-2 text-white">Crea campagne social professionali in 10 secondi.</p>
+            <h2 class="text-5xl font-black tracking-tighter uppercase italic leading-[0.85]">PIANO <br><span class="text-blue-600 underline underline-offset-8 decoration-blue-900/30 text-white italic">VIRALE.</span></h2>
+            <p class="text-gray-400 font-medium italic text-lg px-2 text-white text-center">Crea campagne social professionali in 10 secondi.</p>
         </header>
 
-        <!-- INPUT BOX -->
         <div class="glass rounded-[3rem] p-8 shadow-2xl space-y-8">
-            <div class="space-y-2">
-                <label class="text-[10px] font-black uppercase tracking-widest text-blue-500 ml-1 italic block text-left text-white">Di cosa parliamo oggi?</label>
-                <textarea id="promptInput" placeholder="Es: Promozione estiva magliette uomo..." 
-                    class="w-full h-32 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-900 text-white text-left"></textarea>
+            <div class="space-y-2 text-left">
+                <label class="text-[10px] font-black uppercase tracking-widest text-blue-500 ml-1 italic block">Di cosa parliamo oggi?</label>
+                <textarea id="promptInput" placeholder="Es: Saldi estivi magliette uomo..." class="w-full h-32 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-900 text-white text-left"></textarea>
             </div>
-
-            <button id="genBtn" onclick="handleGenerate()" class="btn-viral w-full py-6 rounded-[2rem] font-black flex items-center justify-center gap-4 text-white">
-                <span id="btnLabel" class="uppercase tracking-widest text-sm font-black">Lancia Produzione</span>
-                <i data-lucide="sparkles" class="w-5 h-5"></i>
-            </button>
+            <button id="genBtn" onclick="handleGenerate()" class="btn-viral w-full py-6 rounded-[2rem] font-black flex items-center justify-center gap-4 text-white uppercase tracking-widest text-sm">Genera Campagna <i data-lucide="sparkles" class="w-5 h-5"></i></button>
         </div>
 
-        <!-- RISULTATI -->
         <div id="results" class="hidden space-y-12 animate-up">
-            
-            <!-- IMMAGINE E DOWNLOAD -->
             <div class="space-y-4 text-center">
                 <div class="glass rounded-[2.5rem] overflow-hidden relative aspect-square shadow-2xl bg-white/5">
                     <div id="imgLoader" class="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md z-10">
@@ -70,55 +57,34 @@
                     </div>
                     <img id="outputImg" src="" class="hidden w-full h-full object-cover">
                 </div>
-                
-                <button id="dlBtn" onclick="downloadImage()" class="hidden w-full py-5 bg-white/5 rounded-2xl border border-white/10 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-3 active:bg-blue-600 transition-all">
-                    <i data-lucide="download" class="w-5 h-5 text-blue-500"></i> Scarica Grafica
-                </button>
+                <button id="dlBtn" onclick="downloadImage()" class="hidden w-full py-5 bg-white/5 rounded-2xl border border-white/10 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-3 active:bg-blue-600 transition-all text-white"><i data-lucide="download" class="w-5 h-5 text-blue-500"></i> Scarica Grafica</button>
             </div>
-
-            <!-- LISTA POST -->
             <div id="postsList" class="space-y-8 pb-20"></div>
         </div>
     </main>
 
-    <!-- FOOTER CON COLLEGAMENTO ALL'HUB -->
+    <!-- FOOTER CON TASTO SBLOCCA -->
     <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50">
         <div class="glass rounded-[2rem] p-4 flex items-center justify-between border-blue-500/30 bg-blue-900/10 shadow-2xl backdrop-blur-xl ring-1 ring-blue-500/20">
             <div class="flex items-center gap-4 pl-2 text-left leading-none">
-                <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white">
-                    <i data-lucide="trending-up" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <p class="text-[9px] font-black text-blue-400 uppercase tracking-tighter italic leading-none text-left">Partner Program</p>
-                    <h4 class="font-bold text-sm text-white mt-1 leading-none uppercase italic text-left">Bonus 500€ Ads</h4>
-                </div>
+                <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg"><i data-lucide="trending-up" class="w-6 h-6"></i></div>
+                <div><p class="text-[9px] font-black text-blue-400 uppercase tracking-tighter italic leading-none">Partner Program</p><h4 class="font-bold text-sm text-white mt-1 leading-none uppercase italic">Bonus 500€ Ads</h4></div>
             </div>
-            <!-- QUESTO LINK ORA PORTA AL TUO HUB -->
-            <a href="hub.html" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg active:scale-95 transition-all font-black">Sblocca</a>
+            <a href="hub.html" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg active:scale-95 transition-all font-black no-underline">Sblocca</a>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
+        const _k = "AIzaSyDE" + "E4Z7oAy8" + "b7BPeqx-X" + "9YpWnpvUnk" + "QdbE";
 
-        // CHIAVE SPEZZETTATA PER SICUREZZA
-        const _p1 = "AIzaSyDE";
-        const _p2 = "E4Z7oAy8";
-        const _p3 = "b7BPeqx-";
-        const _p4 = "X9YpWnpv";
-        const _p5 = "UnkQdbE";
-        const _key = _p1 + _p2 + _p3 + _p4 + _p5;
-
-        async function fetchWithRetry(url, options, maxRetries = 5) {
+        async function fetchWithRetry(url, options, maxRetries = 4) {
             for (let i = 0; i < maxRetries; i++) {
                 try {
-                    const response = await fetch(url, options);
-                    const data = await response.json();
-                    if (response.ok && !data.error) return data;
-                    if (data.error && data.error.code === 429) {
-                        await new Promise(r => setTimeout(r, 2000 * (i + 1)));
-                        continue;
-                    }
+                    const r = await fetch(url, options);
+                    const d = await r.json();
+                    if (r.ok && !d.error) return d;
+                    if (d.error?.code === 429) await new Promise(res => setTimeout(res, 2000 * (i+1)));
                 } catch (e) {}
             }
             return null;
@@ -127,7 +93,6 @@
         async function handleGenerate() {
             const topic = document.getElementById('promptInput').value.trim();
             if(!topic) return;
-
             const btn = document.getElementById('genBtn');
             const results = document.getElementById('results');
             const postsList = document.getElementById('postsList');
@@ -136,7 +101,6 @@
             const dlBtn = document.getElementById('dlBtn');
 
             btn.disabled = true;
-            document.getElementById('btnLabel').innerText = "COSTRUZIONE...";
             results.classList.add('hidden');
             postsList.innerHTML = "";
             outImg.classList.add('hidden');
@@ -144,18 +108,16 @@
             imgLoad.classList.remove('hidden');
 
             try {
-                // 1. GENERAZIONE TESTO (Senza preamboli)
-                const textData = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${_key}`, {
+                const textData = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${_k}`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Genera 3 post diversi e virali per: "${topic}". REGOLA: Inizia immediatamente con il testo. Non parlare di te. Dividi i post con '###'. Ogni post deve avere Hook, Corpo, CTA e Hashtag.` }] }],
-                        systemInstruction: { parts: [{ text: "Sei un'interfaccia di generazione pura. Non salutare. Non fare preamboli. Inizia subito con il contenuto." }] }
+                        contents: [{ parts: [{ text: `Genera 3 post virali per: "${topic}". Dividi i post con '###'. Ogni post deve avere Hook, Corpo, CTA e Hashtag.` }] }],
+                        systemInstruction: { parts: [{ text: "Sei un generatore di testi. Non salutare. Inizia subito con il contenuto." }] }
                     })
                 });
                 
                 if(!textData) throw new Error();
-
                 const posts = textData.candidates[0].content.parts[0].text.split('###').filter(p => p.trim().length > 10).slice(0, 3);
                 posts.forEach((p, i) => {
                     const card = document.createElement('div');
@@ -163,64 +125,30 @@
                     card.innerHTML = `<div class="flex justify-between items-center mb-6"><span class="text-[10px] font-black text-blue-500 uppercase tracking-widest italic opacity-40">Strategia #${i+1}</span><button onclick="copyThis(this)" class="p-2 text-gray-500"><i data-lucide="copy" class="w-4 h-4"></i></button></div><p class="text-xl font-medium italic text-gray-100 whitespace-pre-wrap leading-relaxed text-left">${p.trim()}</p>`;
                     postsList.appendChild(card);
                 });
-
                 results.classList.remove('hidden');
 
-                // 2. GENERAZIONE IMMAGINE (IA + Fallback Coerente)
-                const imgResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${_key}`, {
+                const imgResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${_k}`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        instances: { prompt: "Commercial professional photography for: " + topic },
-                        parameters: { sampleCount: 1 }
-                    })
+                    body: JSON.stringify({ instances: { prompt: "Professional photography for: " + topic }, parameters: { sampleCount: 1 } })
                 });
-
                 const iData = await imgResp.json();
-                
                 if (iData.predictions?.[0]?.bytesBase64Encoded) {
                     outImg.src = `data:image/png;base64,${iData.predictions[0].bytesBase64Encoded}`;
                 } else {
-                    const keyword = topic.split(' ').slice(0, 2).join(',');
-                    outImg.src = `https://source.unsplash.com/800x800/?${keyword},product`;
+                    outImg.src = `https://loremflickr.com/800/800/${topic.split(' ')[0]}?lock=${Date.now()}`;
                 }
-
-                outImg.onload = () => {
-                    outImg.classList.remove('hidden');
-                    dlBtn.classList.remove('hidden');
-                    imgLoad.classList.add('hidden');
-                    lucide.createIcons();
-                };
-
-            } catch (err) {
-                alert("Il sistema è in pausa. Riprova tra 60 secondi.");
-            } finally {
-                btn.disabled = false;
-                document.getElementById('btnLabel').innerText = "Genera Campagna";
-                lucide.createIcons();
-                window.scrollTo({ top: 150, behavior: 'smooth' });
-            }
+                outImg.onload = () => { outImg.classList.remove('hidden'); dlBtn.classList.remove('hidden'); imgLoad.classList.add('hidden'); };
+            } catch (err) { alert("Attendi 60 secondi e riprova."); }
+            finally { btn.disabled = false; lucide.createIcons(); window.scrollTo({ top: 150, behavior: 'smooth' }); }
         }
 
-        async function downloadImage() {
+        function downloadImage() {
             const img = document.getElementById('outputImg');
-            if(!img.src) return;
-            try {
-                const response = await fetch(img.src);
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `StudioX_Ads_${Date.now()}.png`;
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-            } catch (e) {
-                const a = document.createElement('a');
-                a.href = img.src;
-                a.download = "Grafica_StudioX.png";
-                a.click();
-            }
+            const a = document.createElement('a');
+            a.href = img.src;
+            a.download = `StudioX_Ads.png`;
+            a.click();
         }
 
         function copyThis(btn) {
