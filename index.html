@@ -3,95 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudioX AI - Pro Engine</title>
+    <title>StudioX AI - SocialHub Master</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050505; color: white; -webkit-tap-highlight-color: transparent; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
-        .btn-main { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); transition: all 0.3s ease; }
-        .btn-main:active { transform: scale(0.95); }
-        .post-card { border-left: 4px solid #2563eb; background: rgba(255,255,255,0.01); }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-up { animation: fadeInUp 0.4s ease-out forwards; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030303; color: white; -webkit-tap-highlight-color: transparent; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+        .btn-viral { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .btn-viral:active { transform: scale(0.95); opacity: 0.9; }
+        .post-card { border-left: 4px solid #2563eb; background: rgba(255,255,255,0.01); transition: all 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-up { animation: fadeIn 0.5s ease-out forwards; }
     </style>
 </head>
 <body class="min-h-screen pb-40">
 
+    <!-- Navbar -->
     <nav class="p-5 border-b border-white/5 flex justify-between items-center sticky top-0 bg-black/80 backdrop-blur-lg z-50">
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-black text-2xl shadow-lg italic">X</div>
-            <h1 class="font-bold text-xl tracking-tighter uppercase italic leading-none font-black text-white">StudioX <span class="text-blue-500 font-serif lowercase text-xl font-normal">ai</span></h1>
+            <h1 class="font-bold text-xl tracking-tighter uppercase italic text-white font-black">StudioX <span class="text-blue-500 font-serif lowercase text-xl font-normal">ai</span></h1>
         </div>
-        <button onclick="configKey()" class="p-2.5 bg-white/5 rounded-xl border border-white/10 text-yellow-500">
+        <button onclick="configKey()" class="p-2.5 bg-white/5 rounded-xl border border-white/10 text-yellow-500 active:bg-yellow-500/10 transition-all">
             <i data-lucide="key" class="w-5 h-5"></i>
         </button>
     </nav>
 
     <main class="max-w-md mx-auto p-6 space-y-10">
+        
         <header class="text-center space-y-3 pt-4">
             <h2 class="text-5xl font-black tracking-tighter uppercase italic leading-[0.85]">
-                SCALA IL <br><span class="text-blue-600">SUCCESSO.</span>
+                CREA POST <br><span class="text-blue-600">VINCENTI.</span>
             </h2>
-            <p id="status-label" class="text-gray-500 font-medium italic text-sm">Post e immagini virali in un click.</p>
+            <p class="text-gray-500 font-medium italic">Testi e immagini virali in un click.</p>
         </header>
 
+        <!-- Input Box -->
         <div class="glass rounded-[2.5rem] p-8 shadow-2xl space-y-8 border-white/10">
-            <textarea id="promptInput" placeholder="Argomento del post..." 
-                class="w-full h-28 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-800 text-white"></textarea>
+            <textarea id="promptInput" placeholder="Di cosa parla il tuo post?" 
+                class="w-full h-28 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-900 text-white"></textarea>
             
-            <button id="genBtn" onclick="handleGenerate()" class="btn-main w-full py-6 rounded-[2rem] font-black flex items-center justify-center gap-4 shadow-xl text-white">
-                <span id="btnLabel" class="uppercase tracking-widest text-sm font-black">GENERA ORA</span>
+            <button id="genBtn" onclick="handleGenerate()" class="btn-viral w-full py-6 rounded-[1.8rem] font-black flex items-center justify-center gap-4 shadow-xl">
+                <span id="btnLabel" class="uppercase tracking-widest text-sm text-white font-black">GENERA TUTTO</span>
                 <i data-lucide="zap" class="w-5 h-5 fill-white"></i>
             </button>
         </div>
 
+        <!-- Result Area -->
         <div id="results" class="hidden space-y-10 animate-up">
-            <div id="imgBox" class="glass rounded-[2.5rem] overflow-hidden border-white/10 relative aspect-square shadow-2xl bg-white/5">
+            
+            <!-- Immagine -->
+            <div id="imgContainer" class="glass rounded-[2.5rem] overflow-hidden border-white/10 relative aspect-square shadow-2xl bg-white/5">
                 <div id="imgLoader" class="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md z-10">
                     <div class="w-10 h-10 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
-                    <span class="text-[10px] font-black text-blue-500 uppercase mt-4 tracking-widest italic">Creazione Immagine...</span>
+                    <span class="text-[10px] font-black text-blue-500 uppercase mt-4 tracking-widest italic">Creazione Grafica...</span>
                 </div>
                 <img id="outputImg" src="" class="hidden w-full h-full object-cover">
-                <div id="imgError" class="hidden absolute inset-0 flex items-center justify-center bg-black/90 p-8 text-center">
-                    <p class="text-red-500 text-[10px] font-black uppercase tracking-widest leading-relaxed italic">Immagine non disponibile. Riprova tra un attimo.</p>
+                <div id="imgErrorMessage" class="hidden absolute inset-0 flex items-center justify-center bg-black/80 p-8 text-center">
+                    <p class="text-red-500 text-[10px] font-black uppercase tracking-widest leading-relaxed italic">Immagine non generata. Riprova con un argomento diverso.</p>
                 </div>
             </div>
 
-            <div id="postsContainer" class="space-y-6 pb-20"></div>
+            <!-- Posts List -->
+            <div id="postsList" class="space-y-6">
+                <!-- Varianti inserite via JS -->
+            </div>
+
         </div>
     </main>
 
+    <!-- Monetization Footer -->
     <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50">
         <div class="glass rounded-[2rem] p-4 flex items-center justify-between border-blue-500/30 bg-blue-900/10 shadow-2xl backdrop-blur-xl">
             <div class="flex items-center gap-4 pl-2 text-left leading-none">
-                <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white">
+                <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-900/20">
                     <i data-lucide="trending-up" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <p class="text-[9px] font-black text-blue-400 uppercase tracking-tighter leading-none italic">StudioX AI</p>
-                    <h4 class="font-bold text-sm text-white mt-1 leading-none uppercase italic">Versione Finale</h4>
+                    <p class="text-[9px] font-black text-blue-400 uppercase tracking-tighter italic leading-none">Social Scaling</p>
+                    <h4 class="font-bold text-sm text-white mt-1 leading-none uppercase italic">Partner Program</h4>
                 </div>
             </div>
-            <button onclick="location.reload()" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg font-black">RESET</button>
+            <button onclick="location.reload()" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg active:scale-95 transition-all">REFRESH</button>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
-        let apiKey = localStorage.getItem('studiox_vito_ultra_v10') || "";
+        let apiKey = localStorage.getItem('vito_socialhub_v1') || "";
 
         function configKey() {
-            const k = prompt("Configura API Key:", apiKey);
+            const k = prompt("Incolla l'API Key dal 'Default Gemini Project':", apiKey);
             if(k) {
                 apiKey = k;
-                localStorage.setItem('studiox_vito_ultra_v10', k);
+                localStorage.setItem('vito_socialhub_v1', k);
                 location.reload();
             }
         }
 
-        // Sistema di retry con exponential backoff richiesto
+        // Funzione per gestire i ritardi in caso di errore di quota
         async function fetchWithRetry(url, options, maxRetries = 5) {
             for (let i = 0; i < maxRetries; i++) {
                 try {
@@ -114,78 +125,71 @@
             const btn = document.getElementById('genBtn');
             const label = document.getElementById('btnLabel');
             const results = document.getElementById('results');
-            const postsContainer = document.getElementById('postsContainer');
-            const statusLabel = document.getElementById('status-label');
+            const postsList = document.getElementById('postsList');
             const outImg = document.getElementById('outputImg');
             const imgLoad = document.getElementById('imgLoader');
-            const imgErr = document.getElementById('imgError');
+            const imgErr = document.getElementById('imgErrorMessage');
 
             btn.disabled = true;
             label.innerText = "IA AL LAVORO...";
-            statusLabel.innerText = "Generazione post in corso...";
             results.classList.add('hidden');
-            postsContainer.innerHTML = "";
+            postsList.innerHTML = "";
             imgErr.classList.add('hidden');
 
             try {
-                // 1. TESTO
-                const textUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-                const textOptions = {
+                // 1. GENERAZIONE TESTO (Senza chiacchiere)
+                const textResponse = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Agisci come un esperto social media manager. Genera 3 post diversi e virali per: "${topic}". 
-                        REGOLA: Inizia subito con il testo del Post 1. Non salutare. Non parlare di te. 
-                        Struttura ogni post con Hook, Corpo, CTA e 5 Hashtag. Dividi con '###'.` }] }]
+                        contents: [{ parts: [{ text: `Sei un esperto SMM. Genera 3 post diversi e virali per: "${topic}". 
+                        REGOLA: Non parlare di te. Non fare preamboli. Inizia subito con il testo.
+                        Dividi i post con '---'. Ogni post deve avere Hook, Corpo, CTA e Hashtag.` }] }]
                     })
-                };
-
-                const tData = await fetchWithRetry(textUrl, textOptions);
-                const posts = tData.candidates[0].content.parts[0].text.split('###').filter(p => p.trim().length > 10).slice(0, 3);
+                });
+                
+                const posts = textResponse.candidates[0].content.parts[0].text.split('---').filter(p => p.trim().length > 10).slice(0, 3);
 
                 posts.forEach((p, i) => {
                     const card = document.createElement('div');
                     card.className = "glass p-8 rounded-[2rem] post-card animate-up shadow-xl mb-6";
                     card.innerHTML = `
                         <div class="flex justify-between items-center mb-6">
-                            <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest italic opacity-40 italic">Opzione #${i+1}</span>
-                            <button onclick="copyThis(this)" class="p-2 bg-white/5 rounded-lg text-gray-500 hover:text-blue-500"><i data-lucide="copy" class="w-4 h-4"></i></button>
+                            <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest italic tracking-tighter">Variante Strategica #${i+1}</span>
+                            <button onclick="copyThis(this)" class="p-2 bg-white/5 rounded-lg text-gray-500 hover:text-blue-500 transition-all">
+                                <i data-lucide="copy" class="w-4 h-4"></i>
+                            </button>
                         </div>
                         <p class="text-xl font-medium leading-relaxed italic text-gray-100 whitespace-pre-wrap">${p.trim()}</p>
                     `;
-                    postsContainer.appendChild(card);
+                    postsList.appendChild(card);
                 });
 
                 results.classList.remove('hidden');
-                statusLabel.innerText = "Creazione grafica 8K...";
 
-                // 2. IMMAGINE
+                // 2. GENERAZIONE IMMAGINE (Fix Payload)
                 imgLoad.classList.remove('hidden');
                 outImg.classList.add('hidden');
 
-                const imageUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
-                const imageOptions = {
+                const imageResponse = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        instances: { prompt: "High-end professional advertising photography, cinematic lighting, modern minimalist style for: " + topic },
+                        instances: { prompt: "High-end professional advertising photography, cinematic lighting, modern 8k for: " + topic },
                         parameters: { sampleCount: 1 }
                     })
-                };
-
-                const iData = await fetchWithRetry(imageUrl, imageOptions);
+                });
                 
-                if(iData.predictions && iData.predictions[0]) {
-                    outImg.src = `data:image/png;base64,${iData.predictions[0].bytesBase64Encoded}`;
+                if(imageResponse.predictions?.[0]?.bytesBase64Encoded) {
+                    outImg.src = `data:image/png;base64,${imageResponse.predictions[0].bytesBase64Encoded}`;
                     outImg.classList.remove('hidden');
-                    statusLabel.innerText = "Campagna Pronta!";
                 } else {
                     imgErr.classList.remove('hidden');
                 }
 
             } catch (err) {
+                alert("Verifica la tua quota API o riprova tra 60 secondi.");
                 console.error(err);
-                alert("Spiacente, il sistema è sovraccarico. Controlla la tua chiave API o riprova tra 60 secondi.");
             } finally {
                 btn.disabled = false;
                 label.innerText = "GENERA ORA";
@@ -197,8 +201,17 @@
 
         function copyThis(btn) {
             const text = btn.parentElement.nextElementSibling.innerText;
-            navigator.clipboard.writeText(text);
-            alert("Copiato!");
+            // Clipboard Fix per iframe
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            
+            const icon = btn.querySelector('i');
+            btn.classList.add('text-green-500');
+            setTimeout(() => { btn.classList.remove('text-green-500'); }, 2000);
         }
     </script>
 </body>
