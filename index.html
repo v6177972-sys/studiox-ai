@@ -32,7 +32,7 @@
         </div>
         <div class="flex items-center gap-2">
             <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            <span class="text-[9px] font-black uppercase text-gray-500 tracking-tighter italic text-white">Live</span>
+            <span class="text-[9px] font-black uppercase text-gray-500 tracking-tighter italic">Live</span>
         </div>
     </nav>
 
@@ -42,19 +42,19 @@
             <h2 class="text-5xl font-black tracking-tighter uppercase italic leading-[0.85]">
                 PIANO <br><span class="text-blue-600 underline underline-offset-8 decoration-blue-900/30 text-white italic">VIRALE.</span>
             </h2>
-            <p class="text-gray-400 font-medium italic text-lg px-2 text-white">Contenuti pronti all'uso in un istante.</p>
+            <p class="text-gray-400 font-medium italic text-lg px-2 text-white">Crea campagne social professionali in 10 secondi.</p>
         </header>
 
         <!-- INPUT BOX -->
         <div class="glass rounded-[3rem] p-8 shadow-2xl space-y-8">
             <div class="space-y-2">
-                <label class="text-[10px] font-black uppercase tracking-widest text-blue-500 ml-1 italic block text-left">Cosa dobbiamo pubblicare?</label>
-                <textarea id="promptInput" placeholder="Es: Saldi estivi magliette uomo..." 
-                    class="w-full h-32 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-800 text-white text-left"></textarea>
+                <label class="text-[10px] font-black uppercase tracking-widest text-blue-500 ml-1 italic block text-left text-white">Di cosa parliamo oggi?</label>
+                <textarea id="promptInput" placeholder="Es: Promozione estiva magliette uomo..." 
+                    class="w-full h-32 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-900 text-white text-left"></textarea>
             </div>
 
             <button id="genBtn" onclick="handleGenerate()" class="btn-viral w-full py-6 rounded-[2rem] font-black flex items-center justify-center gap-4 text-white">
-                <span id="btnLabel" class="uppercase tracking-widest text-sm font-black">Genera Campagna</span>
+                <span id="btnLabel" class="uppercase tracking-widest text-sm font-black">Lancia Produzione</span>
                 <i data-lucide="sparkles" class="w-5 h-5"></i>
             </button>
         </div>
@@ -81,7 +81,7 @@
         </div>
     </main>
 
-    <!-- FOOTER MONETIZZAZIONE -->
+    <!-- FOOTER CON COLLEGAMENTO ALL'HUB -->
     <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50">
         <div class="glass rounded-[2rem] p-4 flex items-center justify-between border-blue-500/30 bg-blue-900/10 shadow-2xl backdrop-blur-xl ring-1 ring-blue-500/20">
             <div class="flex items-center gap-4 pl-2 text-left leading-none">
@@ -89,18 +89,19 @@
                     <i data-lucide="trending-up" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <p class="text-[9px] font-black text-blue-400 uppercase tracking-tighter italic leading-none text-left">Social Scaling</p>
+                    <p class="text-[9px] font-black text-blue-400 uppercase tracking-tighter italic leading-none text-left">Partner Program</p>
                     <h4 class="font-bold text-sm text-white mt-1 leading-none uppercase italic text-left">Bonus 500€ Ads</h4>
                 </div>
             </div>
-            <a href="https://v6177972-sys.github.io/studiox-ai/" target="_blank" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg active:scale-95 transition-all font-black">Sblocca</a>
+            <!-- QUESTO LINK ORA PORTA AL TUO HUB -->
+            <a href="hub.html" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg active:scale-95 transition-all font-black">Sblocca</a>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
 
-        // CHIAVE SPEZZETTATA PER GITHUB
+        // CHIAVE SPEZZETTATA PER SICUREZZA
         const _p1 = "AIzaSyDE";
         const _p2 = "E4Z7oAy8";
         const _p3 = "b7BPeqx-";
@@ -114,8 +115,11 @@
                     const response = await fetch(url, options);
                     const data = await response.json();
                     if (response.ok && !data.error) return data;
+                    if (data.error && data.error.code === 429) {
+                        await new Promise(r => setTimeout(r, 2000 * (i + 1)));
+                        continue;
+                    }
                 } catch (e) {}
-                await new Promise(res => setTimeout(res, 2000));
             }
             return null;
         }
@@ -132,7 +136,7 @@
             const dlBtn = document.getElementById('dlBtn');
 
             btn.disabled = true;
-            document.getElementById('btnLabel').innerText = "IA AL LAVORO...";
+            document.getElementById('btnLabel').innerText = "COSTRUZIONE...";
             results.classList.add('hidden');
             postsList.innerHTML = "";
             outImg.classList.add('hidden');
@@ -145,7 +149,7 @@
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Genera 3 post virali diversi per: "${topic}". REGOLA: Inizia immediatamente con il testo. Dividi i post con '###'. Ogni post deve avere Hook, Corpo, CTA e Hashtag.` }] }],
+                        contents: [{ parts: [{ text: `Genera 3 post diversi e virali per: "${topic}". REGOLA: Inizia immediatamente con il testo. Non parlare di te. Dividi i post con '###'. Ogni post deve avere Hook, Corpo, CTA e Hashtag.` }] }],
                         systemInstruction: { parts: [{ text: "Sei un'interfaccia di generazione pura. Non salutare. Non fare preamboli. Inizia subito con il contenuto." }] }
                     })
                 });
@@ -162,7 +166,7 @@
 
                 results.classList.remove('hidden');
 
-                // 2. GENERAZIONE IMMAGINE (IA + Fallback Garantito)
+                // 2. GENERAZIONE IMMAGINE (IA + Fallback Coerente)
                 const imgResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${_key}`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
@@ -177,18 +181,19 @@
                 if (iData.predictions?.[0]?.bytesBase64Encoded) {
                     outImg.src = `data:image/png;base64,${iData.predictions[0].bytesBase64Encoded}`;
                 } else {
-                    const kw = topic.split(' ').slice(0, 2).join(',');
-                    outImg.src = `https://loremflickr.com/800/800/${kw}?lock=${Math.floor(Math.random()*999)}`;
+                    const keyword = topic.split(' ').slice(0, 2).join(',');
+                    outImg.src = `https://source.unsplash.com/800x800/?${keyword},product`;
                 }
 
                 outImg.onload = () => {
                     outImg.classList.remove('hidden');
                     dlBtn.classList.remove('hidden');
                     imgLoad.classList.add('hidden');
+                    lucide.createIcons();
                 };
 
             } catch (err) {
-                alert("Riprova tra 60 secondi.");
+                alert("Il sistema è in pausa. Riprova tra 60 secondi.");
             } finally {
                 btn.disabled = false;
                 document.getElementById('btnLabel').innerText = "Genera Campagna";
@@ -197,13 +202,25 @@
             }
         }
 
-        function downloadImage() {
+        async function downloadImage() {
             const img = document.getElementById('outputImg');
             if(!img.src) return;
-            const a = document.createElement('a');
-            a.href = img.src;
-            a.download = `StudioX_Grafica_${Date.now()}.png`;
-            a.click();
+            try {
+                const response = await fetch(img.src);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `StudioX_Ads_${Date.now()}.png`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            } catch (e) {
+                const a = document.createElement('a');
+                a.href = img.src;
+                a.download = "Grafica_StudioX.png";
+                a.click();
+            }
         }
 
         function copyThis(btn) {
