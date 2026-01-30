@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudioX Hub - Toolkit Risorse</title>
+    <title>StudioX Hub - Risorse Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020203; color: white; -webkit-tap-highlight-color: transparent; }
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.3s ease; }
-        .gradient-orange { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
         .gradient-blue { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
+        .gradient-orange { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
         .animate-up { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .active-scale:active { transform: scale(0.98); }
@@ -26,90 +26,91 @@
             <div class="w-20 h-20 gradient-blue rounded-[2.5rem] flex items-center justify-center mx-auto shadow-2xl shadow-blue-900/40">
                 <i data-lucide="layout-grid" class="w-10 h-10 text-white fill-white/10"></i>
             </div>
-            <div class="space-y-1">
-                <h1 class="text-3xl font-black uppercase italic tracking-tighter">StudioX <span class="text-blue-500">Toolkit</span></h1>
-                <p class="text-gray-500 text-sm font-medium italic">Risorse professionali per il tuo business.</p>
-            </div>
+            <h1 class="text-3xl font-black uppercase italic tracking-tighter text-center">StudioX <span class="text-blue-500 italic">Toolkit</span></h1>
+            <p class="text-gray-500 text-sm font-medium italic text-center">Strumenti professionali selezionati per te.</p>
         </header>
 
-        <!-- SEZIONE 1: HARDWARE (AMAZON) -->
+        <!-- SEZIONE 1: HARDWARE (I TUOI 3 LINK AMAZON) -->
         <section class="space-y-6 animate-up" style="animation-delay: 0.1s;">
             <div class="flex items-center justify-between px-2">
-                <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-orange-500 italic">Hardware & Video Kit</h2>
-                <span class="text-[8px] bg-orange-500/10 text-orange-500 px-2 py-1 rounded-full font-bold uppercase border border-orange-500/20 italic">Amazon Partner</span>
+                <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-orange-500 italic">Hardware & Gear</h2>
+                <span class="text-[8px] bg-orange-500/10 text-orange-500 px-2 py-1 rounded-full font-bold uppercase border border-orange-500/20 italic">Amazon Active</span>
             </div>
             
-            <!-- PRODOTTO 3-IN-1 (IL PIÙ VENDUTO) -->
+            <!-- 1. KIT 3-IN-1 (PRINCIPALE) -->
             <div class="glass p-6 rounded-[2.5rem] border-orange-500/20 space-y-4">
                 <div class="flex items-center gap-4">
                     <div class="w-12 h-12 bg-orange-600/10 rounded-2xl flex items-center justify-center">
                         <i data-lucide="award" class="w-6 h-6 text-orange-500"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-sm uppercase italic leading-none">Creator Kit 3-in-1</h3>
-                        <p class="text-[9px] text-orange-400 mt-1 uppercase font-black tracking-widest italic">Luce + Microfono + Supporto</p>
+                        <h3 class="font-bold text-sm uppercase italic leading-none text-left">Creator Kit 3-in-1</h3>
+                        <p class="text-[9px] text-orange-400 mt-1 uppercase font-black tracking-widest italic text-left">Luce + Mic + Supporto</p>
                     </div>
                 </div>
-                <p class="text-[11px] text-gray-400 italic leading-relaxed">Tutto ciò che ti serve per iniziare a registrare video professionali con il tuo smartphone. È la scelta più completa.</p>
+                <p class="text-[11px] text-gray-400 italic leading-relaxed text-left">La soluzione completa per iniziare subito a registrare video di alta qualità per TikTok e Reels.</p>
                 <a href="https://amzn.to/4k90Jg4" target="_blank" class="w-full py-4 gradient-orange rounded-2xl flex items-center justify-center text-[10px] font-black uppercase tracking-widest text-white shadow-lg no-underline active-scale italic transition-all">
                     Vedi Offerta su Amazon
                 </a>
             </div>
 
+            <!-- 2. RING LIGHT & 3. MICROFONO (SECONDARI) -->
             <div class="grid grid-cols-1 gap-4">
-                <!-- RING LIGHT -->
                 <a href="https://amzn.to/3MeUBWX" target="_blank" class="glass p-5 rounded-[2rem] flex items-center gap-5 no-underline text-white active-scale transition-all">
                     <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0">
                         <i data-lucide="sun" class="text-orange-400 w-5 h-5"></i>
                     </div>
-                    <div class="flex-1">
+                    <div class="flex-1 text-left">
                         <h3 class="font-bold text-[13px] uppercase italic leading-none">Ring Light Pro</h3>
-                        <p class="text-[9px] text-gray-500 mt-1 uppercase font-black italic">Cavalletto con luce circolare</p>
+                        <p class="text-[9px] text-gray-500 mt-1 uppercase font-black italic">Solo Illuminazione</p>
                     </div>
-                    <i data-lucide="external-link" class="w-4 h-4 text-gray-700"></i>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-700"></i>
                 </a>
 
-                <!-- MICROFONO -->
                 <a href="https://amzn.to/4kbIfM3" target="_blank" class="glass p-5 rounded-[2rem] flex items-center gap-5 no-underline text-white active-scale transition-all">
                     <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0">
                         <i data-lucide="mic" class="text-orange-400 w-5 h-5"></i>
                     </div>
-                    <div class="flex-1">
-                        <h3 class="font-bold text-[13px] uppercase italic leading-none text-left">Microfono Lavalier</h3>
-                        <p class="text-[9px] text-gray-500 mt-1 uppercase font-black italic text-left">Audio HD per Smartphone</p>
+                    <div class="flex-1 text-left">
+                        <h3 class="font-bold text-[13px] uppercase italic leading-none">Microfono HD</h3>
+                        <p class="text-[9px] text-gray-500 mt-1 uppercase font-black italic">Solo Audio</p>
                     </div>
-                    <i data-lucide="external-link" class="w-4 h-4 text-gray-700"></i>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-700"></i>
                 </a>
             </div>
         </section>
 
-        <!-- SEZIONE 2: SOFTWARE (CANVA/FIVERR) -->
+        <!-- SEZIONE 2: SOFTWARE (CANVA & ADCREATIVE) -->
         <section class="space-y-6 animate-up" style="animation-delay: 0.2s;">
-            <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-500 ml-2 italic">Design & Business</h2>
+            <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-500 ml-2 italic">AI & Software Tools</h2>
             
-            <a href="https://www.canva.com/" target="_blank" class="glass p-5 rounded-[2rem] flex items-center gap-5 no-underline text-white active-scale transition-all">
+            <!-- ADCREATIVE -->
+            <div class="glass p-5 rounded-[2rem] flex items-center gap-5 no-underline text-white opacity-80">
+                <div class="w-12 h-12 bg-blue-600/10 rounded-2xl flex items-center justify-center shrink-0">
+                    <i data-lucide="sparkles" class="text-blue-500 w-5 h-5"></i>
+                </div>
+                <div class="flex-1 text-left">
+                    <h3 class="font-bold text-[13px] uppercase italic leading-none">AdCreative AI</h3>
+                    <p class="text-[9px] text-gray-500 mt-1 uppercase font-black italic leading-none">Bonus $500 Ads Credit</p>
+                </div>
+                <span class="text-[8px] font-black text-blue-500 italic uppercase">Pronto</span>
+            </div>
+
+            <!-- CANVA -->
+            <div class="glass p-5 rounded-[2rem] flex items-center gap-5 no-underline text-white opacity-80">
                 <div class="w-12 h-12 bg-purple-600/10 rounded-2xl flex items-center justify-center shrink-0">
                     <i data-lucide="palette" class="text-purple-400 w-5 h-5"></i>
                 </div>
-                <div class="flex-1">
-                    <h3 class="font-bold text-[13px] uppercase italic leading-none">Canva Social Kit</h3>
-                    <p class="text-[9px] text-gray-500 mt-1 uppercase font-black italic">Template Professionali</p>
+                <div class="flex-1 text-left">
+                    <h3 class="font-bold text-[13px] uppercase italic leading-none">Canva Pro Social</h3>
+                    <p class="text-[9px] text-gray-500 mt-1 uppercase font-black italic leading-none">Template Premium</p>
                 </div>
-            </a>
-
-            <div class="glass p-5 rounded-[2rem] flex items-center gap-5 opacity-40">
-                <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0">
-                    <i data-lucide="zap" class="text-green-500 w-5 h-5"></i>
-                </div>
-                <div class="flex-1">
-                    <h3 class="font-bold text-[13px] uppercase italic leading-none">Fiverr Experts</h3>
-                    <p class="text-[9px] text-gray-500 mt-1 uppercase font-black italic">In fase di attivazione...</p>
-                </div>
+                <span class="text-[8px] font-black text-purple-500 italic uppercase">Pronto</span>
             </div>
         </section>
 
         <footer class="text-center pt-6 opacity-20">
-            <p class="text-[8px] font-black uppercase tracking-[0.4em]">StudioX AI Ecosystem • ID: studioxai-21</p>
+            <p class="text-[8px] font-black uppercase tracking-[0.4em]">StudioX Ecosystem • ID: studioxai-21</p>
         </footer>
 
     </div>
