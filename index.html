@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudioX AI - Image Fix</title>
+    <title>StudioX AI - Pro Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020203; color: white; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050505; color: white; -webkit-tap-highlight-color: transparent; }
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
         .btn-main { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); transition: all 0.3s ease; }
         .btn-main:active { transform: scale(0.95); }
@@ -34,33 +34,31 @@
             <h2 class="text-5xl font-black tracking-tighter uppercase italic leading-[0.85]">
                 SCALA IL <br><span class="text-blue-600">SUCCESSO.</span>
             </h2>
-            <p id="status-label" class="text-gray-500 font-medium italic text-sm">Pronto per generare la tua campagna.</p>
+            <p id="status-label" class="text-gray-500 font-medium italic text-sm">Post e immagini virali in un click.</p>
         </header>
 
         <div class="glass rounded-[2.5rem] p-8 shadow-2xl space-y-8 border-white/10">
-            <textarea id="promptInput" placeholder="Inserisci l'argomento (es. Ristorante di pesce)" 
-                class="w-full h-28 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-900 text-white"></textarea>
+            <textarea id="promptInput" placeholder="Argomento del post..." 
+                class="w-full h-28 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-800 text-white"></textarea>
             
             <button id="genBtn" onclick="handleGenerate()" class="btn-main w-full py-6 rounded-[2rem] font-black flex items-center justify-center gap-4 shadow-xl text-white">
-                <span id="btnLabel" class="uppercase tracking-widest text-sm font-black">GENERA CAMPAGNA</span>
+                <span id="btnLabel" class="uppercase tracking-widest text-sm font-black">GENERA ORA</span>
                 <i data-lucide="zap" class="w-5 h-5 fill-white"></i>
             </button>
         </div>
 
         <div id="results" class="hidden space-y-10 animate-up">
-            <!-- IMMAGINE -->
             <div id="imgBox" class="glass rounded-[2.5rem] overflow-hidden border-white/10 relative aspect-square shadow-2xl bg-white/5">
                 <div id="imgLoader" class="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md z-10">
                     <div class="w-10 h-10 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
-                    <span class="text-[10px] font-black text-blue-500 uppercase mt-4 tracking-widest italic">Rendering Asset...</span>
+                    <span class="text-[10px] font-black text-blue-500 uppercase mt-4 tracking-widest italic">Creazione Immagine...</span>
                 </div>
                 <img id="outputImg" src="" class="hidden w-full h-full object-cover">
                 <div id="imgError" class="hidden absolute inset-0 flex items-center justify-center bg-black/90 p-8 text-center">
-                    <p class="text-red-500 text-[10px] font-black uppercase tracking-widest leading-relaxed italic">Grafica non disponibile. Prova un prompt più semplice o neutro.</p>
+                    <p class="text-red-500 text-[10px] font-black uppercase tracking-widest leading-relaxed italic">Immagine non disponibile. Riprova tra un attimo.</p>
                 </div>
             </div>
 
-            <!-- POSTS -->
             <div id="postsContainer" class="space-y-6 pb-20"></div>
         </div>
     </main>
@@ -72,24 +70,40 @@
                     <i data-lucide="trending-up" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <p class="text-[9px] font-black text-blue-400 uppercase tracking-tighter leading-none italic">Monetizza</p>
-                    <h4 class="font-bold text-sm text-white mt-1 leading-none uppercase italic">Versione Master</h4>
+                    <p class="text-[9px] font-black text-blue-400 uppercase tracking-tighter leading-none italic">StudioX AI</p>
+                    <h4 class="font-bold text-sm text-white mt-1 leading-none uppercase italic">Versione Finale</h4>
                 </div>
             </div>
-            <button onclick="location.reload()" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg active:scale-95 transition-all font-black">RESET</button>
+            <button onclick="location.reload()" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg font-black">RESET</button>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
-        let apiKey = localStorage.getItem('studiox_vito_master_v8') || "";
+        let apiKey = localStorage.getItem('studiox_vito_ultra_v10') || "";
 
         function configKey() {
             const k = prompt("Configura API Key:", apiKey);
             if(k) {
                 apiKey = k;
-                localStorage.setItem('studiox_vito_master_v8', k);
+                localStorage.setItem('studiox_vito_ultra_v10', k);
                 location.reload();
+            }
+        }
+
+        // Sistema di retry con exponential backoff richiesto
+        async function fetchWithRetry(url, options, maxRetries = 5) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    const data = await response.json();
+                    if (response.ok && !data.error) return data;
+                    if (data.error && i === maxRetries - 1) throw new Error(data.error.message);
+                } catch (err) {
+                    if (i === maxRetries - 1) throw err;
+                }
+                const delay = Math.pow(2, i) * 1000;
+                await new Promise(res => setTimeout(res, delay));
             }
         }
 
@@ -108,26 +122,25 @@
 
             btn.disabled = true;
             label.innerText = "IA AL LAVORO...";
-            statusLabel.innerText = "Scrittura post virali...";
+            statusLabel.innerText = "Generazione post in corso...";
             results.classList.add('hidden');
             postsContainer.innerHTML = "";
             imgErr.classList.add('hidden');
 
             try {
-                // 1. GENERAZIONE TESTO
-                const tResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                // 1. TESTO
+                const textUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                const textOptions = {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Agisci come un esperto di social media. Genera 3 post diversi e virali per: "${topic}". 
-                        REGOLA: Non parlare di te. Non fare preamboli. Inizia subito con il testo.
-                        Dividi i post con '###'. Ogni post deve avere Hook, Corpo, CTA e Hashtag.` }] }]
+                        contents: [{ parts: [{ text: `Agisci come un esperto social media manager. Genera 3 post diversi e virali per: "${topic}". 
+                        REGOLA: Inizia subito con il testo del Post 1. Non salutare. Non parlare di te. 
+                        Struttura ogni post con Hook, Corpo, CTA e 5 Hashtag. Dividi con '###'.` }] }]
                     })
-                });
-                
-                const tData = await tResp.json();
-                if(tData.error) throw new Error(tData.error.message);
-                
+                };
+
+                const tData = await fetchWithRetry(textUrl, textOptions);
                 const posts = tData.candidates[0].content.parts[0].text.split('###').filter(p => p.trim().length > 10).slice(0, 3);
 
                 posts.forEach((p, i) => {
@@ -135,7 +148,7 @@
                     card.className = "glass p-8 rounded-[2rem] post-card animate-up shadow-xl mb-6";
                     card.innerHTML = `
                         <div class="flex justify-between items-center mb-6">
-                            <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest italic opacity-40">Strategia #${i+1}</span>
+                            <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest italic opacity-40 italic">Opzione #${i+1}</span>
                             <button onclick="copyThis(this)" class="p-2 bg-white/5 rounded-lg text-gray-500 hover:text-blue-500"><i data-lucide="copy" class="w-4 h-4"></i></button>
                         </div>
                         <p class="text-xl font-medium leading-relaxed italic text-gray-100 whitespace-pre-wrap">${p.trim()}</p>
@@ -144,25 +157,23 @@
                 });
 
                 results.classList.remove('hidden');
-                statusLabel.innerText = "Generazione grafica 8K...";
+                statusLabel.innerText = "Creazione grafica 8K...";
 
-                // 2. GENERAZIONE IMMAGINE (FORMATO PAYLOAD CORRETTO)
+                // 2. IMMAGINE
                 imgLoad.classList.remove('hidden');
                 outImg.classList.add('hidden');
 
-                // Prompt super-neutro e professionale per evitare filtri
-                const safeImagePrompt = `High-end professional advertising photography, cinematic commercial lighting, clean minimalist composition, high resolution for: ${topic}`;
-
-                const iResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`, {
+                const imageUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+                const imageOptions = {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        instances: { prompt: safeImagePrompt },
+                        instances: { prompt: "High-end professional advertising photography, cinematic lighting, modern minimalist style for: " + topic },
                         parameters: { sampleCount: 1 }
                     })
-                });
-                
-                const iData = await iResp.json();
+                };
+
+                const iData = await fetchWithRetry(imageUrl, imageOptions);
                 
                 if(iData.predictions && iData.predictions[0]) {
                     outImg.src = `data:image/png;base64,${iData.predictions[0].bytesBase64Encoded}`;
@@ -170,15 +181,14 @@
                     statusLabel.innerText = "Campagna Pronta!";
                 } else {
                     imgErr.classList.remove('hidden');
-                    statusLabel.innerText = "Immagine bloccata dai filtri.";
                 }
 
             } catch (err) {
                 console.error(err);
-                alert("Errore tecnico. Riprova tra 60 secondi o verifica la tua API Key.");
+                alert("Spiacente, il sistema è sovraccarico. Controlla la tua chiave API o riprova tra 60 secondi.");
             } finally {
                 btn.disabled = false;
-                label.innerText = "GENERA CAMPAGNA";
+                label.innerText = "GENERA ORA";
                 imgLoad.classList.add('hidden');
                 lucide.createIcons();
                 window.scrollTo({ top: 100, behavior: 'smooth' });
@@ -188,9 +198,7 @@
         function copyThis(btn) {
             const text = btn.parentElement.nextElementSibling.innerText;
             navigator.clipboard.writeText(text);
-            const icon = btn.querySelector('i');
-            btn.classList.add('text-green-500');
-            setTimeout(() => { btn.classList.remove('text-green-500'); }, 2000);
+            alert("Copiato!");
         }
     </script>
 </body>
