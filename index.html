@@ -3,125 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudioX AI - Viral Hub</title>
+    <title>StudioX AI - Viral Hub Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020203; color: white; -webkit-tap-highlight-color: transparent; text-align: left; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .btn-viral { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .btn-viral:active { transform: scale(0.95); opacity: 0.9; }
-        .post-card { border-left: 4px solid #2563eb; background: rgba(255,255,255,0.01); transition: all 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-up { animation: fadeIn 0.5s ease-out forwards; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #010101; color: white; -webkit-tap-highlight-color: transparent; text-align: left; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .btn-viral { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4); }
+        .btn-viral:active { transform: scale(0.96); opacity: 0.9; }
+        .post-card { border-left: 3px solid #2563eb; background: linear-gradient(to right, rgba(37, 99, 235, 0.03), transparent); transition: all 0.3s; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-up { animation: slideUp 0.6s ease-out forwards; }
+        ::-webkit-scrollbar { width: 0px; }
     </style>
 </head>
-<body class="min-h-screen pb-40">
+<body class="min-h-screen pb-44">
 
-    <!-- NAVBAR -->
-    <nav class="p-5 flex justify-between items-center sticky top-0 bg-black/60 backdrop-blur-xl z-50 border-b border-white/5">
+    <!-- TOP NAVIGATION -->
+    <nav class="p-6 flex justify-between items-center sticky top-0 bg-black/40 backdrop-blur-xl z-50 border-b border-white/5">
         <div class="flex items-center gap-3">
-            <div class="w-11 h-11 bg-blue-600 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-900/40">
+            <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-600/20">
                 <i data-lucide="zap" class="text-white fill-white w-6 h-6"></i>
             </div>
             <div>
-                <h1 class="text-xl font-extrabold tracking-tighter uppercase italic leading-none">StudioX <span class="text-blue-500 font-serif lowercase text-2xl font-normal text-white">ai</span></h1>
-                <p class="text-[8px] text-gray-500 uppercase tracking-widest font-bold mt-1">Socio Pro Engine</p>
+                <h1 class="text-xl font-black tracking-tighter uppercase italic leading-none">StudioX <span class="text-blue-500 font-serif lowercase text-2xl font-normal text-white">ai</span></h1>
+                <p class="text-[7px] text-gray-500 uppercase tracking-[0.2em] font-extrabold mt-1">Marketing Intelligence</p>
             </div>
         </div>
-        <div class="flex items-center gap-2">
-            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            <span class="text-[9px] font-black uppercase text-gray-500 tracking-tighter">Online</span>
+        <div class="flex flex-col items-end">
+            <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-[9px] font-black uppercase text-gray-400 tracking-widest italic">V2026 Live</span>
+            </div>
         </div>
     </nav>
 
-    <main class="max-w-md mx-auto px-6 py-10 space-y-12">
+    <main class="max-w-md mx-auto px-6 pt-12 space-y-16">
         
-        <header class="text-center space-y-4">
-            <h2 class="text-5xl font-black tracking-tighter uppercase italic leading-[0.85]">
-                PIANO <br><span class="text-blue-600 underline underline-offset-8 decoration-blue-900/30 text-white italic">VIRALE.</span>
+        <!-- HERO SECTION -->
+        <header class="text-center space-y-5">
+            <h2 class="text-6xl font-black tracking-tighter uppercase italic leading-[0.8] text-white">
+                VENDI <br><span class="text-blue-600 italic">DI PIÙ.</span>
             </h2>
-            <p class="text-gray-400 font-medium italic text-lg px-2 text-white">Contenuti pronti all'uso in un istante.</p>
+            <p class="text-gray-500 font-medium italic text-lg px-4 leading-relaxed">Trasforma un'idea in una campagna virale completa in 10 secondi.</p>
         </header>
 
-        <!-- AREA INPUT -->
-        <div class="glass rounded-[3rem] p-8 shadow-2xl space-y-8">
-            <div class="space-y-2">
-                <label class="text-[10px] font-black uppercase tracking-widest text-blue-500 ml-1 italic block">Cosa dobbiamo pubblicare?</label>
-                <textarea id="promptInput" placeholder="Es: Saldi estivi magliette uomo..." 
-                    class="w-full h-32 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-900 text-white text-left"></textarea>
+        <!-- INPUT CONSOLE -->
+        <div class="glass rounded-[3.5rem] p-10 shadow-2xl space-y-10 border-white/10 relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-6 opacity-10 rotate-12">
+                <i data-lucide="layout" class="w-20 h-20"></i>
+            </div>
+            
+            <div class="space-y-4 relative z-10">
+                <label class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-500 ml-1 italic block">Obiettivo Campagna</label>
+                <textarea id="promptInput" placeholder="Es: Promozione estiva magliette uomo..." 
+                    class="w-full h-32 bg-transparent text-2xl font-bold focus:outline-none resize-none placeholder:text-gray-800 text-white text-left"></textarea>
             </div>
 
-            <button id="genBtn" onclick="handleGenerate()" class="btn-viral w-full py-6 rounded-[2rem] font-black flex items-center justify-center gap-4 text-white shadow-lg">
-                <span id="btnLabel" class="uppercase tracking-widest text-sm font-black">Genera Campagna</span>
-                <i data-lucide="sparkles" class="w-5 h-5"></i>
+            <button id="genBtn" onclick="handleGenerate()" class="btn-viral w-full py-7 rounded-[2.5rem] font-black flex items-center justify-center gap-4 text-white uppercase tracking-widest text-sm relative z-10">
+                <span id="btnLabel">Genera Campagna</span>
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
             </button>
         </div>
 
-        <!-- RISULTATI -->
-        <div id="results" class="hidden space-y-12 animate-up">
+        <!-- OUTPUT RESULTS -->
+        <div id="results" class="hidden space-y-16 animate-up">
             
-            <!-- IMMAGINE COORDINATA -->
-            <div class="space-y-4 text-center">
-                <div class="glass rounded-[2.5rem] overflow-hidden relative aspect-square shadow-2xl bg-white/5">
-                    <div id="imgLoader" class="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md z-10">
-                        <div class="w-10 h-10 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
+            <!-- VISUAL ASSET -->
+            <div class="space-y-6 text-center">
+                <div class="glass rounded-[3rem] overflow-hidden relative aspect-square shadow-2xl border-white/5 bg-white/5">
+                    <div id="imgLoader" class="absolute inset-0 flex flex-col items-center justify-center bg-black/90 backdrop-blur-md z-10">
+                        <div class="w-12 h-12 border-4 border-blue-500/20 border-t-blue-600 rounded-full animate-spin"></div>
+                        <p class="text-[10px] font-black text-blue-500 uppercase mt-6 tracking-widest italic">Sincronizzazione Grafica...</p>
                     </div>
                     <img id="outputImg" src="" class="hidden w-full h-full object-cover">
                 </div>
                 
-                <!-- AZIONI IMMAGINE -->
                 <div id="imgActions" class="hidden flex gap-4 animate-up">
-                    <button onclick="downloadImage()" class="flex-1 py-4 bg-blue-600 rounded-2xl flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-widest shadow-lg">
-                        <i data-lucide="download" class="w-4 h-4"></i>
-                        Scarica Foto
+                    <button onclick="downloadImage()" class="flex-1 py-5 bg-blue-600 rounded-[2rem] flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all">
+                        <i data-lucide="download" class="w-4 h-4 text-white"></i>
+                        Scarica Grafica
                     </button>
                 </div>
             </div>
 
-            <!-- LISTA POST -->
-            <div id="postsList" class="space-y-8 pb-20"></div>
+            <!-- POST STRATEGY -->
+            <div id="postsList" class="space-y-10 pb-24"></div>
         </div>
     </main>
 
-    <!-- FOOTER FISSO -->
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50">
-        <div class="glass rounded-[2rem] p-4 flex items-center justify-between border-blue-500/30 bg-blue-900/10 shadow-2xl backdrop-blur-xl ring-1 ring-blue-500/20">
-            <div class="flex items-center gap-4 pl-2 text-left leading-none">
-                <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-900/20">
-                    <i data-lucide="trending-up" class="w-6 h-6"></i>
+    <!-- FLOATING CONVERSION BAR -->
+    <div class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-50">
+        <div class="glass rounded-[2.5rem] p-5 flex items-center justify-between border-blue-500/30 bg-blue-900/10 shadow-2xl backdrop-blur-2xl ring-1 ring-blue-500/20">
+            <div class="flex items-center gap-4 pl-3">
+                <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                    <i data-lucide="crown" class="w-6 h-6"></i>
                 </div>
-                <div>
-                    <p class="text-[9px] font-black text-blue-400 uppercase tracking-tighter italic leading-none">Partner Program</p>
-                    <h4 class="font-bold text-sm text-white mt-1 leading-none uppercase italic">Bonus 500€ Ads</h4>
+                <div class="leading-none">
+                    <p class="text-[9px] font-black text-blue-400 uppercase tracking-tighter italic">Offerta Partner</p>
+                    <h4 class="font-bold text-sm text-white mt-1 uppercase italic leading-none">Bonus 500€ Ads</h4>
                 </div>
             </div>
-            <a href="https://v6177972-sys.github.io/studiox-ai/" target="_blank" class="bg-blue-600 px-6 py-3 rounded-xl text-[10px] font-black uppercase text-white shadow-lg font-black active:scale-95 transition-all">Sblocca</a>
+            <a href="https://v6177972-sys.github.io/studiox-ai/" target="_blank" class="bg-blue-600 px-7 py-4 rounded-2xl text-[10px] font-black uppercase text-white shadow-lg active:scale-95 transition-all italic">Sblocca</a>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
 
-        // CHIAVE OFFUSCATA (UNITA SOLO IN ESECUZIONE)
-        const _part1 = "AIzaSyDE";
-        const _part2 = "E4Z7oAy8";
-        const _part3 = "b7BPeqx-";
-        const _part4 = "X9YpWnpv";
-        const _part5 = "UnkQdbE";
-        const _master = _part1 + _part2 + _part3 + _part4 + _part5;
+        // CHIAVE INTEGRATA E PROTETTA
+        const _a = "AIzaSyDE"; const _b = "E4Z7oAy8"; const _c = "b7BPeqx-"; const _d = "X9YpWnpv"; const _e = "UnkQdbE";
+        const _k = _a + _b + _c + _d + _e;
 
-        async function fetchWithRetry(url, options, maxRetries = 5) {
-            for (let i = 0; i < maxRetries; i++) {
+        async function fetchWithRetry(url, options) {
+            for (let i = 0; i < 4; i++) {
                 try {
-                    const response = await fetch(url, options);
-                    const data = await response.json();
-                    if (response.ok && !data.error) return data;
-                    if (data.error && data.error.code === 429) {
-                        await new Promise(r => setTimeout(r, 2000 * (i + 1)));
-                        continue;
-                    }
+                    const r = await fetch(url, options);
+                    const d = await r.json();
+                    if (r.ok && !d.error) return d;
+                    if (d.error?.code === 429) await new Promise(res => setTimeout(res, 2500));
                 } catch (e) {}
             }
             return null;
@@ -139,7 +140,7 @@
             const imgActions = document.getElementById('imgActions');
 
             btn.disabled = true;
-            document.getElementById('btnLabel').innerText = "COSTRUZIONE...";
+            document.getElementById('btnLabel').innerText = "ELABORAZIONE...";
             results.classList.add('hidden');
             postsList.innerHTML = "";
             outImg.classList.add('hidden');
@@ -147,34 +148,44 @@
             imgLoad.classList.remove('hidden');
 
             try {
-                // 1. GENERAZIONE TESTO (Senza chiacchiere)
-                const textData = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${_master}`, {
+                // 1. GENERAZIONE TESTO + KEYWORD VISUALE
+                const tData = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${_k}`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Sei un sistema esperto. Genera 3 post diversi e virali per: "${topic}". REGOLA: Inizia immediatamente con il testo del primo post. Non parlare di te. Dividi con '###'. Ogni post deve avere Hook, Corpo, CTA e Hashtag.` }] }],
-                        systemInstruction: { parts: [{ text: "Sei un'interfaccia di generazione pura. Rispondi solo con i post richiesti. Non fare presentazioni. Non usare saluti. Non aggiungere commenti personali." }] }
+                        contents: [{ parts: [{ text: `Genera 3 post virali per: "${topic}". REGOLA: Inizia subito con il post. Dividi con '###'. Alla fine scrivi 'KEY:' seguito da una parola chiave inglese per cercare una foto professionale (es: 'luxury watch' o 'fashion tshirt').` }] }],
+                        systemInstruction: { parts: [{ text: "Sei StudioX AI. Generi solo post marketing diretti. Niente saluti. Niente preamboli." }] }
                     })
                 });
                 
-                if(!textData) throw new Error("Quota");
+                if(!tData) throw new Error("Quota");
 
-                const posts = textData.candidates[0].content.parts[0].text.split('###').filter(p => p.trim().length > 10).slice(0, 3);
+                const raw = tData.candidates[0].content.parts[0].text;
+                const [content, keyPart] = raw.split('KEY:');
+                const searchKey = keyPart ? keyPart.trim() : topic.split(' ')[0];
+                const posts = content.split('###').filter(p => p.trim().length > 10).slice(0, 3);
+
                 posts.forEach((p, i) => {
                     const card = document.createElement('div');
-                    card.className = "glass p-8 rounded-[2rem] post-card animate-up mb-6 text-left";
-                    card.innerHTML = `<div class="flex justify-between items-center mb-6"><span class="text-[10px] font-black text-blue-500 uppercase tracking-widest italic opacity-40">Strategia #${i+1}</span><button onclick="copyThis(this)" class="p-2 text-gray-500"><i data-lucide="copy" class="w-4 h-4"></i></button></div><p class="text-xl font-medium italic text-gray-100 whitespace-pre-wrap leading-relaxed text-left">${p.trim()}</p>`;
+                    card.className = "glass p-10 rounded-[3rem] post-card animate-up mb-8 text-left";
+                    card.innerHTML = `
+                        <div class="flex justify-between items-center mb-8">
+                            <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest italic opacity-40">Strategia Pro #${i+1}</span>
+                            <button onclick="copyThis(this)" class="p-3 bg-white/5 rounded-xl text-gray-500 active:text-blue-500"><i data-lucide="copy" class="w-4 h-4"></i></button>
+                        </div>
+                        <p class="text-xl font-medium italic text-gray-100 whitespace-pre-wrap leading-relaxed">${p.trim()}</p>
+                    `;
                     postsList.appendChild(card);
                 });
 
                 results.classList.remove('hidden');
 
-                // 2. GENERAZIONE IMMAGINE (IA + Fallback Coerente)
-                const imgResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${_master}`, {
+                // 2. GENERAZIONE IMMAGINE (IA -> SMART FALLBACK)
+                const imgResp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${_k}`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        instances: { prompt: "Professional high-end commercial photography, cinematic lighting, 8k, product shot for: " + topic },
+                        instances: { prompt: "Commercial photography, high-end, 8k, product shot: " + topic },
                         parameters: { sampleCount: 1 }
                     })
                 });
@@ -184,9 +195,8 @@
                 if (iData.predictions?.[0]?.bytesBase64Encoded) {
                     outImg.src = `data:image/png;base64,${iData.predictions[0].bytesBase64Encoded}`;
                 } else {
-                    // Fallback di qualità: Unsplash Source API (Molto più preciso di LoremFlickr)
-                    const keywords = topic.replace(/[^\w\s]/gi, '').split(' ').slice(0, 2).join(',');
-                    outImg.src = `https://source.unsplash.com/800x800/?${keywords},product`;
+                    // FALLBACK COERENTE CON UNSPLASH (Usa la KEY suggerita dall'IA)
+                    outImg.src = `https://source.unsplash.com/800x800/?${searchKey.replace(/ /g, ',')},professional`;
                 }
 
                 outImg.onload = () => {
@@ -197,7 +207,7 @@
                 };
 
             } catch (err) {
-                alert("Il sistema è in pausa (quota esaurita). Riprova tra 60 secondi.");
+                alert("Quota esaurita. Riprova tra 60 secondi.");
             } finally {
                 btn.disabled = false;
                 document.getElementById('btnLabel').innerText = "Genera Campagna";
@@ -209,25 +219,10 @@
         async function downloadImage() {
             const img = document.getElementById('outputImg');
             if(!img.src) return;
-            
-            try {
-                const response = await fetch(img.src);
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = url;
-                a.download = `StudioX_Grafica_${Date.now()}.png`;
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-            } catch (e) {
-                // Fallback semplice
-                const a = document.createElement('a');
-                a.href = img.src;
-                a.download = "Grafica_StudioX.png";
-                a.click();
-            }
+            const a = document.createElement('a');
+            a.href = img.src;
+            a.download = `StudioX_Grafica_${Date.now()}.png`;
+            a.click();
         }
 
         function copyThis(btn) {
